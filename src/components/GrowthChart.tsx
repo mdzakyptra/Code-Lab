@@ -11,24 +11,27 @@ import {
   ResponsiveContainer,
   ReferenceArea
 } from "recharts";
+import { formatAgeShort } from "@/utils/whoStandards";
 
-const data = [
-  { month: 0, weight: 3.2, height: 50, normalWeight: 3.3, normalHeight: 50.5 },
-  { month: 1, weight: 4.5, height: 54, normalWeight: 4.5, normalHeight: 54.7 },
-  { month: 2, weight: 5.6, height: 58, normalWeight: 5.6, normalHeight: 58.4 },
-  { month: 3, weight: 6.4, height: 61, normalWeight: 6.4, normalHeight: 61.4 },
-  { month: 4, weight: 7.0, height: 63, normalWeight: 7.0, normalHeight: 63.9 },
-  { month: 5, weight: 7.5, height: 65, normalWeight: 7.5, normalHeight: 65.9 },
-  { month: 6, weight: 7.8, height: 66.5, normalWeight: 7.9, normalHeight: 67.6 },
-];
+interface GrowthChartProps {
+  data: any[];
+}
 
-export default function GrowthChart() {
+export default function GrowthChart({ data }: GrowthChartProps) {
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-[350px] bg-gray-50 rounded-lg border border-dashed border-gray-300">
+        <p className="text-gray-500 text-sm">Belum ada data pertumbuhan. Silakan tambah data.</p>
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: "100%", height: 350 }}>
       <ResponsiveContainer>
         <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-          <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => `${val} Bln`} />
+          <XAxis dataKey="month" stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => formatAgeShort(val)} />
           <YAxis stroke="var(--muted-foreground)" fontSize={12} tickLine={false} axisLine={false} />
           <Tooltip 
             contentStyle={{ backgroundColor: "var(--card)", borderColor: "var(--border)", borderRadius: "8px", boxShadow: "var(--shadow-md)" }}
