@@ -1,19 +1,18 @@
 import { NextResponse } from 'next/server';
-import { GoogleGenAI } from '@google/genai';
+import Groq from "groq-sdk";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { age_in_months, weight, height, health_status } = body;
 
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GROQ_API_KEY;
 
     // Jika user belum setup API key, berikan jawaban dummy simulasi AI
     if (!apiKey) {
-      // Delay to simulate AI thinking
       await new Promise(resolve => setTimeout(resolve, 2000));
       return NextResponse.json({
-        recommendation: `Data simulasi (Tambahkan GEMINI_API_KEY di .env.local untuk AI asli): Untuk anak usia ${age_in_months} bulan dengan status ${health_status}, fokus pada protein hewani dan zat besi.`,
+        recommendation: `Data simulasi (Tambahkan GROQ_API_KEY di .env.local untuk AI asli): Untuk anak usia ${age_in_months} bulan dengan status ${health_status}, fokus pada protein hewani dan zat besi.`,
         menu: [
           { time: "Pagi", meal: "Bubur Sup Daging Cincang + Wortel", nutrients: "Protein tinggi, Vitamin A" },
           { time: "Siang", meal: "Nasi Tim Hati Ayam + Brokoli", nutrients: "Zat besi, Folat" },
@@ -27,8 +26,8 @@ export async function POST(req: Request) {
       });
     }
 
-    // Call real Gemini API
-    const ai = new GoogleGenAI({ apiKey: apiKey });
+    // Call real Groq API
+    const groq = new Groq({ apiKey });
     
     const prompt = `
       Anda adalah dokter spesialis gizi anak. 
@@ -36,31 +35,36 @@ export async function POST(req: Request) {
       Saat ini berat badannya ${weight} kg dan tingginya ${height} cm.
       Status gizinya saat ini adalah: "${health_status}".
       
-      Harap kembalikan respon HANYA dalam format JSON dengan struktur persis seperti berikut tanpa markdown tambahan:
+      Harap kembalikan respon HANYA dalam format JSON (json_object) dengan struktur persis seperti berikut tanpa markdown tambahan:
       {
-        "recommendation": "Teks saran singkat untuk orang tua",
+        "recommendation": "Teks saran edukatif dan ramah singkat untuk orang tua",
         "menu": [
-          { "time": "Pagi", "meal": "Nama Makanan", "nutrients": "Kandungan gizi utamanya" },
-          { "time": "Siang", "meal": "Nama Makanan", "nutrients": "Kandungan gizi utamanya" },
-          { "time": "Malam", "meal": "Nama Makanan", "nutrients": "Kandungan gizi utamanya" }
+          { "time": "Pagi", "meal": "Nama Makanan Lengkap", "nutrients": "Kandungan gizi utamanya" },
+          { "time": "Siang", "meal": "Nama Makanan Lengkap", "nutrients": "Kandungan gizi utamanya" },
+          { "time": "Malam", "meal": "Nama Makanan Lengkap", "nutrients": "Kandungan gizi utamanya" }
         ],
         "dailyNeeds": {
-          "calories": "Target kalori harian",
+          "calories": "Target kalori harian (contoh: 800 kkal)",
           "protein": "Target protein",
           "iron": "Target zat besi"
         }
       }
     `;
 
-    const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      model: "llama3-70b-8192", // Llama 3 70B sangat cerdas dan cepat di Groq
+      response_format: { type: "json_object" }, // Memaksa model me-return strict JSON
     });
 
-    const text = response.text;
+    const text = chatCompletion.choices[0]?.message?.content || '{}';
     
     // Parse JSON
-    // Remove markdown code blocks if any
     const cleanJson = text?.replace(/```json/g, '').replace(/```/g, '').trim() || '{}';
     const result = JSON.parse(cleanJson);
 
@@ -68,6 +72,6 @@ export async function POST(req: Request) {
 
   } catch (error: any) {
     console.error("AI Error:", error);
-    return NextResponse.json({ error: 'Gagal mendapatkan rekomendasi AI' }, { status: 500 });
+    return NextResponse.json({ error: 'Gagal mendapatkan rekomendasi dari Groq AI' }, { status: 500 });
   }
 }

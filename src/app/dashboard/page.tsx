@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import GrowthChart from '@/components/GrowthChart';
+import { formatAge } from '@/utils/whoStandards';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function DashboardPage() {
   const [children, setChildren] = useState<any[]>([]);
   const [selectedChildId, setSelectedChildId] = useState<string | null>(null);
   const [chartData, setChartData] = useState<any[]>([]);
+  const [historyRecords, setHistoryRecords] = useState<any[]>([]);
   const [latestStatus, setLatestStatus] = useState<any>(null);
   const [reminders, setReminders] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -97,7 +99,11 @@ export default function DashboardPage() {
         .order('age_in_months', { ascending: true });
         
       if (growthData && growthData.length > 0) {
+          // Simpan data mentah terbalik untuk tabel (terbaru di atas)
+          setHistoryRecords([...growthData].reverse());
+
           const formattedData = growthData.map(record => ({
+            id: record.id,
             month: record.age_in_months,
             weight: record.weight,
             height: record.height,
@@ -115,6 +121,7 @@ export default function DashboardPage() {
           });
         } else {
           setChartData([]);
+          setHistoryRecords([]);
           setLatestStatus(null);
         }
     };
@@ -125,6 +132,29 @@ export default function DashboardPage() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push('/login');
+  };
+
+  const handleDeleteRecord = async (recordId: string) => {
+    const confirmDelete = window.confirm("Apakah Anda yakin ingin menghapus data pengukuran ini?");
+    if (!confirmDelete) return;
+
+    try {
+      const { error } = await supabase
+        .from('growth_records')
+        .delete()
+        .eq('id', recordId);
+
+      if (error) throw error;
+      
+      // Update UI langsung tanpa memuat ulang penuh
+      setHistoryRecords(prev => prev.filter(r => r.id !== recordId));
+      setChartData(prev => prev.filter(r => r.id !== recordId));
+      
+      // Agar status di atas ikut terupdate, kita load ulang halamannya secara cepat
+      window.location.reload();
+    } catch (err) {
+      alert("Gagal menghapus data");
+    }
   };
 
   if (loading) {
@@ -253,6 +283,44 @@ export default function DashboardPage() {
               <GrowthChart data={chartData} />
             )}
           </div>
+
+          {/* Tabel Riwayat Pengukuran */}
+          {historyRecords.length > 0 && (
+            <div className="bg-white rounded-xl p-6 border shadow-sm w-full print:hidden">
+              <h2 className="font-semibold text-gray-800 mb-4">Riwayat Pengukuran Detail</h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm text-gray-600">
+                  <thead className="bg-gray-50 border-b">
+                    <tr>
+                      <th className="p-3 font-semibold">Tanggal</th>
+                      <th className="p-3 font-semibold">Usia</th>
+                      <th className="p-3 font-semibold">Berat (kg)</th>
+                      <th className="p-3 font-semibold">Tinggi (cm)</th>
+                      <th className="p-3 font-semibold text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {historyRecords.map((record) => (
+                      <tr key={record.id} className="hover:bg-slate-50 transition-colors">
+                        <td className="p-3">{new Date(record.measurement_date).toLocaleDateString('id-ID')}</td>
+                        <td className="p-3">{formatAge(record.age_in_months)}</td>
+                        <td className="p-3">{record.weight}</td>
+                        <td className="p-3">{record.height}</td>
+                        <td className="p-3 flex justify-center gap-3">
+                          <button onClick={() => alert('Fitur Edit akan dialihkan ke form /add-data (segera hadir)')} className="text-indigo-500 hover:text-indigo-700 bg-indigo-50 px-2 py-1 rounded" title="Edit Data">
+                            ✏️ Edit
+                          </button>
+                          <button onClick={() => handleDeleteRecord(record.id)} className="text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded" title="Hapus Data">
+                            🗑️ Hapus
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
