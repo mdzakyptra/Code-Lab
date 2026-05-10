@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Save, ArrowLeft, PlusCircle, UserCheck } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { calculateZScore, determineStuntingStatus, determineWeightStatus } from "@/utils/whoStandards";
 
-export default function AddData() {
+function AddDataForm() {
   const router = useRouter();
-  
+  const searchParams = useSearchParams();
+  const editId = searchParams.get("edit");
+  const childIdParam = searchParams.get("child");
+
   // State user & children
   const [userId, setUserId] = useState<string | null>(null);
   const [existingChildren, setExistingChildren] = useState<any[]>([]);
@@ -26,6 +28,7 @@ export default function AddData() {
   const [height, setHeight] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,7 +39,6 @@ export default function AddData() {
       }
       setUserId(user.id);
 
-      // Ambil daftar anak yang sudah ada
       const { data: childrenData } = await supabase
         .from("children")
         .select("*")
@@ -46,11 +48,33 @@ export default function AddData() {
       if (childrenData && childrenData.length > 0) {
         setExistingChildren(childrenData);
         setIsNewChild(false);
-        setSelectedChildId(childrenData[0].id);
+        
+        if (childIdParam) {
+          setSelectedChildId(childIdParam);
+        } else {
+          setSelectedChildId(childrenData[0].id);
+        }
       }
+      
+      // Jika mode edit, ambil data pengukuran
+      if (editId) {
+        setIsNewChild(false);
+        const { data: recordData } = await supabase
+          .from("growth_records")
+          .select("*")
+          .eq("id", editId)
+          .single();
+          
+        if (recordData) {
+          setWeight(recordData.weight.toString());
+          setHeight(recordData.height.toString());
+        }
+      }
+      
+      setPageLoading(false);
     };
     fetchUserData();
-  }, [router]);
+  }, [router, editId, childIdParam]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +89,6 @@ export default function AddData() {
       let childGender = gender;
 
       if (isNewChild) {
-        // 1. Simpan Profil Anak Baru
         const { data: childData, error: childError } = await supabase
           .from("children")
           .insert({
@@ -84,43 +107,65 @@ export default function AddData() {
         const today = new Date();
         ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
       } else {
-        // Ambil data umur & gender anak lama
         const selectedChild = existingChildren.find(c => c.id === currentChildId);
         if (!selectedChild) throw new Error("Anak tidak ditemukan.");
-        
+
         childGender = selectedChild.gender;
         const birthDate = new Date(selectedChild.date_of_birth);
-        const today = new Date();
-        ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+        
+        if (editId) {
+            // Jika edit, hitung umur berdasarkan tanggal pengukuran asli jika memungkinkan
+            // Tapi untuk amannya kita pakai today()
+            const today = new Date();
+            ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+        } else {
+            const today = new Date();
+            ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+        }
       }
 
       ageInMonths = ageInMonths < 0 ? 0 : ageInMonths;
 
-      // Hitung Diagnosis Awal (Z-Score)
-      const wZScore = calculateZScore(childGender as "L"|"P", ageInMonths, parseFloat(weight), 'weight');
-      const hZScore = calculateZScore(childGender as "L"|"P", ageInMonths, parseFloat(height), 'height');
-      
+      const wZScore = calculateZScore(childGender as "L" | "P", ageInMonths, parseFloat(weight), 'weight');
+      const hZScore = calculateZScore(childGender as "L" | "P", ageInMonths, parseFloat(height), 'height');
+
       const stuntingStatus = determineStuntingStatus(hZScore).label;
       const weightStatus = determineWeightStatus(wZScore).label;
       const combinedStatus = `${stuntingStatus} & ${weightStatus}`;
 
-      // 2. Simpan Data Pengukuran beserta Hasil Diagnosis Z-Score
-      const { error: growthError } = await supabase
-        .from("growth_records")
-        .insert({
-          child_id: currentChildId,
-          measurement_date: new Date().toISOString().split('T')[0],
-          age_in_months: ageInMonths,
-          weight: parseFloat(weight),
-          height: parseFloat(height),
-          z_score_wfa: wZScore,
-          z_score_hfa: hZScore,
-          health_status: combinedStatus
-        });
+      if (editId) {
+        const { error: updateError } = await supabase
+          .from("growth_records")
+          .update({
+            weight: parseFloat(weight),
+            height: parseFloat(height),
+            z_score_wfa: wZScore,
+            z_score_hfa: hZScore,
+            health_status: combinedStatus,
+            age_in_months: ageInMonths // Update umur juga
+          })
+          .eq("id", editId);
 
-      if (growthError) throw growthError;
+        if (updateError) throw updateError;
+        alert("Data berhasil diperbarui!");
+      } else {
+        const { error: growthError } = await supabase
+          .from("growth_records")
+          .insert({
+            child_id: currentChildId,
+            measurement_date: new Date().toISOString().split('T')[0],
+            age_in_months: ageInMonths,
+            weight: parseFloat(weight),
+            height: parseFloat(height),
+            z_score_wfa: wZScore,
+            z_score_hfa: hZScore,
+            health_status: combinedStatus
+          });
 
-      alert("Data berhasil disimpan!");
+        if (growthError) throw growthError;
+        alert("Data berhasil disimpan!");
+      }
+
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message || "Gagal menyimpan data.");
@@ -129,101 +174,252 @@ export default function AddData() {
     }
   };
 
+  if (pageLoading) {
+    return <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito', sans-serif", fontSize: "1.2rem", fontWeight: 800 }}>Memuat lebah madu... 🐝</div>;
+  }
+
   return (
-    <div className="flex flex-col gap-6 max-w-3xl mx-auto p-4 md:p-8">
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard" className="btn btn-outline border border-gray-300 rounded p-2 hover:bg-gray-100">
-          <ArrowLeft size={20} />
-        </Link>
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800">Input Data Pertumbuhan</h2>
-          <p className="text-gray-500">Perbarui data ukur atau tambah profil baru</p>
-        </div>
-      </div>
-
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border p-6 flex flex-col gap-6">
-        {error && <div className="p-3 bg-red-100 text-red-700 rounded-lg text-sm">{error}</div>}
+    <>
+      <style>{`
+        .neo-container { max-width: 800px; margin: 0 auto; font-family: 'Nunito', sans-serif; }
         
-        {/* Tab Selection */}
-        <div className="flex gap-2 p-1 bg-gray-100 rounded-lg">
-          <button
-            type="button"
-            onClick={() => setIsNewChild(false)}
-            disabled={existingChildren.length === 0}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-colors ${
-              !isNewChild ? "bg-white shadow text-indigo-600" : "text-gray-500 hover:text-gray-700 disabled:opacity-40"
-            }`}
-          >
-            <UserCheck size={16} /> Lanjutkan Pengisian
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsNewChild(true)}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium rounded-md transition-colors ${
-              isNewChild ? "bg-white shadow text-indigo-600" : "text-gray-500 hover:text-gray-700"
-            }`}
-          >
-            <PlusCircle size={16} /> Tambah Anak Baru
-          </button>
+        .neo-header { background: #fff; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .neo-title { font-size: 2rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .neo-subtitle { font-size: 1rem; color: #5d4037; font-weight: 600; }
+        
+        .btn-back { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 2.5px solid #111; border-radius: 999px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; background: #FFFDE7; color: #111; box-shadow: 3px 3px 0 #111; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-back:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #111; }
+        
+        .alert-error { background: #ffcdd2; border: 3px solid #b71c1c; border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 4px 4px 0 #b71c1c; color: #b71c1c; }
+        .alert-error-title { font-weight: 900; font-size: 1.1rem; margin-bottom: 0.25rem; }
+        
+        .neo-card { background: #fff; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; }
+        .neo-card-title { font-size: 1.25rem; font-weight: 900; color: #111; margin-bottom: 0.25rem; }
+        .neo-card-desc { font-size: 0.95rem; color: #5d4037; font-weight: 600; margin-bottom: 1.5rem; }
+        
+        .neo-tabs { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .neo-tab { flex: 1; min-width: 200px; padding: 1rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; border: 3px solid #111; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #FFFDE7; color: #5d4037; box-shadow: 3px 3px 0 rgba(0,0,0,0.1); }
+        .neo-tab:hover:not(:disabled) { background: #FFD54F; }
+        .neo-tab.active { background: #FFC107; color: #111; box-shadow: 4px 4px 0 #111; transform: translate(-2px, -2px); }
+        .neo-tab:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .badge-count { background: #111; color: #FFC107; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 900; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+        @media(min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } .col-span-2 { grid-column: span 2; } }
+        
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .neo-label { font-size: 0.95rem; font-weight: 800; color: #111; }
+        
+        .neo-input { width: 100%; border: 3px solid #111; border-radius: 12px; padding: 0.875rem 1rem; font-size: 1rem; font-family: 'Nunito', sans-serif; font-weight: 700; color: #111; background: #fff; transition: box-shadow 0.2s, transform 0.2s; outline: none; }
+        .neo-input:focus { box-shadow: 4px 4px 0 #FFC107; transform: translate(-2px, -2px); }
+        .neo-input::placeholder { color: #9e9e9e; font-weight: 600; }
+        
+        .neo-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+        
+        .input-wrapper { position: relative; }
+        .input-addon { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem; font-weight: 900; color: #5d4037; }
+        
+        .info-box { background: #FFE082; border: 2.5px solid #111; border-radius: 12px; padding: 1.25rem; display: flex; gap: 1rem; align-items: flex-start; margin-top: 1.5rem; }
+        .info-box p { font-size: 0.9rem; font-weight: 700; color: #3e2723; margin: 0; }
+        
+        .form-actions { display: flex; gap: 1rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
+        .btn-cancel { padding: 0.875rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.05rem; border: 3px solid #111; border-radius: 999px; cursor: pointer; background: #FFFDE7; color: #111; text-decoration: none; }
+        .btn-cancel:hover { background: #FFD54F; }
+        
+        .btn-submit { padding: 0.875rem 2.5rem; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.05rem; border: 3px solid #111; border-radius: 999px; cursor: pointer; background: #111; color: #FFC107; box-shadow: 4px 4px 0 #FFC107; transition: transform 0.15s, box-shadow 0.15s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-submit:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #FFC107; }
+        .btn-submit:active:not(:disabled) { transform: translate(0, 0); box-shadow: 2px 2px 0 #FFC107; }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+      `}</style>
+
+      <div className="neo-container">
+        {/* Header */}
+        <div className="neo-header">
+          <div>
+            <h1 className="neo-title">✍️ Input Data</h1>
+            <p className="neo-subtitle">Perbarui data ukur atau tambahkan profil anak</p>
+          </div>
+          <Link href="/dashboard" className="btn-back">
+            ← Kembali
+          </Link>
         </div>
 
-        {/* Profil Anak Section */}
-        {isNewChild ? (
-          <div className="animate-fade-in">
-            <h3 className="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Profil Anak Baru</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-gray-700">Nama Anak</label>
-                <input type="text" className="rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="Contoh: Budi Santoso" value={childName} onChange={(e) => setChildName(e.target.value)} required={isNewChild} />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                <input type="date" className="rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required={isNewChild} />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                <select className="rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500 bg-white" value={gender} onChange={(e) => setGender(e.target.value)} required={isNewChild}>
-                  <option value="">Pilih Jenis Kelamin</option>
-                  <option value="L">Laki-laki</option>
-                  <option value="P">Perempuan</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="animate-fade-in">
-            <h3 className="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Pilih Anak</h3>
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-gray-700">Nama Anak yang Akan Diukur</label>
-              <select className="rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500 bg-white" value={selectedChildId} onChange={(e) => setSelectedChildId(e.target.value)} required={!isNewChild}>
-                {existingChildren.map(child => (
-                  <option key={child.id} value={child.id}>{child.full_name}</option>
-                ))}
-              </select>
+        {/* Error Banner */}
+        {error && (
+          <div className="alert-error animate-fade-in">
+            <span style={{ fontSize: '1.5rem' }}>⚠️</span>
+            <div>
+              <h3 className="alert-error-title">Terjadi Kesalahan</h3>
+              <p style={{ fontWeight: 600, fontSize: '0.95rem' }}>{error}</p>
             </div>
           </div>
         )}
 
-        <h3 className="text-lg font-bold text-gray-700 border-b pb-2 mt-4">Pengukuran Bulan Ini</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Berat Badan (kg)</label>
-            <input type="number" step="0.1" className="rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="Contoh: 7.5" value={weight} onChange={(e) => setWeight(e.target.value)} required />
+        <form onSubmit={handleSubmit}>
+
+          {/* Tab Selection */}
+          <div className="neo-card">
+            <h2 className="neo-card-title">Pilih Mode Input</h2>
+            <div className="neo-tabs" style={{ marginTop: '1.25rem' }}>
+              <button
+                type="button"
+                onClick={() => setIsNewChild(false)}
+                disabled={existingChildren.length === 0}
+                className={`neo-tab ${!isNewChild ? 'active' : ''}`}
+              >
+                👦 Lanjutkan Pengisian
+                {existingChildren.length > 0 && (
+                  <span className="badge-count">{existingChildren.length}</span>
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsNewChild(true)}
+                className={`neo-tab ${isNewChild ? 'active' : ''}`}
+              >
+                ➕ Tambah Anak Baru
+              </button>
+            </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-700">Tinggi Badan (cm)</label>
-            <input type="number" step="0.1" className="rounded border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="Contoh: 65.0" value={height} onChange={(e) => setHeight(e.target.value)} required />
+          {/* Profil Anak Section */}
+          <div className="neo-card animate-fade-in">
+            {isNewChild ? (
+              <>
+                <h2 className="neo-card-title">Profil Anak Baru</h2>
+                <p className="neo-card-desc">Isi data lengkap anak yang akan dipantau pertumbuhannya</p>
+                <div className="form-grid">
+                  <div className="form-group col-span-2">
+                    <label className="neo-label">Nama Lengkap Anak</label>
+                    <input
+                      type="text"
+                      className="neo-input"
+                      placeholder="Contoh: Budi Santoso"
+                      value={childName}
+                      onChange={(e) => setChildName(e.target.value)}
+                      required={isNewChild}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="neo-label">Tanggal Lahir</label>
+                    <input
+                      type="date"
+                      className="neo-input"
+                      value={dateOfBirth}
+                      onChange={(e) => setDateOfBirth(e.target.value)}
+                      required={isNewChild}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="neo-label">Jenis Kelamin</label>
+                    <select
+                      className="neo-input neo-select"
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                      required={isNewChild}
+                    >
+                      <option value="">Pilih Jenis Kelamin</option>
+                      <option value="L">Laki-laki</option>
+                      <option value="P">Perempuan</option>
+                    </select>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="neo-card-title">Pilih Anak</h2>
+                <p className="neo-card-desc">Pilih anak yang akan dicatat pengukurannya</p>
+                <div className="form-group">
+                  <label className="neo-label">Nama Anak yang Akan Diukur</label>
+                  <select
+                    className="neo-input neo-select"
+                    value={selectedChildId}
+                    onChange={(e) => setSelectedChildId(e.target.value)}
+                    required={!isNewChild}
+                  >
+                    {existingChildren.map(child => (
+                      <option key={child.id} value={child.id}>{child.full_name}</option>
+                    ))}
+                  </select>
+                </div>
+              </>
+            )}
           </div>
-        </div>
 
-        <div className="flex justify-end mt-6">
-          <button type="submit" disabled={loading} className="flex items-center gap-2 bg-indigo-600 text-white rounded-lg px-6 py-3 font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors">
-            <Save size={20} />
-            {loading ? "Menyimpan..." : "Simpan Data & Analisis"}
-          </button>
-        </div>
-      </form>
-    </div>
+          {/* Pengukuran Section */}
+          <div className="neo-card">
+            <h2 className="neo-card-title">Data Pengukuran</h2>
+            <p className="neo-card-desc">Masukkan hasil pengukuran tubuh anak saat ini</p>
+            <div className="form-grid">
+              <div className="form-group">
+                <label className="neo-label">Berat Badan (kg)</label>
+                <div className="input-wrapper">
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    className="neo-input"
+                    placeholder="Contoh: 7.5"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    required
+                  />
+                  <span className="input-addon">kg</span>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="neo-label">Tinggi Badan (cm)</label>
+                <div className="input-wrapper">
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    className="neo-input"
+                    placeholder="Contoh: 65.0"
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                    required
+                  />
+                  <span className="input-addon">cm</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Info Box */}
+            <div className="info-box">
+              <span style={{ fontSize: '1.5rem' }}>💡</span>
+              <div>
+                <strong style={{ display: 'block', marginBottom: '0.25rem', color: '#111' }}>Tips Pengukuran</strong>
+                <p>Ukur berat dan tinggi badan anak di pagi hari sebelum makan untuk hasil yang akurat. Gunakan timbangan dan alat ukur standar!</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="form-actions">
+            <Link href="/dashboard" className="btn-cancel">
+              Batal
+            </Link>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-submit"
+            >
+              {loading ? 'Menyimpan... 🐝' : 'Simpan Data & Analisis 🚀'}
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </>
+  );
+}
+
+export default function AddData() {
+  return (
+    <Suspense fallback={<div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito', sans-serif", fontSize: "1.2rem", fontWeight: 800 }}>Memuat lebah madu... 🐝</div>}>
+      <AddDataForm />
+    </Suspense>
   );
 }

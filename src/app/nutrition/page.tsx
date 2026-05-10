@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Sparkles, Utensils, AlertCircle } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 
 export default function NutritionPage() {
@@ -16,6 +15,7 @@ export default function NutritionPage() {
   const [aiData, setAiData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -32,6 +32,7 @@ export default function NutritionPage() {
         setChildren(childrenData);
         setSelectedChildId(childrenData[0].id);
       }
+      setPageLoading(false);
     };
     fetchUserData();
   }, [router]);
@@ -89,94 +90,169 @@ export default function NutritionPage() {
     }
   };
 
+  if (pageLoading) {
+    return <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito', sans-serif", fontSize: "1.2rem", fontWeight: 800 }}>Memuat lebah madu... 🐝</div>;
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <Link href="/dashboard" className="btn btn-outline bg-white border border-gray-300 rounded p-2 hover:bg-gray-100">
-            <ArrowLeft size={20} />
-          </Link>
+    <>
+      <style>{`
+        .neo-container { max-width: 1000px; margin: 0 auto; font-family: 'Nunito', sans-serif; }
+        
+        .neo-header { background: #fff; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+        .neo-title { font-size: 2rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .neo-subtitle { font-size: 1rem; color: #5d4037; font-weight: 600; }
+        
+        .btn-back { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 2.5px solid #111; border-radius: 999px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; background: #FFFDE7; color: #111; box-shadow: 3px 3px 0 #111; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-back:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #111; }
+
+        .child-select-card { background: #FFE082; border: 3px solid #111; border-radius: 16px; padding: 1.5rem; box-shadow: 4px 4px 0 #111; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .child-select-label { font-size: 1.1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
+        .child-select { appearance: none; background-color: #fff; border: 3px solid #111; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; box-shadow: 4px 4px 0 #111; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: transform 0.1s, box-shadow 0.1s; width: 100%; max-width: 400px; }
+        .child-select:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #111; }
+        .child-select:focus { outline: none; border-color: #FF8F00; }
+
+        .neo-card { background: #fff; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; }
+        .neo-card-title { font-size: 1.25rem; font-weight: 900; color: #111; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        .alert-error { background: #ffcdd2; border: 3px solid #b71c1c; border-radius: 12px; padding: 1.25rem; margin-top: 1rem; margin-bottom: 1rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 4px 4px 0 #b71c1c; color: #b71c1c; }
+        
+        .status-box-wrap { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .status-box { background: #FFFDE7; border: 2.5px solid #111; border-radius: 12px; padding: 1rem 1.5rem; flex: 1; min-width: 200px; }
+        .status-label { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5d4037; display: block; margin-bottom: 0.25rem; }
+        .status-val { font-size: 1.25rem; font-weight: 900; color: #111; display: block; }
+        .status-pill { display: inline-block; background: #fff; border: 2px solid #111; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 1rem; margin-top: 0.25rem; box-shadow: 2px 2px 0 #111; }
+
+        .btn-ai-submit { width: 100%; padding: 1rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.15rem; border: 3px solid #111; border-radius: 16px; cursor: pointer; background: #FFC107; color: #111; box-shadow: 4px 4px 0 #111; transition: transform 0.15s, box-shadow 0.15s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-ai-submit:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #111; background: #FFD54F; }
+        .btn-ai-submit:active:not(:disabled) { transform: translate(0, 0); box-shadow: 2px 2px 0 #111; }
+        .btn-ai-submit:disabled { opacity: 0.7; cursor: not-allowed; background: #FFE082; box-shadow: 2px 2px 0 #111; transform: translate(2px, 2px); }
+
+        .ai-result-card { background: #FFFDE7; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; }
+        .ai-result-text { font-size: 1.05rem; font-weight: 600; color: #3e2723; line-height: 1.6; white-space: pre-wrap; }
+
+        .targets-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+        @media(min-width: 768px) { .targets-grid { grid-template-columns: repeat(3, 1fr); } }
+        .target-box { background: #fff; border: 2.5px solid #111; border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: 3px 3px 0 #111; }
+        .target-box p:first-child { font-size: 0.9rem; font-weight: 800; color: #5d4037; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .target-box p:last-child { font-size: 1.5rem; font-weight: 900; color: #111; }
+
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media(min-width: 768px) { .menu-grid { grid-template-columns: repeat(3, 1fr); } }
+        .menu-card { background: #fff; border: 3px solid #111; border-radius: 16px; padding: 1.5rem; position: relative; box-shadow: 5px 5px 0 #111; transition: transform 0.2s; }
+        .menu-card:hover { transform: translateY(-4px); box-shadow: 5px 9px 0 #111; }
+        .menu-time { position: absolute; top: 0; right: 0; background: #FFC107; border-bottom: 3px solid #111; border-left: 3px solid #111; border-top-right-radius: 13px; border-bottom-left-radius: 12px; padding: 0.4rem 0.8rem; font-weight: 900; font-size: 0.85rem; color: #111; }
+        .menu-title { font-size: 1.25rem; font-weight: 900; color: #111; margin-top: 0.5rem; margin-bottom: 1rem; padding-right: 3.5rem; }
+        .menu-nutrients { display: inline-block; background: #FFFDE7; border: 2px solid #111; border-radius: 8px; padding: 0.4rem 0.75rem; font-size: 0.85rem; font-weight: 800; color: #5d4037; }
+      `}</style>
+
+      <div className="neo-container">
+        {/* Header */}
+        <div className="neo-header">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              <Sparkles className="text-amber-500" /> AI Rekomendasi Nutrisi
-            </h1>
-            <p className="text-gray-500 text-sm">Resep dan panduan makanan khusus sesuai status gizi anak</p>
+            <h1 className="neo-title">✨ AI Rekomendasi Nutrisi</h1>
+            <p className="neo-subtitle">Resep dan panduan makanan khusus sesuai status gizi anak</p>
           </div>
+          <Link href="/dashboard" className="btn-back">
+            ← Kembali
+          </Link>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
-            <h2 className="font-semibold text-gray-800">Pilih Anak</h2>
-            {children.length > 0 && (
-              <select 
-                className="rounded border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 bg-white min-w-[200px]"
-                value={selectedChildId}
-                onChange={(e) => setSelectedChildId(e.target.value)}
-              >
-                {children.map(child => (
-                  <option key={child.id} value={child.id}>{child.full_name}</option>
-                ))}
-              </select>
-            )}
+        {/* Child Selector */}
+        {children.length > 0 && (
+          <div className="child-select-card animate-fade-in">
+            <label className="child-select-label">
+              <span>👶</span> Pilih Anak:
+            </label>
+            <select 
+              className="child-select"
+              value={selectedChildId}
+              onChange={(e) => setSelectedChildId(e.target.value)}
+            >
+              {children.map(child => (
+                <option key={child.id} value={child.id}>{child.full_name}</option>
+              ))}
+            </select>
           </div>
+        )}
 
+        {/* Content Section */}
+        <div className="neo-card">
           {!latestRecord ? (
-            <div className="text-center p-6 bg-gray-50 rounded-lg text-gray-500 text-sm border border-dashed">
-              Belum ada data pengukuran anak ini. Silakan kembali ke Dashboard dan tambah data terlebih dahulu.
+            <div style={{ textAlign: 'center', padding: '3rem 1rem', background: '#FFFDE7', border: '3px dashed #111', borderRadius: '16px', fontWeight: 800, color: '#5d4037' }}>
+              Belum ada data pengukuran untuk anak ini. Silakan kembali ke Dashboard dan tambah data terlebih dahulu. 🍯
             </div>
           ) : (
-            <div className="bg-indigo-50 rounded-lg p-4 flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="text-sm text-indigo-900">
-                <p>Usia: <strong>{latestRecord.age_in_months >= 12 ? `${Math.floor(latestRecord.age_in_months / 12)} Tahun ${latestRecord.age_in_months % 12 !== 0 ? (latestRecord.age_in_months % 12) + " Bulan" : ""}` : `${latestRecord.age_in_months} Bulan`}</strong></p>
-                <p>Status Saat Ini: <strong className="bg-white px-2 py-1 rounded ml-1 border">{latestRecord.health_status}</strong></p>
+            <div className="animate-fade-in">
+              <h2 className="neo-card-title" style={{ marginBottom: '1.5rem' }}>📊 Profil Anak Saat Ini</h2>
+              
+              <div className="status-box-wrap">
+                <div className="status-box">
+                  <span className="status-label">Usia</span>
+                  <span className="status-val">
+                    {latestRecord.age_in_months >= 12 
+                      ? `${Math.floor(latestRecord.age_in_months / 12)} Tahun ${latestRecord.age_in_months % 12 !== 0 ? (latestRecord.age_in_months % 12) + " Bulan" : ""}` 
+                      : `${latestRecord.age_in_months} Bulan`}
+                  </span>
+                </div>
+                <div className="status-box" style={{ background: '#FFE082' }}>
+                  <span className="status-label">Status Gizi</span>
+                  <span className="status-pill">{latestRecord.health_status}</span>
+                </div>
               </div>
+
               <button 
                 onClick={getRecommendation}
                 disabled={loading}
-                className="w-full md:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50"
+                className="btn-ai-submit"
               >
-                {loading ? "AI Sedang Berpikir..." : <><Sparkles size={18} /> Buat Resep dengan AI</>}
+                {loading ? "AI Sedang Menganalisis... 🐝" : "✨ Buat Resep dengan AI"}
               </button>
+
+              {error && (
+                <div className="alert-error">
+                  <span style={{ fontSize: '1.5rem' }}>⚠️</span>
+                  <div>
+                    <h3 style={{ fontWeight: 900, marginBottom: '0.25rem', color: '#b71c1c' }}>Gagal</h3>
+                    <p style={{ fontWeight: 600 }}>{error}</p>
+                  </div>
+                </div>
+              )}
             </div>
           )}
-          {error && <p className="mt-4 text-sm text-red-600 flex items-center gap-1"><AlertCircle size={16}/> {error}</p>}
         </div>
 
-        {/* Hasil AI */}
+        {/* AI Result */}
         {aiData && (
-          <div className="animate-fade-in space-y-6">
-            <div className="bg-white rounded-xl shadow-sm border p-6 border-l-4 border-l-amber-500">
-              <h3 className="font-bold text-gray-800 mb-2">💡 Saran Dokter AI</h3>
-              <p className="text-gray-600 leading-relaxed">{aiData.recommendation}</p>
+          <div className="animate-fade-in">
+            <div className="ai-result-card">
+              <h2 className="neo-card-title" style={{ fontSize: '1.5rem' }}>💡 Saran Dokter AI</h2>
+              <p className="ai-result-text">{aiData.recommendation}</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white rounded-xl shadow-sm border p-4 text-center">
-                <p className="text-sm text-gray-500">Target Kalori Harian</p>
-                <p className="text-xl font-bold text-indigo-600 mt-1">{aiData.dailyNeeds?.calories || "-"}</p>
+            <h2 className="neo-card-title" style={{ marginTop: '3rem', marginBottom: '1.5rem' }}>🎯 Target Harian</h2>
+            <div className="targets-grid">
+              <div className="target-box" style={{ background: '#FFFDE7' }}>
+                <p>Kalori</p>
+                <p>{aiData.dailyNeeds?.calories || "-"}</p>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border p-4 text-center">
-                <p className="text-sm text-gray-500">Target Protein</p>
-                <p className="text-xl font-bold text-emerald-600 mt-1">{aiData.dailyNeeds?.protein || "-"}</p>
+              <div className="target-box" style={{ background: '#e8f5e9' }}>
+                <p>Protein</p>
+                <p>{aiData.dailyNeeds?.protein || "-"}</p>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border p-4 text-center">
-                <p className="text-sm text-gray-500">Target Zat Besi</p>
-                <p className="text-xl font-bold text-rose-600 mt-1">{aiData.dailyNeeds?.iron || "-"}</p>
+              <div className="target-box" style={{ background: '#ffebee' }}>
+                <p>Zat Besi</p>
+                <p>{aiData.dailyNeeds?.iron || "-"}</p>
               </div>
             </div>
 
-            <h3 className="font-bold text-xl text-gray-800 flex items-center gap-2 mt-8 mb-4">
-              <Utensils className="text-gray-500" /> Contoh Menu Harian
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <h2 className="neo-card-title" style={{ marginTop: '3rem', marginBottom: '1.5rem' }}>🍽️ Contoh Menu Harian</h2>
+            <div className="menu-grid">
               {aiData.menu?.map((m: any, i: number) => (
-                <div key={i} className="bg-white rounded-xl shadow-sm border p-5 hover:shadow-md transition-shadow relative overflow-hidden">
-                  <div className="absolute top-0 right-0 bg-slate-100 text-slate-500 text-xs font-bold px-3 py-1 rounded-bl-lg">
-                    {m.time}
-                  </div>
-                  <h4 className="font-bold text-gray-800 text-lg mt-3 mb-2 pr-10">{m.meal}</h4>
-                  <div className="inline-block bg-emerald-50 text-emerald-700 text-xs px-2 py-1 rounded border border-emerald-100">
+                <div key={i} className="menu-card">
+                  <div className="menu-time">{m.time}</div>
+                  <h4 className="menu-title">{m.meal}</h4>
+                  <div className="menu-nutrients">
                     Kaya akan: {m.nutrients}
                   </div>
                 </div>
@@ -185,6 +261,6 @@ export default function NutritionPage() {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }

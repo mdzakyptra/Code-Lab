@@ -30,7 +30,6 @@ export default function DashboardPage() {
 
       setUser(session.user);
 
-      // Ambil data profil
       const { data: profileData } = await supabase
         .from('profiles')
         .select('*')
@@ -41,7 +40,6 @@ export default function DashboardPage() {
         setProfile(profileData);
       }
       
-      // Ambil semua data anak milik user ini
       const { data: childrenData } = await supabase
         .from('children')
         .select('*')
@@ -50,9 +48,8 @@ export default function DashboardPage() {
 
       if (childrenData && childrenData.length > 0) {
         setChildren(childrenData);
-        setSelectedChildId(childrenData[0].id); // Pilih anak pertama secara default
+        setSelectedChildId(childrenData[0].id);
 
-        // Cek Reminder Bulanan
         const newReminders: string[] = [];
         for (const child of childrenData) {
           const { data: latestRecord } = await supabase
@@ -69,12 +66,10 @@ export default function DashboardPage() {
             const diffTime = Math.abs(today.getTime() - lastDate.getTime());
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
-            // Jika lewat dari 30 hari, berikan peringatan
             if (diffDays >= 30) {
               newReminders.push(`Waktunya timbang! Sudah ${diffDays} hari sejak pengukuran terakhir ${child.full_name}.`);
             }
           } else {
-            // Jika baru daftar dan belum ada data record sama sekali
             newReminders.push(`Belum ada data awal pertumbuhan untuk ${child.full_name}. Yuk, isi sekarang!`);
           }
         }
@@ -87,7 +82,6 @@ export default function DashboardPage() {
     checkUser();
   }, [router]);
 
-  // Effect terpisah khusus untuk mengambil data grafik setiap kali pilihan anak diubah
   useEffect(() => {
     if (!selectedChildId) return;
 
@@ -99,7 +93,6 @@ export default function DashboardPage() {
         .order('age_in_months', { ascending: true });
         
       if (growthData && growthData.length > 0) {
-          // Simpan data mentah terbalik untuk tabel (terbaru di atas)
           setHistoryRecords([...growthData].reverse());
 
           const formattedData = growthData.map(record => ({
@@ -112,7 +105,6 @@ export default function DashboardPage() {
           }));
           setChartData(formattedData);
 
-          // Data terbaru adalah data terakhir di array (karena di-sort ASC)
           const latest = growthData[growthData.length - 1];
           setLatestStatus({
             status: latest.health_status,
@@ -146,183 +138,243 @@ export default function DashboardPage() {
 
       if (error) throw error;
       
-      // Update UI langsung tanpa memuat ulang penuh
       setHistoryRecords(prev => prev.filter(r => r.id !== recordId));
       setChartData(prev => prev.filter(r => r.id !== recordId));
       
-      // Agar status di atas ikut terupdate, kita load ulang halamannya secara cepat
       window.location.reload();
-    } catch (err) {
-      alert("Gagal menghapus data");
+    } catch (err: any) {
+      alert("Gagal menghapus data: " + (err.message || "Kesalahan tak dikenal"));
+      console.error("Delete Error:", err);
     }
   };
 
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center">Memuat...</div>;
+    return <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito', sans-serif", fontSize: "1.2rem", fontWeight: 800 }}>Memuat lebah madu... 🐝</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 print:p-0 print:bg-white">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-sm p-8 print:shadow-none print:p-0">
+    <>
+      <style>{`
+        .dash-container { max-width: 1000px; margin: 0 auto; font-family: 'Nunito', sans-serif; }
+        
+        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
+        .dash-title { font-size: 2.5rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.5rem; }
+        .dash-subtitle { font-size: 1.1rem; color: #5d4037; font-weight: 600; }
+        
+        .dash-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-neo { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 2.5px solid #111; border-radius: 999px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-neo:hover { transform: translate(-2px, -2px); }
+        .btn-print { background: #fff; color: #111; box-shadow: 3px 3px 0 #111; }
+        .btn-print:hover { box-shadow: 5px 5px 0 #111; }
+        .btn-ai { background: #FFC107; color: #111; box-shadow: 3px 3px 0 #5d4037; }
+        .btn-ai:hover { box-shadow: 5px 5px 0 #5d4037; }
+        .btn-add { background: #111; color: #FFC107; box-shadow: 3px 3px 0 #5d4037; }
+        .btn-add:hover { box-shadow: 5px 5px 0 #5d4037; }
+        .btn-logout { background: #ffcdd2; color: #b71c1c; box-shadow: 3px 3px 0 #111; }
+        .btn-logout:hover { box-shadow: 5px 5px 0 #111; }
+
+        .child-select-card { background: #FFE082; border: 3px solid #111; border-radius: 16px; padding: 1.25rem; box-shadow: 4px 4px 0 #111; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .child-select-label { font-size: 1.1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
+        .child-select { appearance: none; background-color: #fff; border: 3px solid #111; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; box-shadow: 4px 4px 0 #111; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: transform 0.1s, box-shadow 0.1s; width: 100%; max-width: 400px; }
+        .child-select:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #111; }
+        .child-select:focus { outline: none; border-color: #FF8F00; }
+
+        .neo-card { background: #fff; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .neo-card-title { font-size: 1.5rem; font-weight: 900; color: #111; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        .alert-box { background: #FFE082; border: 3px solid #111; border-radius: 16px; padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 4px 4px 0 #5d4037; margin-bottom: 2rem; }
+        .alert-danger { background: #ffcdd2; box-shadow: 4px 4px 0 #b71c1c; }
+        .alert-title { font-weight: 900; font-size: 1.1rem; color: #111; margin-bottom: 0.25rem; }
+        .alert-text { font-size: 0.95rem; color: #3e2723; font-weight: 600; }
+
+        .status-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        @media(min-width: 768px) { .status-grid { grid-template-columns: 1.5fr 1fr; } }
+        
+        .status-box { background: #FFFDE7; border: 2.5px solid #111; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: center; }
+        .status-label { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5d4037; margin-bottom: 0.5rem; }
+        .status-value { font-size: 1.5rem; font-weight: 900; color: #111; }
+
+        .chart-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+
+        .neo-table-wrapper { border: 3px solid #111; border-radius: 16px; overflow: hidden; box-shadow: 5px 5px 0 #111; }
+        .neo-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .neo-table th { background: #FFC107; padding: 1rem; font-weight: 900; color: #111; border-bottom: 3px solid #111; border-right: 2px solid #111; }
+        .neo-table th:last-child { border-right: none; }
+        .neo-table td { background: #fff; padding: 1rem; font-weight: 700; color: #3e2723; border-bottom: 2px solid #111; border-right: 2px solid #111; }
+        .neo-table td:last-child { border-right: none; }
+        .neo-table tr:last-child td { border-bottom: none; }
+        .neo-table tr:hover td { background: #FFFDE7; }
+        
+        .action-btns { display: flex; gap: 0.5rem; justify-content: center; }
+        .btn-mini { padding: 0.4rem 0.8rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.85rem; border: 2px solid #111; border-radius: 8px; cursor: pointer; transition: transform 0.1s; }
+        .btn-mini:hover { transform: translate(-2px, -2px); }
+        .btn-mini-edit { background: #FFFDE7; color: #111; }
+        .btn-mini-del { background: #ffcdd2; color: #111; }
+
+        @media print {
+          .print-hidden, .neo-nav { display: none !important; }
+          .neo-card { box-shadow: none; border: 1px solid #ccc; padding: 1rem; }
+          .print-header { display: block !important; text-align: center; margin-bottom: 2rem; }
+        }
+        .print-header { display: none; }
+      `}</style>
+
+      <div className="dash-container">
         
         {/* Header khusus saat dicetak ke PDF */}
-        <div className="hidden print:block text-center mb-8 border-b pb-4">
-          <h1 className="text-2xl font-bold text-gray-900">Laporan Pemantauan Pertumbuhan Anak</h1>
-          <p className="text-gray-500">Sistem Deteksi Dini Stunting</p>
-          <p className="text-sm text-gray-400 mt-2">Dicetak pada: {new Date().toLocaleDateString('id-ID')}</p>
+        <div className="print-header">
+          <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '0.5rem' }}>Laporan Pemantauan Pertumbuhan Anak</h1>
+          <p>Sistem Deteksi Dini Stunting GrowB</p>
+          <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Dicetak pada: {new Date().toLocaleDateString('id-ID')}</p>
         </div>
 
-        <div className="flex justify-between items-center mb-8 border-b pb-4 print:hidden">
+        <div className="dash-header print-hidden">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-            <p className="text-gray-500">Selamat datang kembali, {profile?.full_name || user?.email}!</p>
+            <h1 className="dash-title">Dashboard 🐝</h1>
+            <p className="dash-subtitle">Halo Bunda {profile?.full_name || user?.email}!</p>
           </div>
-          <div className="flex flex-wrap gap-3 justify-end">
-            <button 
-              onClick={() => window.print()}
-              className="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2"
-            >
-              🖨️ Cetak PDF
-            </button>
-            <Link 
-              href="/nutrition"
-              className="px-4 py-2 text-sm font-medium text-amber-700 bg-amber-100 rounded-lg hover:bg-amber-200 transition-colors flex items-center gap-1"
-            >
-              ✨ Tanya AI Nutrisi
-            </Link>
-            <Link 
-              href="/add-data"
-              className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
-            >
-              + Tambah Data
-            </Link>
-            <button 
-              onClick={handleLogout}
-              className="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
-            >
-              Keluar
-            </button>
+          <div className="dash-actions">
+            <button onClick={() => window.print()} className="btn-neo btn-print">🖨️ Cetak PDF</button>
+            <Link href="/nutrition" className="btn-neo btn-ai">✨ Tanya AI Nutrisi</Link>
+            <Link href="/add-data" className="btn-neo btn-add">+ Tambah Data</Link>
+            <button onClick={handleLogout} className="btn-neo btn-logout">Keluar</button>
           </div>
         </div>
 
         {/* Tampilkan Notifikasi Reminder Bulanan */}
         {reminders.length > 0 && (
-          <div className="mb-8 space-y-3 print:hidden">
+          <div className="print-hidden">
             {reminders.map((msg, idx) => (
-              <div key={idx} className="bg-amber-50 border-l-4 border-amber-500 text-amber-800 p-4 rounded-r-lg flex items-start gap-3 shadow-sm animate-fade-in">
-                <span className="text-xl mt-0.5">🔔</span>
+              <div key={idx} className="alert-box animate-fade-in">
+                <span style={{ fontSize: '2rem' }}>🔔</span>
                 <div>
-                  <h3 className="font-bold text-amber-900 mb-1">Pengingat Jadwal Posyandu/Mandiri</h3>
-                  <p className="text-sm">{msg}</p>
+                  <h3 className="alert-title">Waktunya Timbang!</h3>
+                  <p className="alert-text">{msg}</p>
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-6">
-          <div className="bg-indigo-50 rounded-xl p-6 border border-indigo-100">
-            <h2 className="font-semibold text-indigo-900 mb-1">Informasi Akun</h2>
-            <p className="text-sm text-indigo-800">{user?.email} &bull; {profile?.role === 'kader_kesehatan' ? 'Kader Kesehatan' : 'Orang Tua'}</p>
+        {/* CHILD SELECTOR DROPDOWN */}
+        {children.length > 0 && (
+          <div className="child-select-card print-hidden animate-fade-in">
+            <label className="child-select-label">
+              <span>👶</span> Pilih Anak untuk Dipantau:
+            </label>
+            <select 
+              className="child-select"
+              value={selectedChildId || ''}
+              onChange={(e) => setSelectedChildId(e.target.value)}
+            >
+              {children.map(child => (
+                <option key={child.id} value={child.id}>{child.full_name}</option>
+              ))}
+            </select>
           </div>
-          
+        )}
+
+        <div className="status-grid">
           {latestStatus && latestStatus.status && (
-            <div className="bg-white rounded-xl p-6 border shadow-sm w-full animate-fade-in">
-              <h2 className="font-semibold text-gray-800 mb-4">Diagnosis Awal (Status Gizi Saat Ini)</h2>
-              <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                  <p className="text-sm text-gray-500 mb-1">Status berdasarkan Standar WHO (Z-Score)</p>
-                  <p className="font-bold text-lg text-slate-800">{latestStatus.status}</p>
+            <div className="neo-card animate-fade-in" style={{ marginBottom: 0 }}>
+              <h2 className="neo-card-title">🩺 Status Gizi Saat Ini</h2>
+              
+              <div className="status-box" style={{ marginBottom: '1rem', background: '#FFC107' }}>
+                <span className="status-label">Kondisi (Z-Score WHO)</span>
+                <span className="status-value">{latestStatus.status}</span>
+              </div>
+              
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <div className="status-box" style={{ flex: 1 }}>
+                  <span className="status-label">TB/U (Tinggi)</span>
+                  <span className="status-value" style={{ fontSize: '1.25rem' }}>{latestStatus.zScoreHFA}</span>
                 </div>
-                <div className="text-sm bg-white p-3 rounded border text-gray-600">
-                  <p>TB/U (Tinggi): <span className="font-semibold text-gray-900">{latestStatus.zScoreHFA}</span></p>
-                  <p>BB/U (Berat): <span className="font-semibold text-gray-900">{latestStatus.zScoreWFA}</span></p>
+                <div className="status-box" style={{ flex: 1 }}>
+                  <span className="status-label">BB/U (Berat)</span>
+                  <span className="status-value" style={{ fontSize: '1.25rem' }}>{latestStatus.zScoreWFA}</span>
                 </div>
               </div>
 
               {(latestStatus.zScoreHFA < -2 || latestStatus.zScoreWFA < -2) && (
-                <div className="mt-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-800 rounded-r-md text-sm flex gap-3">
-                  <span className="text-xl">⚠️</span>
+                <div className="alert-box alert-danger" style={{ marginTop: '1.5rem', marginBottom: 0, padding: '1rem' }}>
+                  <span style={{ fontSize: '1.5rem' }}>⚠️</span>
                   <div>
-                    <strong className="block mb-1">Peringatan Dini (Early Warning)</strong>
-                    Status gizi anak terdeteksi berada di bawah standar. Sangat disarankan untuk segera melakukan konsultasi dengan Puskesmas atau Dokter Spesialis Anak untuk penanganan lebih lanjut.
+                    <h3 className="alert-title">Peringatan Dini!</h3>
+                    <p className="alert-text">Status gizi anak di bawah standar. Segera konsultasikan ke Posyandu atau Dokter Spesialis Anak.</p>
                   </div>
                 </div>
               )}
             </div>
           )}
 
-          <div className="bg-white rounded-xl p-6 border shadow-sm w-full overflow-hidden print:border-none print:shadow-none print:p-0">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 print:mb-2">
-              <h2 className="font-semibold text-gray-800">Grafik Pertumbuhan Anak</h2>
-              
-              {children.length > 0 && (
-                <div className="print:hidden">
-                  <select 
-                    className="rounded border border-gray-300 px-3 py-1.5 text-sm focus:ring-2 focus:ring-indigo-500 bg-white min-w-[200px]"
-                    value={selectedChildId || ''}
-                    onChange={(e) => setSelectedChildId(e.target.value)}
-                  >
-                    {children.map(child => (
-                      <option key={child.id} value={child.id}>{child.full_name}</option>
-                    ))}
-                  </select>
-                </div>
-              )}
-              {/* Teks label nama anak saat di PDF agar jelas grafik siapa */}
-              <div className="hidden print:block font-bold text-indigo-700">
-                Nama Anak: {children.find(c => c.id === selectedChildId)?.full_name}
-              </div>
+          <div className="neo-card" style={{ marginBottom: 0, background: '#FFC107', borderColor: '#111' }}>
+            <h2 className="neo-card-title">👤 Info Akun</h2>
+            <div className="status-box" style={{ marginBottom: '1rem', background: '#fff' }}>
+              <span className="status-label">Email Terdaftar</span>
+              <span className="status-value" style={{ fontSize: '1.1rem' }}>{user?.email}</span>
             </div>
-            
-            {children.length === 0 ? (
-              <div className="text-center py-10 text-gray-500 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-                Belum ada profil anak. Silakan klik + Tambah Data.
-              </div>
-            ) : (
-              <GrowthChart data={chartData} />
-            )}
+            <div className="status-box" style={{ background: '#fff' }}>
+              <span className="status-label">Peran</span>
+              <span className="status-value" style={{ fontSize: '1.1rem' }}>{profile?.role === 'kader_kesehatan' ? 'Kader Kesehatan' : 'Orang Tua'}</span>
+            </div>
           </div>
+        </div>
 
-          {/* Tabel Riwayat Pengukuran */}
-          {historyRecords.length > 0 && (
-            <div className="bg-white rounded-xl p-6 border shadow-sm w-full print:hidden">
-              <h2 className="font-semibold text-gray-800 mb-4">Riwayat Pengukuran Detail</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-gray-600">
-                  <thead className="bg-gray-50 border-b">
-                    <tr>
-                      <th className="p-3 font-semibold">Tanggal</th>
-                      <th className="p-3 font-semibold">Usia</th>
-                      <th className="p-3 font-semibold">Berat (kg)</th>
-                      <th className="p-3 font-semibold">Tinggi (cm)</th>
-                      <th className="p-3 font-semibold text-center">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y">
-                    {historyRecords.map((record) => (
-                      <tr key={record.id} className="hover:bg-slate-50 transition-colors">
-                        <td className="p-3">{new Date(record.measurement_date).toLocaleDateString('id-ID')}</td>
-                        <td className="p-3">{formatAge(record.age_in_months)}</td>
-                        <td className="p-3">{record.weight}</td>
-                        <td className="p-3">{record.height}</td>
-                        <td className="p-3 flex justify-center gap-3">
-                          <button onClick={() => alert('Fitur Edit akan dialihkan ke form /add-data (segera hadir)')} className="text-indigo-500 hover:text-indigo-700 bg-indigo-50 px-2 py-1 rounded" title="Edit Data">
-                            ✏️ Edit
-                          </button>
-                          <button onClick={() => handleDeleteRecord(record.id)} className="text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded" title="Hapus Data">
-                            🗑️ Hapus
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+        <div className="neo-card print-visible">
+          <div className="chart-header">
+            <h2 className="neo-card-title" style={{ marginBottom: 0 }}>📈 Grafik Pertumbuhan</h2>
+            
+            <div style={{ display: 'none' }} className="print-header">
+              <strong style={{ fontSize: '1.25rem' }}>Nama Anak: {children.find(c => c.id === selectedChildId)?.full_name}</strong>
+            </div>
+          </div>
+          
+          {children.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFDE7', border: '3px dashed #111', borderRadius: '16px', fontWeight: 800, color: '#5d4037' }}>
+              Belum ada profil anak. Silakan klik + Tambah Data. 🍯
+            </div>
+          ) : (
+            <div style={{ background: '#fff', border: '2.5px solid #111', borderRadius: '12px', padding: '1rem' }}>
+              <GrowthChart data={chartData} />
             </div>
           )}
         </div>
+
+        {historyRecords.length > 0 && (
+          <div className="neo-card print-hidden">
+            <h2 className="neo-card-title">📋 Riwayat Pengukuran</h2>
+            <div className="neo-table-wrapper">
+              <table className="neo-table">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Usia</th>
+                    <th>Berat (kg)</th>
+                    <th>Tinggi (cm)</th>
+                    <th style={{ textAlign: 'center' }}>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {historyRecords.map((record) => (
+                    <tr key={record.id}>
+                      <td>{new Date(record.measurement_date).toLocaleDateString('id-ID')}</td>
+                      <td>{formatAge(record.age_in_months)}</td>
+                      <td>{record.weight}</td>
+                      <td>{record.height}</td>
+                      <td>
+                        <div className="action-btns">
+                          <button onClick={() => router.push(`/add-data?edit=${record.id}&child=${selectedChildId}`)} className="btn-mini btn-mini-edit" title="Edit">✏️</button>
+                          <button onClick={() => handleDeleteRecord(record.id)} className="btn-mini btn-mini-del" title="Hapus">🗑️</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 }
