@@ -17,27 +17,29 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           position: sticky;
           top: 0;
           z-index: 100;
-          background: #FFC107;
+          background: #FFD54F;
           border-bottom: 3px solid #111;
-          padding: 0.875rem 2rem;
+          padding: 1rem 2.5rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
           font-family: 'Nunito', sans-serif;
         }
         .neo-logo {
-          font-size: 1.625rem;
+          font-size: 1.9rem;
           font-weight: 900;
           color: #111;
           text-decoration: none;
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
         }
         .neo-links {
           display: flex;
           align-items: center;
-          gap: 1.5rem;
+          gap: 2rem;
+          min-width: 320px;
+          justify-content: flex-end;
         }
         .neo-links a {
           font-size: 0.9375rem;

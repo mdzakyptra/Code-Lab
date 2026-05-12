@@ -11,14 +11,22 @@ export default function HomePage() {
         .hp{font-family:'Nunito',sans-serif;background:#FFFDE7;overflow-x:hidden;}
 
         /* NAV */
-        .hp-nav-wrap{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;justify-content:center;padding:1.5rem 2rem 0;pointer-events:none;}
-        .hp-nav{background:#fff;border:3px solid #111;border-radius:20px;padding:.75rem 2.5rem;display:flex;align-items:center;justify-content:space-between;pointer-events:auto;width:100%;max-width:1100px;}
-        .hp-logo{font-size:1.625rem;font-weight:900;color:#111;text-decoration:none;display:flex;align-items:center;gap:8px;}
-        .hp-links{display:flex;align-items:center;gap:1.5rem;}
-        .hp-links a{font-size:.9375rem;font-weight:700;color:#111;text-decoration:none;}
-        .hp-links a:hover{text-decoration:underline;}
-        .hp-cta-nav{background:#111;color:#FDBC15;padding:.6rem 1.5rem;border-radius:999px;font-weight:800;font-size:.9375rem;text-decoration:none;border:2.5px solid #111;box-shadow:3px 3px 0 #5d4037;transition:transform .15s,box-shadow .15s;display:inline-block;}
-        .hp-cta-nav:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 #5d4037;}
+        .hp-nav-wrap{position:fixed;top:0;left:0;width:100%;z-index:100;background:#FDBC15;height:80px;display:flex;justify-content:center;border-bottom:none;}
+        .hp-nav{width:100%;max-width:1200px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:100%;background:#FDBC15;}
+        .hp-logo{font-size:2rem;font-weight:900;text-decoration:none;display:flex;align-items:center;letter-spacing:-.04em;}
+        .hp-logo .part1{color:#FF4C00;}
+        .hp-logo .part2{color:#6C4EE5;}
+        
+        .hp-nav-right{display:flex;align-items:center;gap:1rem;}
+        
+        .hp-nav-pill{background:#fff;border-radius:999px;padding:0.55rem 1.5rem;display:flex;align-items:center;gap:1.5rem;box-shadow:0 4px 12px rgba(0,0,0,0.06);}
+        .hp-nav-pill a{font-size:.95rem;font-weight:800;color:#111;text-decoration:none;transition:color 0.2s;}
+        .hp-nav-pill a:hover{color:#FF4C00;}
+        
+        .hp-login-btn{background:#FF4C00;color:#fff;padding:.6rem 1.75rem;border-radius:999px;font-weight:900;font-size:.95rem;text-decoration:none;box-shadow:0 4px 10px rgba(255,76,0,0.3);transition:transform .15s,box-shadow .15s;display:inline-block;}
+        .hp-login-btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(255,76,0,0.4);}
+        
+        html { scroll-behavior: smooth; }
 
         /* HERO */
         /* HERO */
@@ -241,12 +249,16 @@ export default function HomePage() {
         {/* NAV */}
         <div className="hp-nav-wrap">
           <nav className="hp-nav">
-            <Link href="/" className="hp-logo">🐝 GrowB</Link>
-            <div className="hp-links">
-              <a href="/dashboard">Dashboard</a>
-              <a href="/add-data">Input Data</a>
-              <a href="/nutrition">Nutrisi</a>
-              <Link href="/register" className="hp-cta-nav">Daftar Gratis</Link>
+            <Link href="/" className="hp-logo">
+              <span className="part1">grow</span><span className="part2">b</span>
+            </Link>
+            <div className="hp-nav-right">
+              <div className="hp-nav-pill">
+                <a href="#features">Feature</a>
+                <a href="#how-to-use">How to Use</a>
+                <a href="#about-us">About Us</a>
+              </div>
+              <Link href="/login" className="hp-login-btn">Login</Link>
             </div>
           </nav>
         </div>
@@ -364,7 +376,7 @@ export default function HomePage() {
         </section>
 
        {/* FEATURES */}
-<section className="hp-features">
+<section className="hp-features" id="features">
   <div className="hp-fhead">
 
     {/* Letter images dari public */}
@@ -407,8 +419,8 @@ export default function HomePage() {
           </ScrollStack>
         </section>
 
-        {/* CTA */}
-        <section className="hp-cta">
+        {/* CTA / HOW TO USE */}
+        <section className="hp-cta" id="how-to-use">
           <div style={{fontSize:"3.5rem",marginBottom:"1rem"}}>🐝🍯</div>
           <h2>Yuk, Mulai Jaga Pertumbuhan<br/>Si Buah Hati!</h2>
           <p>Gratis, mudah, dan manis seperti madu — dirancang untuk orang tua & kader Posyandu Indonesia.</p>
@@ -419,8 +431,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* FOOTER */}
-        <footer className="hp-footer">
+        {/* FOOTER / ABOUT US */}
+        <footer className="hp-footer" id="about-us">
           <p>© {new Date().getFullYear()} <strong>GrowB 🐝</strong> — Platform Deteksi Dini Stunting Anak Indonesia</p>
           <p style={{marginTop:".4rem"}}>Dibuat dengan ❤️ dan 🍯 untuk masa depan anak yang lebih sehat</p>
         </footer>
