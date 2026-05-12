@@ -11,30 +11,171 @@ export default function HomePage() {
         .hp{font-family:'Nunito',sans-serif;background:#FFFDE7;overflow-x:hidden;}
 
         /* NAV */
-        .hp-nav{position:sticky;top:0;z-index:100;background:#FFC107;border-bottom:3px solid #111;padding:.875rem 2rem;display:flex;align-items:center;justify-content:space-between;}
+        .hp-nav-wrap{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;justify-content:center;padding:1.5rem 2rem 0;pointer-events:none;}
+        .hp-nav{background:#fff;border:3px solid #111;border-radius:20px;padding:.75rem 2.5rem;display:flex;align-items:center;justify-content:space-between;pointer-events:auto;width:100%;max-width:1100px;}
         .hp-logo{font-size:1.625rem;font-weight:900;color:#111;text-decoration:none;display:flex;align-items:center;gap:8px;}
         .hp-links{display:flex;align-items:center;gap:1.5rem;}
         .hp-links a{font-size:.9375rem;font-weight:700;color:#111;text-decoration:none;}
         .hp-links a:hover{text-decoration:underline;}
-        .hp-cta-nav{background:#111;color:#FFC107;padding:.6rem 1.5rem;border-radius:999px;font-weight:800;font-size:.9375rem;text-decoration:none;border:2.5px solid #111;box-shadow:3px 3px 0 #5d4037;transition:transform .15s,box-shadow .15s;display:inline-block;}
+        .hp-cta-nav{background:#111;color:#FDBC15;padding:.6rem 1.5rem;border-radius:999px;font-weight:800;font-size:.9375rem;text-decoration:none;border:2.5px solid #111;box-shadow:3px 3px 0 #5d4037;transition:transform .15s,box-shadow .15s;display:inline-block;}
         .hp-cta-nav:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 #5d4037;}
 
         /* HERO */
-        .hp-hero{background:#FFC107;position:relative;overflow:hidden;min-height:88vh;display:flex;align-items:center;padding:4rem 2rem 2rem;border-bottom:4px solid #111;}
-        .hp-hero-content{position:relative;z-index:2;max-width:560px;}
-        .hp-badge{display:inline-block;background:#111;color:#FFC107;border-radius:999px;padding:5px 18px;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.5rem;box-shadow:3px 3px 0 #5d4037;animation:bobBadge 2.2s ease-in-out infinite;}
-        @keyframes bobBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-        .hp-hero h1{font-size:clamp(2.75rem,6vw,4.5rem);font-weight:900;color:#111;line-height:1.05;letter-spacing:-.02em;margin-bottom:1.25rem;}
-        .hp-hero h1 em{font-style:normal;color:#fff;text-shadow:2px 2px 0 #111;}
-        .hp-hero p{font-size:1.1rem;color:#4a3000;line-height:1.7;margin-bottom:2rem;max-width:440px;}
-        .btn-y{background:#111;color:#FFC107;padding:.875rem 2rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;text-decoration:none;border:2.5px solid #111;box-shadow:4px 4px 0 #5d4037;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:6px;}
-        .btn-y:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #5d4037;}
-        .btn-w{background:#fff;color:#111;padding:.875rem 2rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;text-decoration:none;border:2.5px solid #111;box-shadow:4px 4px 0 #5d4037;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:6px;}
-        .btn-w:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #5d4037;}
-        .hp-hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+        /* HERO */
+        .hp-hero{background:#FFFDE7;padding:0;display:flex;justify-content:center;}
+        .hp-hero-card{background:#FDBC15;border-radius:0;position:relative;width:100%;max-width:none;display:flex;flex-direction:column;align-items:center;min-height:100vh;overflow:hidden;box-shadow:none;}
+        .hp-hero-bg{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
+        .hp-hero-content{max-width:800px;text-align:center;padding:8rem 2rem 2rem;z-index:10;position:relative;margin-top:2rem;}
+        .hp-hero h1{font-size:clamp(3rem,6vw,4.5rem);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.02em;margin-bottom:1.5rem;text-shadow:0 4px 12px rgba(0,0,0,0.1);}
+        .hp-hero h1 span{color:#FFFDE7;}
+        .hp-hero p{font-size:1.25rem;color:#fff;line-height:1.6;margin:0 auto 2.5rem;max-width:600px;font-weight:700;}
+        .hp-hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+        
+        .btn-primary{background:#fff;color:#FDBC15;padding:1rem 2.5rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.1rem;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,0.1);transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;}
+        .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:0 12px 24px rgba(0,0,0,0.15);}
+        .btn-secondary{background:rgba(255,255,255,0.2);color:#fff;padding:1rem 2.5rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.1rem;text-decoration:none;backdrop-filter:blur(4px);transition:background .15s;display:inline-flex;align-items:center;}
+        .btn-secondary:hover{background:rgba(255,255,255,0.3);}
 
-        /* Honeycomb bg */
-        .hive-bg{position:absolute;inset:0;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V18L28 2l28 16v32z' fill='none' stroke='%23111' stroke-width='2'/%3E%3Cpath d='M28 100L0 84V52l28-16 28 16v32z' fill='none' stroke='%23111' stroke-width='2'/%3E%3Cpath d='M56 66L28 50V18L56 2' fill='none' stroke='%23111' stroke-width='2'/%3E%3C/svg%3E");pointer-events:none;}
+        .hp-hero-bottom{width:100%;flex:1;position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:300px;z-index:5;}
+        
+        .speech-bubble {
+          position: absolute;
+          background: #fff;
+          border-radius: 24px 24px 24px 6px;
+          padding: 1rem 1.5rem;
+          font-weight: 800;
+          font-size: 1.25rem;
+          color: #FDBC15;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          bottom: 250px; right: 15%;
+          animation: floatSpeech 3s ease-in-out infinite;
+          z-index: 20;
+        }
+        @keyframes floatSpeech {
+          0%, 100% { transform: translateY(0) rotate(2deg); }
+          50% { transform: translateY(-10px) rotate(-2deg); }
+        }
+        
+        .anim-bubble {
+          position: absolute;
+          background: rgba(255,255,255,0.5);
+          border-radius: 50%;
+          animation: floatUp 5s linear infinite;
+          bottom: -50px;
+        }
+        @keyframes floatUp {
+          0% { transform: translateY(0) scale(0.8); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-400px) scale(1.2); opacity: 0; }
+        }
+        .bub-1 { left: 10%; width: 40px; height: 40px; animation-duration: 6s; animation-delay: 0s; }
+        .bub-2 { left: 25%; width: 60px; height: 60px; animation-duration: 5s; animation-delay: 1s; }
+        .bub-3 { left: 40%; width: 30px; height: 30px; animation-duration: 7s; animation-delay: 2s; }
+        .bub-4 { right: 30%; width: 50px; height: 50px; animation-duration: 6.5s; animation-delay: 0.5s; }
+        .bub-5 { right: 15%; width: 45px; height: 45px; animation-duration: 5.5s; animation-delay: 1.5s; }
+        .bub-6 { left: 5%; width: 20px; height: 20px; animation-duration: 4s; animation-delay: 0.2s; }
+        .bub-7 { left: 18%; width: 35px; height: 35px; animation-duration: 6.2s; animation-delay: 1.2s; }
+        .bub-8 { left: 32%; width: 50px; height: 50px; animation-duration: 5.8s; animation-delay: 0.8s; }
+        .bub-9 { left: 55%; width: 25px; height: 25px; animation-duration: 4.5s; animation-delay: 2.5s; }
+        .bub-10 { left: 68%; width: 45px; height: 45px; animation-duration: 7.2s; animation-delay: 0.3s; }
+        .bub-11 { right: 8%; width: 30px; height: 30px; animation-duration: 5.1s; animation-delay: 1.7s; }
+        .bub-12 { right: 22%; width: 55px; height: 55px; animation-duration: 6.8s; animation-delay: 0.9s; }
+        .bub-13 { right: 45%; width: 20px; height: 20px; animation-duration: 4.8s; animation-delay: 2.1s; }
+        .bub-14 { left: 50%; width: 40px; height: 40px; animation-duration: 6s; animation-delay: 1.4s; }
+        .bub-15 { right: 38%; width: 25px; height: 25px; animation-duration: 5.5s; animation-delay: 0.6s; }
+
+        /* ANIMATIONS (Maxima Style) */
+        @keyframes popIn {
+          0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes floatSmooth {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-12px); }
+        }
+        @keyframes swayPlant {
+          0%, 100% { transform: rotate(0deg); }
+          50% { transform: rotate(5deg); }
+        }
+        @keyframes flyBee {
+          0%, 100% { transform: translate(100px, 150px) scale(0.6) rotate(-10deg); }
+          50% { transform: translate(100px, 135px) scale(0.6) rotate(-14deg); }
+        }
+        @keyframes drawCurve {
+          0% { stroke-dashoffset: 400; }
+          100% { stroke-dashoffset: 0; }
+        }
+
+        .anim-pop { opacity: 0; }
+        .hp-ready .anim-pop { animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .hp-ready .hp-hero-illustration svg { animation: popIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; opacity: 0; animation-delay: 0.4s; }
+        
+        .hp-ready .cloud-1 { animation: floatSmooth 4s ease-in-out infinite; }
+        .hp-ready .cloud-2 { animation: floatSmooth 5s ease-in-out infinite 1s; }
+        
+        .hp-ready .plant-1 { transform-origin: center 350px; animation: swayPlant 3s ease-in-out infinite; }
+        .hp-ready .plant-2 { transform-origin: center 360px; animation: swayPlant 4s ease-in-out infinite 0.5s; }
+        .hp-ready .plant-3 { transform-origin: center 350px; animation: swayPlant 3.5s ease-in-out infinite 1s; }
+        
+        .hp-ready .anim-bee { animation: flyBee 3s ease-in-out infinite; }
+        .hp-ready .anim-curve { stroke-dasharray: 400; stroke-dashoffset: 400; animation: drawCurve 1.5s ease-out forwards 0.8s; }
+        .hp-ready .anim-honey { animation: floatSmooth 3s ease-in-out infinite; }
+
+        /* SPLASH SCREEN */
+        .splash-wrap {
+          position: fixed; inset: 0; z-index: 9999;
+          background: #FFF8E7;
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .splash-wrap.fading { opacity: 0; transform: scale(0.6); pointer-events: none; }
+        .splash-wrap.hidden { display: none; }
+
+        .hp {
+          transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+          transform-origin: center 20vh;
+        }
+        .hp.hp-zoomed { transform: scale(1.15); opacity: 0; pointer-events: none; }
+        .hp.hp-ready { transform: scale(1); opacity: 1; pointer-events: auto; }
+        
+        .splash-text-svg { width: 400px; height: 120px; overflow: visible; }
+        .splash-text {
+          font-family: 'Nunito', sans-serif;
+          font-weight: 900;
+          font-size: 5.5rem;
+          fill: transparent;
+          stroke: #111;
+          stroke-width: 3.5;
+          stroke-dasharray: 600;
+          stroke-dashoffset: 600;
+          animation: drawSplashText 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards, fillSplashText 0.5s ease-out 1.2s forwards, popBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s forwards;
+          transform-origin: center;
+        }
+        @keyframes drawSplashText { 100% { stroke-dashoffset: 0; } }
+        @keyframes fillSplashText { 100% { fill: #FDBC15; } }
+        @keyframes popBounce {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.15); }
+          100% { transform: scale(1); }
+        }
+
+        .splash-bee {
+          position: absolute;
+          top: 50%; left: 50%;
+          width: 80px; height: 80px;
+          margin-top: -80px; margin-left: -180px;
+          opacity: 0;
+          animation: splashBeeFly 2s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+        }
+        @keyframes splashBeeFly {
+          0% { opacity: 0; transform: translate(-100px, 100px) scale(0.5) rotate(-30deg); }
+          20% { opacity: 1; }
+          100% { opacity: 1; transform: translate(140px, -60px) scale(1.2) rotate(10deg); }
+        }
 
         /* STATS */
         .hp-stats{background:#FFE082;border-top:3px solid #111;border-bottom:3px solid #111;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;}
@@ -43,139 +184,225 @@ export default function HomePage() {
 
         /* FEATURES */
         .hp-features{background:#FFFDE7;border-bottom:3px solid #111;}
-        .hp-fhead{text-align:center;padding:4rem 2rem 2rem;}
-        .hp-tag{display:inline-block;background:#111;color:#FFC107;padding:4px 14px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;}
+        .hp-fhead{text-align:center;padding:2rem 2rem 4rem;}
+        .hp-tag{display:inline-block;background:#111;color:#FDBC15;padding:4px 14px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;}
         .hp-fhead h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;color:#111;letter-spacing:-.03em;line-height:1.15;margin-bottom:.75rem;}
         .hp-fhead p{color:#6d4c00;font-size:1rem;max-width:460px;margin:0 auto;line-height:1.65;}
 
-        .feat-stack .scroll-stack-card{height:auto;min-height:19rem;border:3px solid #111!important;border-radius:28px!important;display:flex;flex-direction:column;justify-content:space-between;box-shadow:6px 6px 0 #111!important;}
+        .feat-stack .scroll-stack-card {
+          width: 100%;
+          height: auto;
+          min-height: 24rem;
+          border-radius: 24px!important;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 2.5rem;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
 
-        .fc-tag{display:inline-flex;align-items:center;padding:3px 12px;border-radius:999px;background:rgba(0,0,0,.15);border:1.5px solid rgba(0,0,0,.25);font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#111;width:fit-content;margin-bottom:1rem;}
-        .fc-icon{font-size:2.75rem;line-height:1;margin-bottom:.75rem;}
-        .fc-title{font-size:1.625rem;font-weight:900;color:#111;letter-spacing:-.02em;line-height:1.15;margin-bottom:.75rem;}
-        .fc-desc{font-size:.9375rem;color:#111;line-height:1.65;flex:1;opacity:.85;}
-        .fc-dots{display:flex;gap:6px;margin-top:1.5rem;}
-        .fc-dot{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.2);border:1.5px solid rgba(0,0,0,.3);}
-        .fc-dot.on{background:#111;}
-        .cc1{background:#FFC107!important;}
-        .cc2{background:#FFD54F!important;}
-        .cc3{background:#FFB300!important;}
-        .cc4{background:#FF8F00!important;}
+        .fc-tag{display:inline-flex;align-items:center;padding:6px 16px;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0.9;}
+        .fc-icon{font-size:5rem;line-height:1;margin-bottom:1.5rem;}
+        .fc-title{font-size:2rem;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:1rem;}
+        .fc-desc{font-size:1.1rem;line-height:1.6;max-width:400px;opacity:.9;}
+        
+        .fc-dots{display:none;} /* Hid dots to match minimalist flip flop design */
+        
+        .cc1{background:#2a9d8f!important;color:#fff;}
+        .cc1 .fc-tag{background:rgba(255,255,255,0.2);color:#fff;}
+        .cc1 .fc-title, .cc1 .fc-desc{color:#fff;}
+        
+        .cc2{background:#2A5FE3!important;color:#fff;}
+        .cc2 .fc-tag{background:rgba(255,255,255,0.2);color:#fff;}
+        .cc2 .fc-title, .cc2 .fc-desc{color:#fff;}
+        
+        .cc3{background:#fff!important;color:#111;}
+        .cc3 .fc-tag{background:rgba(0,0,0,0.1);color:#111;}
+        .cc3 .fc-title, .cc3 .fc-desc{color:#111;}
+        
+        .cc4{background:#9D1A2E!important;color:#fff;}
+        .cc4 .fc-tag{background:rgba(255,255,255,0.2);color:#fff;}
+        .cc4 .fc-title, .cc4 .fc-desc{color:#fff;}
 
         /* CTA */
         .hp-cta{background:#111;padding:5rem 2rem;text-align:center;position:relative;overflow:hidden;}
-        .hp-cta h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;color:#FFC107;letter-spacing:-.02em;margin-bottom:1rem;}
+        .hp-cta h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;color:#FDBC15;letter-spacing:-.02em;margin-bottom:1rem;}
         .hp-cta p{color:rgba(255,255,255,.75);font-size:1rem;max-width:460px;margin:0 auto 2rem;line-height:1.65;}
-        .btn-cta{background:#FFC107;color:#111;padding:1rem 2.5rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.0625rem;text-decoration:none;border:2.5px solid #FFC107;box-shadow:5px 5px 0 #FF8F00;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px;}
+        .btn-cta{background:#FDBC15;color:#111;padding:1rem 2.5rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.0625rem;text-decoration:none;border:2.5px solid #FDBC15;box-shadow:5px 5px 0 #FF8F00;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px;}
         .btn-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #FF8F00;}
 
         /* FOOTER */
-        .hp-footer{background:#111;border-top:3px solid #FFC107;color:rgba(255,255,255,.45);padding:2rem;text-align:center;font-size:.8125rem;}
-        .hp-footer strong{color:#FFC107;}
+        .hp-footer{background:#111;border-top:3px solid #FDBC15;color:rgba(255,255,255,.45);padding:2rem;text-align:center;font-size:.8125rem;}
+        .hp-footer strong{color:#FDBC15;}
       `}</style>
-
-      <div className="hp">
+      <div className="hp hp-ready">
         {/* NAV */}
-        <nav className="hp-nav">
-          <Link href="/" className="hp-logo">🐝 GrowB</Link>
-          <div className="hp-links">
-            <a href="/dashboard">Dashboard</a>
-            <a href="/add-data">Input Data</a>
-            <a href="/nutrition">Nutrisi</a>
-            <Link href="/register" className="hp-cta-nav">Daftar Gratis</Link>
-          </div>
-        </nav>
+        <div className="hp-nav-wrap">
+          <nav className="hp-nav">
+            <Link href="/" className="hp-logo">🐝 GrowB</Link>
+            <div className="hp-links">
+              <a href="/dashboard">Dashboard</a>
+              <a href="/add-data">Input Data</a>
+              <a href="/nutrition">Nutrisi</a>
+              <Link href="/register" className="hp-cta-nav">Daftar Gratis</Link>
+            </div>
+          </nav>
+        </div>
 
         {/* HERO */}
         <section className="hp-hero">
-          <div className="hive-bg"/>
-          <div className="hp-hero-content">
-            <div className="hp-badge">🏥 Berbasis Standar WHO 2024</div>
-            <h1>Pantau Tumbuh<br/>Kembang Si Kecil,<br/><em>Lebih Mudah!</em></h1>
-            <p>Platform cerdas deteksi dini stunting & pemantauan gizi anak. Seperti lebah yang rajin menjaga sarangnya, kami menjaga pertumbuhan si buah hati 🐝</p>
-            <div className="hp-hero-btns">
-              <Link href="/register" className="btn-y">Mulai Sekarang 🚀</Link>
-              <Link href="/login" className="btn-w">Sudah Punya Akun</Link>
+          <div className="hp-hero-card">
+            
+            {/* Wavy Background inside the card */}
+            <svg className="hp-hero-bg" preserveAspectRatio="none" viewBox="0 0 1440 800">
+              <path d="M0 0 H1440 V500 Q1080 650 720 450 T0 600 Z" fill="#FFC107" />
+              <path d="M0 0 H1440 V300 Q1080 450 720 250 T0 400 Z" fill="#FFD54F" />
+            </svg>
+
+            <div className="hp-hero-content">
+              <h1 className="anim-pop delay-1">Pantau Tumbuh <span>Kembang</span> Anak Jadi Lebih Mudah</h1>
+              <p className="anim-pop delay-2">Deteksi dini, rekomendasi gizi, dan pantau pertumbuhan anak setiap saat bersama GrowB!</p>
+              <div className="hp-hero-btns anim-pop delay-3">
+                <Link href="/register" className="btn-primary">Mulai Sekarang</Link>
+                <Link href="#features" className="btn-secondary">Pelajari Lebih Lanjut</Link>
+              </div>
+            </div>
+
+            <div className="hp-hero-bottom">
+              {/* Bubbles */}
+              <div className="anim-bubble bub-1"></div>
+              <div className="anim-bubble bub-2"></div>
+              <div className="anim-bubble bub-3"></div>
+              <div className="anim-bubble bub-4"></div>
+              <div className="anim-bubble bub-5"></div>
+              <div className="anim-bubble bub-6"></div>
+              <div className="anim-bubble bub-7"></div>
+              <div className="anim-bubble bub-8"></div>
+              <div className="anim-bubble bub-9"></div>
+              <div className="anim-bubble bub-10"></div>
+              <div className="anim-bubble bub-11"></div>
+              <div className="anim-bubble bub-12"></div>
+              <div className="anim-bubble bub-13"></div>
+              <div className="anim-bubble bub-14"></div>
+              <div className="anim-bubble bub-15"></div>
+
+              {/* Speech Bubble */}
+              <div className="speech-bubble delay-3">
+                Tumbuh sehat, <br/>anak kuat! 💪
+              </div>
+
+              {/* Kids holding hands & Seamless Mountain SVG */}
+              <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice" style={{width:"100%",height:"100%",maxHeight:"400px",position:"absolute",bottom:0,zIndex:10}}>
+                <g transform="translate(600, 200)">
+                  {/* Kid 1 (Left) */}
+                  <g transform="translate(-150, 60)">
+                    {/* Left Arm raised */}
+                    <path d="M-20 60 Q-60 0 -80 -20" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round"/>
+                    {/* Right Arm to center kid */}
+                    <path d="M20 60 Q60 50 80 10" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round"/>
+                    
+                    {/* Body */}
+                    <path d="M-30 60 Q0 40 30 60 L35 150 L-35 150 Z" fill="#EF476F"/>
+                    {/* Head */}
+                    <circle cx="0" cy="15" r="35" fill="#FFCCBC"/>
+                    {/* Hair */}
+                    <path d="M-40 20 Q-20 -20 0 -25 Q20 -20 40 20 Q30 -40 0 -45 Q-30 -40 -40 20 Z" fill="#FFD166"/>
+                    {/* Face */}
+                    <circle cx="-10" cy="15" r="3" fill="#4A342E"/>
+                    <circle cx="10" cy="15" r="3" fill="#4A342E"/>
+                    <path d="M-8 28 Q0 38 8 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round"/>
+                  </g>
+
+                  {/* Kid 3 (Right) */}
+                  <g transform="translate(150, 60)">
+                    {/* Right Arm raised */}
+                    <path d="M20 60 Q60 0 80 -20" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round"/>
+                    {/* Left Arm to center kid */}
+                    <path d="M-20 60 Q-60 50 -80 10" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round"/>
+                    
+                    {/* Body */}
+                    <path d="M-30 60 Q0 40 30 60 L35 150 L-35 150 Z" fill="#06D6A0"/>
+                    {/* Head */}
+                    <circle cx="0" cy="15" r="35" fill="#FFCCBC"/>
+                    {/* Hair */}
+                    <path d="M-35 10 Q-30 -30 0 -35 Q30 -30 35 10 Q20 -20 0 -20 Q-20 -20 -35 10 Z" fill="#2B2B2B"/>
+                    {/* Face */}
+                    <circle cx="-10" cy="15" r="3" fill="#4A342E"/>
+                    <circle cx="10" cy="15" r="3" fill="#4A342E"/>
+                    <path d="M-8 28 Q0 38 8 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round"/>
+                  </g>
+
+                  {/* Kid 2 (Center) */}
+                  <g transform="translate(0, 30)">
+                    {/* Arms holding the others (Front arms, so lighter skin) */}
+                    <path d="M-25 70 Q-70 70 -90 40" fill="none" stroke="#FFCCBC" strokeWidth="18" strokeLinecap="round"/>
+                    <path d="M25 70 Q70 70 90 40" fill="none" stroke="#FFCCBC" strokeWidth="18" strokeLinecap="round"/>
+
+                    {/* Body */}
+                    <path d="M-30 60 Q0 40 30 60 L35 160 L-35 160 Z" fill="#118AB2"/>
+                    {/* Head */}
+                    <circle cx="0" cy="15" r="38" fill="#FFCCBC"/>
+                    {/* Hair */}
+                    <path d="M-40 20 Q-20 -25 0 -30 Q20 -25 40 20 Q30 -45 0 -50 Q-30 -45 -40 20 Z" fill="#5D4037"/>
+                    {/* Face */}
+                    <circle cx="-12" cy="12" r="4" fill="#4A342E"/>
+                    <circle cx="12" cy="12" r="4" fill="#4A342E"/>
+                    <path d="M-10 28 Q0 42 10 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round"/>
+                  </g>
+                </g>
+
+                {/* Seamless Mountain Shape */}
+                <path d="M-400 400 Q 600 180 1600 400 Z" fill="#FFFDE7"/>
+                {/* Clean cover at very bottom to ensure no gaps */}
+                <rect x="-400" y="395" width="2000" height="20" fill="#FFFDE7"/>
+              </svg>
+
             </div>
           </div>
-
-          {/* Bee SVG art */}
-          <svg style={{position:"absolute",right:"5%",bottom:"5%",width:"420px",height:"420px",zIndex:2,pointerEvents:"none"}} viewBox="0 0 420 420">
-            {/* Honeycomb cells */}
-            {[[210,80],[160,108],[260,108],[135,150],[210,150],[285,150],[160,192],[260,192]].map(([cx,cy],i)=>(
-              <polygon key={i} points={`${cx},${cy-28} ${cx+24},${cy-14} ${cx+24},${cy+14} ${cx},${cy+28} ${cx-24},${cy+14} ${cx-24},${cy-14}`} fill={i%2===0?"#FFD54F":"#FFC107"} stroke="#111" strokeWidth="2"/>
-            ))}
-            {/* Big bee body */}
-            <ellipse cx="210" cy="300" rx="55" ry="75" fill="#FFC107" stroke="#111" strokeWidth="3"/>
-            <rect x="155" y="260" width="110" height="20" rx="10" fill="#111"/>
-            <rect x="155" y="300" width="110" height="20" rx="10" fill="#111"/>
-            <rect x="155" y="340" width="110" height="18" rx="9" fill="#111"/>
-            {/* Wings */}
-            <ellipse cx="155" cy="275" rx="48" ry="28" fill="rgba(255,255,255,0.7)" stroke="#111" strokeWidth="2" transform="rotate(-20 155 275)"/>
-            <ellipse cx="265" cy="275" rx="48" ry="28" fill="rgba(255,255,255,0.7)" stroke="#111" strokeWidth="2" transform="rotate(20 265 275)"/>
-            {/* Head */}
-            <circle cx="210" cy="225" r="38" fill="#FFC107" stroke="#111" strokeWidth="3"/>
-            <circle cx="196" cy="218" r="8" fill="#111"/>
-            <circle cx="224" cy="218" r="8" fill="#111"/>
-            <circle cx="198" cy="216" r="3" fill="#fff"/>
-            <circle cx="226" cy="216" r="3" fill="#fff"/>
-            <path d="M196 235 Q210 246 224 235" fill="none" stroke="#111" strokeWidth="2.5" strokeLinecap="round"/>
-            {/* Antennae */}
-            <line x1="200" y1="188" x2="185" y2="165" stroke="#111" strokeWidth="2.5" strokeLinecap="round"/>
-            <circle cx="185" cy="163" r="5" fill="#111"/>
-            <line x1="220" y1="188" x2="235" y2="165" stroke="#111" strokeWidth="2.5" strokeLinecap="round"/>
-            <circle cx="235" cy="163" r="5" fill="#111"/>
-            {/* Stinger */}
-            <polygon points="210,375 204,395 216,395" fill="#FF8F00" stroke="#111" strokeWidth="2"/>
-          </svg>
-
-          {/* Honey drip border */}
-          <svg style={{position:"absolute",bottom:-2,left:0,right:0,width:"100%",pointerEvents:"none"}} viewBox="0 0 1440 60" preserveAspectRatio="none">
-            {[...Array(20)].map((_,i)=>(
-              <ellipse key={i} cx={36*i+18} cy={20+Math.sin(i*1.3)*12} rx="14" ry={18+Math.sin(i*0.9)*6} fill="#FFA000"/>
-            ))}
-            <rect x="0" y="30" width="1440" height="30" fill="#FFA000"/>
-          </svg>
         </section>
 
-        {/* STATS */}
-        <div className="hp-stats">
-          {[
-            {num:"Z-Score",label:"Standar WHO"},
-            {num:"4 Fitur",label:"Lengkap & Gratis"},
-            {num:"AI 🤖",label:"Rekomendasi Gizi"},
-            {num:"Real-time",label:"Pantau Pertumbuhan"},
-          ].map(s=>(
-            <div key={s.num} style={{textAlign:"center"}}>
-              <div className="hp-stat-num">{s.num}</div>
-              <div className="hp-stat-label">{s.label}</div>
-            </div>
-          ))}
-        </div>
+       {/* FEATURES */}
+<section className="hp-features">
+  <div className="hp-fhead">
 
-        {/* FEATURES */}
-        <section className="hp-features">
-          <div className="hp-fhead">
-            <div className="hp-tag">🍯 Fitur Unggulan</div>
-            <h2>Semua yang kamu butuhkan,<br/>ada di sini! 🐝</h2>
-            <p>Scroll ke bawah dan lihat semua fitur manis GrowB 👇</p>
-          </div>
+    {/* Letter images dari public */}
+    <div style={{ display: 'flex', gap: '0px', justifyContent: 'center', flexWrap: 'wrap', margin: '1rem 0' }}>
+      {['o','u','r'].map((letter, i) => (
+        <img
+          key={i}
+          src={`/${letter}.png`}
+          alt={letter.toUpperCase()}
+          style={{ height: '70px', width: 'auto' }}
+        />
+      ))}
+
+      <div style={{ width: '20px' }} />
+
+      {['f','e','a','t','u','r','e','s'].map((letter, i) => (
+        <img
+          key={i}
+          src={`/${letter}.png`}
+          alt={letter.toUpperCase()}
+          style={{ height: '70px', width: 'auto' }}
+        />
+      ))}
+    </div>
+  </div>
+
           <ScrollStack className="feat-stack" itemDistance={100} itemScale={0.035} itemStackDistance={20} stackPosition="12%" scaleEndPosition="6%" baseScale={0.9} rotationAmount={1} useWindowScroll={true}>
             <ScrollStackItem itemClassName="cc1">
               <div><div className="fc-tag">🎯 WHO Standard</div><div className="fc-icon">🎯</div><div className="fc-title">Deteksi Dini Stunting</div><div className="fc-desc">Sistem hitung Z-Score otomatis standar WHO untuk deteksi risiko stunting. Akurat dan cepat seperti lebah yang sigap!</div></div>
-              <div className="fc-dots"><div className="fc-dot on"/><div className="fc-dot"/><div className="fc-dot"/><div className="fc-dot"/></div>
             </ScrollStackItem>
             <ScrollStackItem itemClassName="cc2">
               <div><div className="fc-tag">📈 Real-time</div><div className="fc-icon">📈</div><div className="fc-title">Grafik Pertumbuhan</div><div className="fc-desc">Pantau tinggi & berat badan si kecil bulan per bulan dengan grafik interaktif lengkap kurva persentil WHO.</div></div>
-              <div className="fc-dots"><div className="fc-dot"/><div className="fc-dot on"/><div className="fc-dot"/><div className="fc-dot"/></div>
             </ScrollStackItem>
             <ScrollStackItem itemClassName="cc3">
               <div><div className="fc-tag">🤖 AI-Powered</div><div className="fc-icon">🤖</div><div className="fc-title">Rekomendasi Nutrisi AI</div><div className="fc-desc">Menu makan harian + target kalori & protein dipersonalisasi AI — semanis madu untuk tumbuh kembang si kecil!</div></div>
-              <div className="fc-dots"><div className="fc-dot"/><div className="fc-dot"/><div className="fc-dot on"/><div className="fc-dot"/></div>
             </ScrollStackItem>
             <ScrollStackItem itemClassName="cc4">
               <div><div className="fc-tag">📋 Ekspor PDF</div><div className="fc-icon">📋</div><div className="fc-title">Laporan Lengkap</div><div className="fc-desc">Generate laporan pertumbuhan anak PDF profesional — siap dibagikan ke dokter atau kader Posyandu. Manis dan berguna!</div></div>
-              <div className="fc-dots"><div className="fc-dot"/><div className="fc-dot"/><div className="fc-dot"/><div className="fc-dot on"/></div>
             </ScrollStackItem>
           </ScrollStack>
         </section>
@@ -188,7 +415,7 @@ export default function HomePage() {
           <Link href="/register" className="btn-cta">Daftar Gratis Sekarang 🎉</Link>
           <div style={{marginTop:"1.25rem",fontSize:".85rem",color:"rgba(255,193,7,.7)"}}>
             Sudah punya akun?{" "}
-            <Link href="/login" style={{color:"#FFC107",fontWeight:700,textDecoration:"underline"}}>Masuk di sini</Link>
+            <Link href="/login" style={{color:"#FDBC15",fontWeight:700,textDecoration:"underline"}}>Masuk di sini</Link>
           </div>
         </section>
 

@@ -75,7 +75,7 @@ export default function RegisterPage() {
           max-width: 900px;
           min-height: 540px;
           background: #fff;
-          border: 2px solid #FFC107;
+          border: 2px solid #FDBC15;
           border-radius: 24px;
           box-shadow: 0 10px 30px rgba(255, 193, 7, 0.15);
           overflow: hidden;
@@ -85,7 +85,7 @@ export default function RegisterPage() {
         }
         .auth-left {
           flex: 1;
-          background-color: #FFC107;
+          background-color: #FDBC15;
           background-image: url("data:image/svg+xml,%3Csvg width='40' height='69.28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 17.32l-20 11.55L0 17.32V0h40v17.32zm0 34.64l-20 11.55-20-11.55V34.64h40v17.32z' fill='%23FFB300' fill-opacity='0.25' fill-rule='evenodd'/%3E%3C/svg%3E");
           padding: 3rem;
           display: flex;
@@ -168,7 +168,7 @@ export default function RegisterPage() {
 
         .auth-toggle {
           display: flex;
-          border: 2px solid #FFC107;
+          border: 2px solid #FDBC15;
           border-radius: 999px;
           margin-bottom: 2.5rem;
           overflow: hidden;
@@ -186,7 +186,7 @@ export default function RegisterPage() {
           text-decoration: none;
         }
         .toggle-btn.active {
-          background: #FFC107;
+          background: #FDBC15;
           color: #fff;
           border-radius: 999px;
           margin: 2px;
@@ -207,7 +207,7 @@ export default function RegisterPage() {
         .input-wrapper { position: relative; }
         .form-input {
           width: 100%;
-          border: 2px solid #FFC107;
+          border: 2px solid #FDBC15;
           border-radius: 12px;
           padding: 0.7rem 1rem;
           font-size: 0.95rem;
@@ -236,7 +236,7 @@ export default function RegisterPage() {
           font-weight: 800;
           cursor: pointer;
           margin-top: 0.5rem;
-          background: #FFC107;
+          background: #FDBC15;
           color: #111;
           box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
           transition: transform 0.1s, box-shadow 0.1s;
