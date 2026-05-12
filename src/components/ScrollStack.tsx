@@ -142,7 +142,7 @@ const ScrollStack = ({
       card.style.zIndex = `${cards.length - i}`;
       
       // Shadow for depth when stacked
-      card.style.boxShadow = `6px 6px 0 #111, 0 ${15 * (shift/i || 0)}px ${30 * (shift/i || 0)}px rgba(0,0,0,0.25)`;
+      card.style.boxShadow = `0 ${15 * (shift/i || 0)}px ${30 * (shift/i || 0)}px rgba(0,0,0,0.25)`;
     });
   }, [progress]);
 
