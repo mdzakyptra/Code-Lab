@@ -99,51 +99,50 @@ export default function NutritionPage() {
       <style>{`
         .neo-container { max-width: 1000px; margin: 0 auto; font-family: 'Nunito', sans-serif; }
         
-        .neo-header { background: #fff; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+        .neo-header { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
         .neo-title { font-size: 2rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
         .neo-subtitle { font-size: 1rem; color: #5d4037; font-weight: 600; }
-        
-        .btn-back { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 2.5px solid #111; border-radius: 999px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; background: #FFFDE7; color: #111; box-shadow: 3px 3px 0 #111; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-back:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 #111; }
 
-        .child-select-card { background: #FFE082; border: 3px solid #111; border-radius: 16px; padding: 1.5rem; box-shadow: 4px 4px 0 #111; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .btn-back { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; background: #FFFDE7; color: #111; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-back:hover { background: #FFF8E1; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+        .child-select-card { background: #FFF8E1; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
         .child-select-label { font-size: 1.1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
-        .child-select { appearance: none; background-color: #fff; border: 3px solid #111; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; box-shadow: 4px 4px 0 #111; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: transform 0.1s, box-shadow 0.1s; width: 100%; max-width: 400px; }
-        .child-select:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #111; }
-        .child-select:focus { outline: none; border-color: #FF8F00; }
+        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; max-width: 400px; }
+        .child-select:hover { border-color: #9ca3af; }
+        .child-select:focus { outline: none; border-color: #FFC107; box-shadow: 0 0 0 3px rgba(255,193,7,0.15); }
 
-        .neo-card { background: #fff; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; }
+        .neo-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; }
         .neo-card-title { font-size: 1.25rem; font-weight: 900; color: #111; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        
-        .alert-error { background: #ffcdd2; border: 3px solid #b71c1c; border-radius: 12px; padding: 1.25rem; margin-top: 1rem; margin-bottom: 1rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 4px 4px 0 #b71c1c; color: #b71c1c; }
-        
+
+        .alert-error { background: #fff1f2; border: 1.5px solid #fca5a5; border-radius: 12px; padding: 1.25rem; margin-top: 1rem; margin-bottom: 1rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(239,68,68,0.1); color: #b71c1c; }
+
         .status-box-wrap { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-        .status-box { background: #FFFDE7; border: 2.5px solid #111; border-radius: 12px; padding: 1rem 1.5rem; flex: 1; min-width: 200px; }
+        .status-box { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.5rem; flex: 1; min-width: 200px; }
         .status-label { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5d4037; display: block; margin-bottom: 0.25rem; }
         .status-val { font-size: 1.25rem; font-weight: 900; color: #111; display: block; }
-        .status-pill { display: inline-block; background: #fff; border: 2px solid #111; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 1rem; margin-top: 0.25rem; box-shadow: 2px 2px 0 #111; }
+        .status-pill { display: inline-block; background: #fff; border: 1.5px solid #d1d5db; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 1rem; margin-top: 0.25rem; }
 
-        .btn-ai-submit { width: 100%; padding: 1rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.15rem; border: 3px solid #111; border-radius: 16px; cursor: pointer; background: #FFC107; color: #111; box-shadow: 4px 4px 0 #111; transition: transform 0.15s, box-shadow 0.15s; display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .btn-ai-submit:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #111; background: #FFD54F; }
-        .btn-ai-submit:active:not(:disabled) { transform: translate(0, 0); box-shadow: 2px 2px 0 #111; }
-        .btn-ai-submit:disabled { opacity: 0.7; cursor: not-allowed; background: #FFE082; box-shadow: 2px 2px 0 #111; transform: translate(2px, 2px); }
+        .btn-ai-submit { width: 100%; padding: 1rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.15rem; border: none; border-radius: 16px; cursor: pointer; background: #FFC107; color: #111; box-shadow: 0 4px 14px rgba(255,193,7,0.4); transition: box-shadow 0.2s, background 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-ai-submit:hover:not(:disabled) { background: #FFD54F; box-shadow: 0 6px 20px rgba(255,193,7,0.5); }
+        .btn-ai-submit:disabled { opacity: 0.7; cursor: not-allowed; box-shadow: none; }
 
-        .ai-result-card { background: #FFFDE7; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; }
+        .ai-result-card { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; }
         .ai-result-text { font-size: 1.05rem; font-weight: 600; color: #3e2723; line-height: 1.6; white-space: pre-wrap; }
 
         .targets-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
         @media(min-width: 768px) { .targets-grid { grid-template-columns: repeat(3, 1fr); } }
-        .target-box { background: #fff; border: 2.5px solid #111; border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: 3px 3px 0 #111; }
+        .target-box { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
         .target-box p:first-child { font-size: 0.9rem; font-weight: 800; color: #5d4037; text-transform: uppercase; margin-bottom: 0.5rem; }
         .target-box p:last-child { font-size: 1.5rem; font-weight: 900; color: #111; }
 
         .menu-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
         @media(min-width: 768px) { .menu-grid { grid-template-columns: repeat(3, 1fr); } }
-        .menu-card { background: #fff; border: 3px solid #111; border-radius: 16px; padding: 1.5rem; position: relative; box-shadow: 5px 5px 0 #111; transition: transform 0.2s; }
-        .menu-card:hover { transform: translateY(-4px); box-shadow: 5px 9px 0 #111; }
-        .menu-time { position: absolute; top: 0; right: 0; background: #FFC107; border-bottom: 3px solid #111; border-left: 3px solid #111; border-top-right-radius: 13px; border-bottom-left-radius: 12px; padding: 0.4rem 0.8rem; font-weight: 900; font-size: 0.85rem; color: #111; }
+        .menu-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.5rem; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.07); transition: box-shadow 0.2s, transform 0.2s; }
+        .menu-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .menu-time { position: absolute; top: 0; right: 0; background: #FFC107; border-bottom: 1.5px solid #e5e7eb; border-left: 1.5px solid #e5e7eb; border-top-right-radius: 14px; border-bottom-left-radius: 12px; padding: 0.4rem 0.8rem; font-weight: 900; font-size: 0.85rem; color: #111; }
         .menu-title { font-size: 1.25rem; font-weight: 900; color: #111; margin-top: 0.5rem; margin-bottom: 1rem; padding-right: 3.5rem; }
-        .menu-nutrients { display: inline-block; background: #FFFDE7; border: 2px solid #111; border-radius: 8px; padding: 0.4rem 0.75rem; font-size: 0.85rem; font-weight: 800; color: #5d4037; }
+        .menu-nutrients { display: inline-block; background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 0.4rem 0.75rem; font-size: 0.85rem; font-weight: 800; color: #5d4037; }
       `}</style>
 
       <div className="neo-container">
@@ -179,7 +178,7 @@ export default function NutritionPage() {
         {/* Content Section */}
         <div className="neo-card">
           {!latestRecord ? (
-            <div style={{ textAlign: 'center', padding: '3rem 1rem', background: '#FFFDE7', border: '3px dashed #111', borderRadius: '16px', fontWeight: 800, color: '#5d4037' }}>
+            <div style={{ textAlign: 'center', padding: '3rem 1rem', background: '#FFFDE7', border: '2px dashed #d1d5db', borderRadius: '16px', fontWeight: 800, color: '#5d4037' }}>
               Belum ada data pengukuran untuk anak ini. Silakan kembali ke Dashboard dan tambah data terlebih dahulu. 🍯
             </div>
           ) : (

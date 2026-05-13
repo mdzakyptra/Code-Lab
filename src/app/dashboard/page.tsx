@@ -162,52 +162,52 @@ export default function DashboardPage() {
         .dash-subtitle { font-size: 1.1rem; color: #5d4037; font-weight: 600; }
         
         .dash-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn-neo { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 2.5px solid #111; border-radius: 999px; cursor: pointer; transition: transform 0.1s, box-shadow 0.1s; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-neo:hover { transform: translate(-2px, -2px); }
-        .btn-print { background: #fff; color: #111; box-shadow: 3px 3px 0 #111; }
-        .btn-print:hover { box-shadow: 5px 5px 0 #111; }
-        .btn-ai { background: #FFC107; color: #111; box-shadow: 3px 3px 0 #5d4037; }
-        .btn-ai:hover { box-shadow: 5px 5px 0 #5d4037; }
-        .btn-add { background: #111; color: #FFC107; box-shadow: 3px 3px 0 #5d4037; }
-        .btn-add:hover { box-shadow: 5px 5px 0 #5d4037; }
-        .btn-logout { background: #ffcdd2; color: #b71c1c; box-shadow: 3px 3px 0 #111; }
-        .btn-logout:hover { box-shadow: 5px 5px 0 #111; }
+        .btn-neo { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: box-shadow 0.2s, background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-neo:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+        .btn-print { background: #fff; color: #111; }
+        .btn-print:hover { background: #f9fafb; }
+        .btn-ai { background: #FFC107; color: #111; border-color: #FFC107; }
+        .btn-ai:hover { background: #FFD54F; }
+        .btn-add { background: #111; color: #FFC107; border-color: #111; }
+        .btn-add:hover { background: #2a2a2a; }
+        .btn-logout { background: #ffcdd2; color: #b71c1c; border-color: #fca5a5; }
+        .btn-logout:hover { background: #fecaca; }
 
-        .child-select-card { background: #FFE082; border: 3px solid #111; border-radius: 16px; padding: 1.25rem; box-shadow: 4px 4px 0 #111; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .child-select-card { background: #FFF8E1; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
         .child-select-label { font-size: 1.1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
-        .child-select { appearance: none; background-color: #fff; border: 3px solid #111; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; box-shadow: 4px 4px 0 #111; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: transform 0.1s, box-shadow 0.1s; width: 100%; max-width: 400px; }
-        .child-select:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #111; }
-        .child-select:focus { outline: none; border-color: #FF8F00; }
+        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; max-width: 400px; }
+        .child-select:hover { border-color: #9ca3af; }
+        .child-select:focus { outline: none; border-color: #FFC107; box-shadow: 0 0 0 3px rgba(255,193,7,0.15); }
 
-        .neo-card { background: #fff; border: 3px solid #111; border-radius: 20px; padding: 2rem; box-shadow: 6px 6px 0 #111; margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .neo-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; position: relative; overflow: hidden; }
         .neo-card-title { font-size: 1.5rem; font-weight: 900; color: #111; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
-        
-        .alert-box { background: #FFE082; border: 3px solid #111; border-radius: 16px; padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 4px 4px 0 #5d4037; margin-bottom: 2rem; }
-        .alert-danger { background: #ffcdd2; box-shadow: 4px 4px 0 #b71c1c; }
+
+        .alert-box { background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 16px; padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; }
+        .alert-danger { background: #fff1f2; border-color: #fca5a5; }
         .alert-title { font-weight: 900; font-size: 1.1rem; color: #111; margin-bottom: 0.25rem; }
         .alert-text { font-size: 0.95rem; color: #3e2723; font-weight: 600; }
 
         .status-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
         @media(min-width: 768px) { .status-grid { grid-template-columns: 1.5fr 1fr; } }
-        
-        .status-box { background: #FFFDE7; border: 2.5px solid #111; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: center; }
+
+        .status-box { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: center; }
         .status-label { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5d4037; margin-bottom: 0.5rem; }
         .status-value { font-size: 1.5rem; font-weight: 900; color: #111; }
 
         .chart-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
 
-        .neo-table-wrapper { border: 3px solid #111; border-radius: 16px; overflow: hidden; box-shadow: 5px 5px 0 #111; }
+        .neo-table-wrapper { border: 1.5px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
         .neo-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .neo-table th { background: #FFC107; padding: 1rem; font-weight: 900; color: #111; border-bottom: 3px solid #111; border-right: 2px solid #111; }
+        .neo-table th { background: #FFF8E1; padding: 1rem; font-weight: 900; color: #111; border-bottom: 1.5px solid #e5e7eb; border-right: 1px solid #e5e7eb; }
         .neo-table th:last-child { border-right: none; }
-        .neo-table td { background: #fff; padding: 1rem; font-weight: 700; color: #3e2723; border-bottom: 2px solid #111; border-right: 2px solid #111; }
+        .neo-table td { background: #fff; padding: 1rem; font-weight: 700; color: #3e2723; border-bottom: 1px solid #f3f4f6; border-right: 1px solid #f3f4f6; }
         .neo-table td:last-child { border-right: none; }
         .neo-table tr:last-child td { border-bottom: none; }
         .neo-table tr:hover td { background: #FFFDE7; }
-        
+
         .action-btns { display: flex; gap: 0.5rem; justify-content: center; }
-        .btn-mini { padding: 0.4rem 0.8rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.85rem; border: 2px solid #111; border-radius: 8px; cursor: pointer; transition: transform 0.1s; }
-        .btn-mini:hover { transform: translate(-2px, -2px); }
+        .btn-mini { padding: 0.4rem 0.8rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.85rem; border: 1.5px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+        .btn-mini:hover { opacity: 0.85; }
         .btn-mini-edit { background: #FFFDE7; color: #111; }
         .btn-mini-del { background: #ffcdd2; color: #111; }
 
@@ -230,14 +230,11 @@ export default function DashboardPage() {
 
         <div className="dash-header print-hidden">
           <div>
-            <h1 className="dash-title">Dashboard 🐝</h1>
+            <h1 className="dash-title">Dashboard</h1>
             <p className="dash-subtitle">Halo Bunda {profile?.full_name || user?.email}!</p>
           </div>
           <div className="dash-actions">
             <button onClick={() => window.print()} className="btn-neo btn-print">🖨️ Cetak PDF</button>
-            <Link href="/nutrition" className="btn-neo btn-ai">✨ Tanya AI Nutrisi</Link>
-            <Link href="/add-data" className="btn-neo btn-add">+ Tambah Data</Link>
-            <button onClick={handleLogout} className="btn-neo btn-logout">Keluar</button>
           </div>
         </div>
 
@@ -307,7 +304,7 @@ export default function DashboardPage() {
             </div>
           )}
 
-          <div className="neo-card" style={{ marginBottom: 0, background: '#FFC107', borderColor: '#111' }}>
+          <div className="neo-card" style={{ marginBottom: 0, background: '#FFC107', borderColor: '#FFC107' }}>
             <h2 className="neo-card-title">👤 Info Akun</h2>
             <div className="status-box" style={{ marginBottom: '1rem', background: '#fff' }}>
               <span className="status-label">Email Terdaftar</span>
@@ -330,11 +327,11 @@ export default function DashboardPage() {
           </div>
           
           {children.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFDE7', border: '3px dashed #111', borderRadius: '16px', fontWeight: 800, color: '#5d4037' }}>
+            <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFDE7', border: '2px dashed #d1d5db', borderRadius: '16px', fontWeight: 800, color: '#5d4037' }}>
               Belum ada profil anak. Silakan klik + Tambah Data. 🍯
             </div>
           ) : (
-            <div style={{ background: '#fff', border: '2.5px solid #111', borderRadius: '12px', padding: '1rem' }}>
+            <div style={{ background: '#fff', border: '1.5px solid #e5e7eb', borderRadius: '12px', padding: '1rem' }}>
               <GrowthChart data={chartData} />
             </div>
           )}
