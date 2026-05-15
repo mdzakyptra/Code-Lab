@@ -173,12 +173,12 @@ export default function HomePage() {
         }
 
         /* STATS */
-        .hp-stats{background:#FFE082;border-top:3px solid #111;border-bottom:3px solid #111;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;}
+        .hp-stats{background:#FFE082;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;}
         .hp-stat-num{font-size:1.875rem;font-weight:900;color:#111;}
         .hp-stat-label{font-size:.8125rem;font-weight:600;color:#5d4037;}
 
         /* FEATURES */
-        .hp-features{background:#FFFDE7;border-bottom:3px solid #111;}
+        .hp-features{background:#FFFDE7;}
         .hp-fhead{text-align:center;padding:2rem 2rem 4rem;}
         .hp-tag{display:inline-block;background:#111;color:#FDBC15;padding:4px 14px;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;}
         .hp-fhead h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;color:#111;letter-spacing:-.03em;line-height:1.15;margin-bottom:.75rem;}
@@ -188,15 +188,15 @@ export default function HomePage() {
           width: 100%;
           height: auto;
           min-height: 24rem;
-          border-radius: 20px!important;
+          border-radius: 24px!important;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           text-align: center;
-          padding: 2.5rem;
-          border: 3px solid #111;
-          box-shadow: 6px 6px 0 #111;
+          padding: 3rem 2.5rem;
+          border: 2px solid #111;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .fc-tag{display:inline-flex;align-items:center;padding:6px 16px;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.5rem;}
@@ -223,22 +223,19 @@ export default function HomePage() {
         .cc4 .fc-title, .cc4 .fc-desc{color:#111;}
 
         /* HOW TO USE */
-        .hp-how{background:#fff;border-top:3px solid #111;border-bottom:3px solid #111;padding:5rem 2rem;}
-        .hp-how-inner{max-width:960px;margin:0 auto;}
-        .hp-how-head{text-align:center;margin-bottom:3.5rem;}
+        .hp-how{background:#FFFDE7;padding:6rem 2rem;}
+        .hp-how-inner{max-width:1100px;margin:0 auto;}
+        .hp-how-head{text-align:center;margin-bottom:4rem;}
         .hp-how-head h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;color:#111;letter-spacing:-.03em;line-height:1.2;margin-bottom:.75rem;}
         .hp-how-head p{color:#6d4c00;font-size:1rem;max-width:480px;margin:0 auto;line-height:1.65;}
-        .hp-how-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;position:relative;}
-        .hp-how-step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:2rem 1.5rem;position:relative;}
-        .hp-how-step:not(:last-child)::after{content:'';position:absolute;top:3rem;right:-1px;width:2px;height:calc(100% - 6rem);background:#FFE082;display:none;}
-        @media(min-width:640px){.hp-how-step:not(:last-child)::after{display:block;}}
-        .hp-how-num{width:56px;height:56px;border-radius:999px;background:#FDBC15;border:3px solid #111;box-shadow:4px 4px 0 #111;display:flex;align-items:center;justify-content:center;font-size:1.375rem;font-weight:900;color:#111;margin-bottom:1.25rem;flex-shrink:0;}
-        .hp-how-step h3{font-size:1rem;font-weight:900;color:#111;margin-bottom:.5rem;}
-        .hp-how-step p{font-size:.875rem;color:#6d4c00;line-height:1.6;}
-        .hp-how-connector{display:none;}
-        @media(min-width:640px){
-          .hp-how-steps{grid-template-columns:repeat(4,1fr);}
-        }
+        .hp-how-steps{display:flex;flex-direction:column;gap:0;position:relative;}
+        .hp-how-row{display:flex;align-items:flex-start;gap:1.5rem;}
+        .hp-how-row.reverse{flex-direction:row-reverse;text-align:right;}
+        .hp-how-num{width:72px;height:72px;border-radius:999px;background:#FDBC15;border:3px solid #111;display:flex;align-items:center;justify-content:center;font-size:1.75rem;font-weight:900;color:#111;flex-shrink:0;}
+        .hp-how-content{padding:.5rem 0 2rem;max-width:340px;}
+        .hp-how-content h3{font-size:1.2rem;font-weight:900;color:#111;margin-bottom:.4rem;}
+        .hp-how-content p{font-size:.9rem;color:#6d4c00;line-height:1.65;}
+        .hp-how-wave{width:100%;overflow:visible;display:block;margin:-8px 0;height:60px;}
 
         /* ABOUT */
         .hp-about{background:#111;padding:5rem 2rem;position:relative;overflow:hidden;}
@@ -267,7 +264,7 @@ export default function HomePage() {
         {/* HERO */}
         <section className="hp-hero">
           <div className="hp-hero-card">
-            
+
             {/* Wavy Background inside the card */}
             <svg className="hp-hero-bg" preserveAspectRatio="none" viewBox="0 0 1440 800">
               <path d="M0 0 H1440 V500 Q1080 650 720 450 T0 600 Z" fill="#FFC107" />
@@ -303,119 +300,115 @@ export default function HomePage() {
 
               {/* Speech Bubble */}
               <div className="speech-bubble delay-3">
-                Tumbuh sehat, <br/>anak kuat! 💪
+                Tumbuh sehat, <br />anak kuat! 💪
               </div>
 
               {/* Kids holding hands & Seamless Mountain SVG */}
-              <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice" style={{width:"100%",height:"100%",maxHeight:"500px",position:"absolute",bottom:0,zIndex:10}}>
+              <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMax slice" style={{ width: "100%", height: "100%", maxHeight: "500px", position: "absolute", bottom: 0, zIndex: 10 }}>
                 <g transform="translate(600, 120)">
                   {/* Kid 1 (Left) */}
                   <g transform="translate(-150, 60)">
                     {/* Left Arm raised */}
-                    <path d="M-20 60 Q-60 0 -80 -20" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round"/>
+                    <path d="M-20 60 Q-60 0 -80 -20" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round" />
                     {/* Right Arm to center kid */}
-                    <path d="M20 60 Q60 50 80 10" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round"/>
-                    
+                    <path d="M20 60 Q60 50 80 10" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round" />
+
                     {/* Body */}
-                    <path d="M-30 60 Q0 40 30 60 L35 150 L-35 150 Z" fill="#EF476F"/>
+                    <path d="M-30 60 Q0 40 30 60 L35 150 L-35 150 Z" fill="#EF476F" />
                     {/* Head */}
-                    <circle cx="0" cy="15" r="35" fill="#FFCCBC"/>
+                    <circle cx="0" cy="15" r="35" fill="#FFCCBC" />
                     {/* Hair */}
-                    <path d="M-40 20 Q-20 -20 0 -25 Q20 -20 40 20 Q30 -40 0 -45 Q-30 -40 -40 20 Z" fill="#FFD166"/>
+                    <path d="M-40 20 Q-20 -20 0 -25 Q20 -20 40 20 Q30 -40 0 -45 Q-30 -40 -40 20 Z" fill="#FFD166" />
                     {/* Face */}
-                    <circle cx="-10" cy="15" r="3" fill="#4A342E"/>
-                    <circle cx="10" cy="15" r="3" fill="#4A342E"/>
-                    <path d="M-8 28 Q0 38 8 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round"/>
+                    <circle cx="-10" cy="15" r="3" fill="#4A342E" />
+                    <circle cx="10" cy="15" r="3" fill="#4A342E" />
+                    <path d="M-8 28 Q0 38 8 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round" />
                   </g>
 
                   {/* Kid 3 (Right) */}
                   <g transform="translate(150, 60)">
                     {/* Right Arm raised */}
-                    <path d="M20 60 Q60 0 80 -20" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round"/>
+                    <path d="M20 60 Q60 0 80 -20" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round" />
                     {/* Left Arm to center kid */}
-                    <path d="M-20 60 Q-60 50 -80 10" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round"/>
-                    
+                    <path d="M-20 60 Q-60 50 -80 10" fill="none" stroke="#F1A893" strokeWidth="18" strokeLinecap="round" />
+
                     {/* Body */}
-                    <path d="M-30 60 Q0 40 30 60 L35 150 L-35 150 Z" fill="#06D6A0"/>
+                    <path d="M-30 60 Q0 40 30 60 L35 150 L-35 150 Z" fill="#06D6A0" />
                     {/* Head */}
-                    <circle cx="0" cy="15" r="35" fill="#FFCCBC"/>
+                    <circle cx="0" cy="15" r="35" fill="#FFCCBC" />
                     {/* Hair */}
-                    <path d="M-35 10 Q-30 -30 0 -35 Q30 -30 35 10 Q20 -20 0 -20 Q-20 -20 -35 10 Z" fill="#2B2B2B"/>
+                    <path d="M-35 10 Q-30 -30 0 -35 Q30 -30 35 10 Q20 -20 0 -20 Q-20 -20 -35 10 Z" fill="#2B2B2B" />
                     {/* Face */}
-                    <circle cx="-10" cy="15" r="3" fill="#4A342E"/>
-                    <circle cx="10" cy="15" r="3" fill="#4A342E"/>
-                    <path d="M-8 28 Q0 38 8 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round"/>
+                    <circle cx="-10" cy="15" r="3" fill="#4A342E" />
+                    <circle cx="10" cy="15" r="3" fill="#4A342E" />
+                    <path d="M-8 28 Q0 38 8 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round" />
                   </g>
 
                   {/* Kid 2 (Center) */}
                   <g transform="translate(0, 30)">
                     {/* Arms holding the others (Front arms, so lighter skin) */}
-                    <path d="M-25 70 Q-70 70 -90 40" fill="none" stroke="#FFCCBC" strokeWidth="18" strokeLinecap="round"/>
-                    <path d="M25 70 Q70 70 90 40" fill="none" stroke="#FFCCBC" strokeWidth="18" strokeLinecap="round"/>
+                    <path d="M-25 70 Q-70 70 -90 40" fill="none" stroke="#FFCCBC" strokeWidth="18" strokeLinecap="round" />
+                    <path d="M25 70 Q70 70 90 40" fill="none" stroke="#FFCCBC" strokeWidth="18" strokeLinecap="round" />
 
                     {/* Body */}
-                    <path d="M-30 60 Q0 40 30 60 L35 160 L-35 160 Z" fill="#118AB2"/>
+                    <path d="M-30 60 Q0 40 30 60 L35 160 L-35 160 Z" fill="#118AB2" />
                     {/* Head */}
-                    <circle cx="0" cy="15" r="38" fill="#FFCCBC"/>
+                    <circle cx="0" cy="15" r="38" fill="#FFCCBC" />
                     {/* Hair */}
-                    <path d="M-40 20 Q-20 -25 0 -30 Q20 -25 40 20 Q30 -45 0 -50 Q-30 -45 -40 20 Z" fill="#5D4037"/>
+                    <path d="M-40 20 Q-20 -25 0 -30 Q20 -25 40 20 Q30 -45 0 -50 Q-30 -45 -40 20 Z" fill="#5D4037" />
                     {/* Face */}
-                    <circle cx="-12" cy="12" r="4" fill="#4A342E"/>
-                    <circle cx="12" cy="12" r="4" fill="#4A342E"/>
-                    <path d="M-10 28 Q0 42 10 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round"/>
+                    <circle cx="-12" cy="12" r="4" fill="#4A342E" />
+                    <circle cx="12" cy="12" r="4" fill="#4A342E" />
+                    <path d="M-10 28 Q0 42 10 28" fill="none" stroke="#4A342E" strokeWidth="3" strokeLinecap="round" />
                   </g>
                 </g>
 
                 {/* Seamless Mountain Shape */}
-                <path d="M-400 400 Q 600 180 1600 400 Z" fill="#FFFDE7"/>
+                <path d="M-400 400 Q 600 180 1600 400 Z" fill="#FFFDE7" />
                 {/* Clean cover at very bottom to ensure no gaps */}
-                <rect x="-400" y="395" width="2000" height="20" fill="#FFFDE7"/>
+                <rect x="-400" y="395" width="2000" height="20" fill="#FFFDE7" />
               </svg>
 
             </div>
           </div>
         </section>
 
-       {/* FEATURES */}
-<section className="hp-features" id="features">
-  <div className="hp-fhead">
+        {/* FEATURES */}
+        <section className="hp-features" id="features">
+          <div className="hp-fhead">
 
-    {/* Letter images dari public */}
-    <div style={{ display: 'flex', gap: '0px', justifyContent: 'center', flexWrap: 'wrap', margin: '1rem 0' }}>
-      {['o','u','r'].map((letter, i) => (
-        <img
-          key={i}
-          src={`/${letter}.png`}
-          alt={letter.toUpperCase()}
-          style={{ height: '70px', width: 'auto' }}
-        />
-      ))}
-
-      <div style={{ width: '20px' }} />
-
-      {['f','e','a','t','u','r','e','s'].map((letter, i) => (
-        <img
-          key={i}
-          src={`/${letter}.png`}
-          alt={letter.toUpperCase()}
-          style={{ height: '70px', width: 'auto' }}
-        />
-      ))}
-    </div>
-  </div>
+            <h2>Early Intervention</h2>
+            <p>Mendukung Perjalanan Tumbuh Kembang Setiap Anak</p>
+          </div>
 
           <ScrollStack className="feat-stack" itemDistance={100} itemScale={0.035} itemStackDistance={20} stackPosition="12%" scaleEndPosition="6%" baseScale={0.9} rotationAmount={1} useWindowScroll={true}>
             <ScrollStackItem itemClassName="cc1">
-              <div><div className="fc-tag">🎯 WHO Standard</div><div className="fc-icon">🎯</div><div className="fc-title">Deteksi Dini Stunting</div><div className="fc-desc">Sistem hitung Z-Score otomatis standar WHO untuk deteksi risiko stunting. Akurat dan cepat seperti lebah yang sigap!</div></div>
+              <div>
+                <div className="fc-title">Deteksi Dini Stunting</div>
+                <img src="/target.png" alt="Deteksi" style={{ height: '80px', margin: '0 auto 1.5rem auto', display: 'block' }} />
+                <div className="fc-desc">Sistem hitung Z-Score otomatis standar WHO untuk deteksi risiko stunting. Akurat dan cepat seperti lebah yang sigap!</div>
+              </div>
             </ScrollStackItem>
             <ScrollStackItem itemClassName="cc2">
-              <div><div className="fc-tag">📈 Real-time</div><div className="fc-icon">📈</div><div className="fc-title">Grafik Pertumbuhan</div><div className="fc-desc">Pantau tinggi & berat badan si kecil bulan per bulan dengan grafik interaktif lengkap kurva persentil WHO.</div></div>
+              <div>
+                <div className="fc-title">Grafik Pertumbuhan</div>
+                <img src="/bar-chart.png" alt="Grafik" style={{ height: '80px', margin: '0 auto 1.5rem auto', display: 'block' }} />
+                <div className="fc-desc">Pantau tinggi & berat badan si kecil bulan per bulan dengan grafik interaktif lengkap kurva persentil WHO.</div>
+              </div>
             </ScrollStackItem>
             <ScrollStackItem itemClassName="cc3">
-              <div><div className="fc-tag">🤖 AI-Powered</div><div className="fc-icon">🤖</div><div className="fc-title">Rekomendasi Nutrisi AI</div><div className="fc-desc">Menu makan harian + target kalori & protein dipersonalisasi AI — semanis madu untuk tumbuh kembang si kecil!</div></div>
+              <div>
+                <div className="fc-title">Rekomendasi Nutrisi AI</div>
+                <img src="/puzzle.png" alt="Nutrisi" style={{ height: '80px', margin: '0 auto 1.5rem auto', display: 'block' }} />
+                <div className="fc-desc">Menu makan harian + target kalori & protein dipersonalisasi AI — semanis madu untuk tumbuh kembang si kecil!</div>
+              </div>
             </ScrollStackItem>
             <ScrollStackItem itemClassName="cc4">
-              <div><div className="fc-tag">📋 Ekspor PDF</div><div className="fc-icon">📋</div><div className="fc-title">Laporan Lengkap</div><div className="fc-desc">Generate laporan pertumbuhan anak PDF profesional — siap dibagikan ke dokter atau kader Posyandu. Manis dan berguna!</div></div>
+              <div>
+                <div className="fc-title">Laporan Lengkap</div>
+                <img src="/analysis.png" alt="Laporan" style={{ height: '80px', margin: '0 auto 1.5rem auto', display: 'block' }} />
+                <div className="fc-desc">Generate laporan pertumbuhan anak PDF profesional — siap dibagikan ke dokter atau kader Posyandu. Manis dan berguna!</div>
+              </div>
             </ScrollStackItem>
           </ScrollStack>
         </section>
@@ -428,26 +421,58 @@ export default function HomePage() {
               <p>Tidak perlu keahlian khusus — cukup data anak dan GrowB sisanya.</p>
             </div>
             <div className="hp-how-steps">
-              <div className="hp-how-step">
+
+              {/* Step 1 */}
+              <div className="hp-how-row">
                 <div className="hp-how-num">1</div>
-                <h3>Buat Akun Gratis</h3>
-                <p>Daftar hanya dengan email. Tidak perlu kartu kredit atau biaya apapun.</p>
+                <div className="hp-how-content">
+                  <h3>Buat Akun Gratis</h3>
+                  <p>Daftar hanya dengan email. Tidak perlu kartu kredit atau biaya apapun.</p>
+                </div>
               </div>
-              <div className="hp-how-step">
+
+              {/* Wavy connector 1→2 */}
+              <svg className="hp-how-wave" viewBox="0 0 400 60" preserveAspectRatio="none">
+                <path d="M36 10 C100 50, 200 -10, 260 30 S360 50, 364 30" fill="none" stroke="#FDBC15" strokeWidth="3" strokeDasharray="10 8" strokeLinecap="round" />
+              </svg>
+
+              {/* Step 2 */}
+              <div className="hp-how-row reverse">
                 <div className="hp-how-num">2</div>
-                <h3>Tambah Data Anak</h3>
-                <p>Masukkan nama, tanggal lahir, berat badan, dan tinggi badan si kecil.</p>
+                <div className="hp-how-content">
+                  <h3>Tambah Data Anak</h3>
+                  <p>Masukkan nama, tanggal lahir, berat badan, dan tinggi badan si kecil.</p>
+                </div>
               </div>
-              <div className="hp-how-step">
+
+              {/* Wavy connector 2→3 */}
+              <svg className="hp-how-wave" viewBox="0 0 400 60" preserveAspectRatio="none" style={{ transform: 'scaleX(-1)' }}>
+                <path d="M36 10 C100 50, 200 -10, 260 30 S360 50, 364 30" fill="none" stroke="#FDBC15" strokeWidth="3" strokeDasharray="10 8" strokeLinecap="round" />
+              </svg>
+
+              {/* Step 3 */}
+              <div className="hp-how-row">
                 <div className="hp-how-num">3</div>
-                <h3>Lihat Analisis Otomatis</h3>
-                <p>GrowB menghitung Z-Score WHO secara otomatis dan menampilkan status pertumbuhan.</p>
+                <div className="hp-how-content">
+                  <h3>Lihat Analisis Otomatis</h3>
+                  <p>GrowB menghitung Z-Score WHO secara otomatis dan menampilkan status pertumbuhan.</p>
+                </div>
               </div>
-              <div className="hp-how-step">
+
+              {/* Wavy connector 3→4 */}
+              <svg className="hp-how-wave" viewBox="0 0 400 60" preserveAspectRatio="none">
+                <path d="M36 10 C100 50, 200 -10, 260 30 S360 50, 364 30" fill="none" stroke="#FDBC15" strokeWidth="3" strokeDasharray="10 8" strokeLinecap="round" />
+              </svg>
+
+              {/* Step 4 */}
+              <div className="hp-how-row reverse">
                 <div className="hp-how-num">4</div>
-                <h3>Tindak Lanjut</h3>
-                <p>Dapatkan rekomendasi nutrisi dari AI dan ekspor laporan PDF untuk dokter atau Posyandu.</p>
+                <div className="hp-how-content">
+                  <h3>Tindak Lanjut</h3>
+                  <p>Dapatkan rekomendasi nutrisi dari AI dan ekspor laporan PDF untuk dokter atau Posyandu.</p>
+                </div>
               </div>
+
             </div>
           </div>
         </section>
@@ -456,7 +481,7 @@ export default function HomePage() {
         <section className="hp-about" id="about-us">
           <div className="hp-about-inner">
             <div className="hp-about-tag">🐝 Tentang GrowB</div>
-            <h2>Dibangun untuk Masa Depan<br/>Anak Indonesia</h2>
+            <h2>Dibangun untuk Masa Depan<br />Anak Indonesia</h2>
             <p className="hp-about-lead">
               Stunting masih menjadi tantangan besar di Indonesia — 1 dari 5 anak mengalaminya.
               GrowB hadir karena kami percaya setiap orang tua berhak mendapatkan alat yang mudah,
@@ -490,7 +515,7 @@ export default function HomePage() {
               <Link href="/register" className="btn-cta">Mulai Sekarang — Gratis 🎉</Link>
               <p className="hp-about-note">
                 Sudah punya akun?{" "}
-                <Link href="/login" style={{color:"#FDBC15",fontWeight:700,textDecoration:"underline"}}>Masuk di sini</Link>
+                <Link href="/login" style={{ color: "#FDBC15", fontWeight: 700, textDecoration: "underline" }}>Masuk di sini</Link>
               </p>
             </div>
           </div>
@@ -499,7 +524,7 @@ export default function HomePage() {
         {/* FOOTER / ABOUT US */}
         <footer className="hp-footer" id="about-us">
           <p>© {new Date().getFullYear()} <strong>GrowB 🐝</strong> — Platform Deteksi Dini Stunting Anak Indonesia</p>
-          <p style={{marginTop:".4rem"}}>Dibuat dengan ❤️ dan 🍯 untuk masa depan anak yang lebih sehat</p>
+          <p style={{ marginTop: ".4rem" }}>Dibuat dengan ❤️ dan 🍯 untuk masa depan anak yang lebih sehat</p>
         </footer>
       </div>
     </>

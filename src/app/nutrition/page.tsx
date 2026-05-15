@@ -7,11 +7,11 @@ import { supabase } from "@/lib/supabaseClient";
 
 export default function NutritionPage() {
   const router = useRouter();
-  
+
   const [children, setChildren] = useState<any[]>([]);
   const [selectedChildId, setSelectedChildId] = useState<string>("");
   const [latestRecord, setLatestRecord] = useState<any>(null);
-  
+
   const [aiData, setAiData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -42,7 +42,7 @@ export default function NutritionPage() {
 
     const fetchLatestRecord = async () => {
       setAiData(null); // Reset AI data saat ganti anak
-      
+
       const { data: growthData } = await supabase
         .from("growth_records")
         .select("*")
@@ -61,7 +61,7 @@ export default function NutritionPage() {
 
   const getRecommendation = async () => {
     if (!latestRecord) return;
-    
+
     setLoading(true);
     setError("");
 
@@ -163,7 +163,7 @@ export default function NutritionPage() {
             <label className="child-select-label">
               <span>👶</span> Pilih Anak:
             </label>
-            <select 
+            <select
               className="child-select"
               value={selectedChildId}
               onChange={(e) => setSelectedChildId(e.target.value)}
@@ -184,13 +184,13 @@ export default function NutritionPage() {
           ) : (
             <div className="animate-fade-in">
               <h2 className="neo-card-title" style={{ marginBottom: '1.5rem' }}>📊 Profil Anak Saat Ini</h2>
-              
+
               <div className="status-box-wrap">
                 <div className="status-box">
                   <span className="status-label">Usia</span>
                   <span className="status-val">
-                    {latestRecord.age_in_months >= 12 
-                      ? `${Math.floor(latestRecord.age_in_months / 12)} Tahun ${latestRecord.age_in_months % 12 !== 0 ? (latestRecord.age_in_months % 12) + " Bulan" : ""}` 
+                    {latestRecord.age_in_months >= 12
+                      ? `${Math.floor(latestRecord.age_in_months / 12)} Tahun ${latestRecord.age_in_months % 12 !== 0 ? (latestRecord.age_in_months % 12) + " Bulan" : ""}`
                       : `${latestRecord.age_in_months} Bulan`}
                   </span>
                 </div>
@@ -200,7 +200,7 @@ export default function NutritionPage() {
                 </div>
               </div>
 
-              <button 
+              <button
                 onClick={getRecommendation}
                 disabled={loading}
                 className="btn-ai-submit"

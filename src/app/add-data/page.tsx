@@ -48,14 +48,14 @@ function AddDataForm() {
       if (childrenData && childrenData.length > 0) {
         setExistingChildren(childrenData);
         setIsNewChild(false);
-        
+
         if (childIdParam) {
           setSelectedChildId(childIdParam);
         } else {
           setSelectedChildId(childrenData[0].id);
         }
       }
-      
+
       // Jika mode edit, ambil data pengukuran
       if (editId) {
         setIsNewChild(false);
@@ -64,13 +64,13 @@ function AddDataForm() {
           .select("*")
           .eq("id", editId)
           .single();
-          
+
         if (recordData) {
           setWeight(recordData.weight.toString());
           setHeight(recordData.height.toString());
         }
       }
-      
+
       setPageLoading(false);
     };
     fetchUserData();
@@ -112,15 +112,15 @@ function AddDataForm() {
 
         childGender = selectedChild.gender;
         const birthDate = new Date(selectedChild.date_of_birth);
-        
+
         if (editId) {
-            // Jika edit, hitung umur berdasarkan tanggal pengukuran asli jika memungkinkan
-            // Tapi untuk amannya kita pakai today()
-            const today = new Date();
-            ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+          // Jika edit, hitung umur berdasarkan tanggal pengukuran asli jika memungkinkan
+          // Tapi untuk amannya kita pakai today()
+          const today = new Date();
+          ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
         } else {
-            const today = new Date();
-            ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+          const today = new Date();
+          ageInMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
         }
       }
 

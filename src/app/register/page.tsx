@@ -270,14 +270,14 @@ export default function RegisterPage() {
 
       <div className="auth-page">
         <div className="auth-card">
-          
+
           <div className="auth-left">
             <div className="brand-logo">
               <span>🍯</span> GrowB
             </div>
             <div className="big-bee">🐝</div>
-            <h2 className="left-title">Pantau tumbuh kembang<br/>si kecil! 🌟</h2>
-            
+            <h2 className="left-title">Pantau tumbuh kembang<br />si kecil! 🌟</h2>
+
             <div className="benefits">
               <div className="benefit-item">
                 <div className="check-icon">✓</div>
@@ -309,37 +309,37 @@ export default function RegisterPage() {
             <form className="auth-form" onSubmit={handleSubmit}>
               <div>
                 <label className="form-label">Nama Lengkap</label>
-                <input 
-                  type="text" 
-                  required 
+                <input
+                  type="text"
+                  required
                   placeholder="Bunda Lebah..."
-                  value={fullName} 
-                  onChange={(e) => setFullName(e.target.value)} 
-                  className="form-input" 
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="form-input"
                 />
               </div>
 
               <div>
                 <label className="form-label">Email</label>
-                <input 
-                  type="email" 
-                  required 
+                <input
+                  type="email"
+                  required
                   placeholder="nama@email.com"
-                  value={email} 
-                  onChange={(e) => setEmail(e.target.value)} 
-                  className="form-input" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="form-input"
                 />
               </div>
 
               <div>
                 <label className="form-label">Password</label>
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   required
-                  placeholder="••••••••" 
+                  placeholder="••••••••"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)} 
-                  className="form-input" 
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="form-input"
                 />
               </div>
 

@@ -22,7 +22,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (!session) {
         router.push('/login');
         return;
@@ -35,11 +35,11 @@ export default function DashboardPage() {
         .select('*')
         .eq('id', session.user.id)
         .single();
-        
+
       if (profileData) {
         setProfile(profileData);
       }
-      
+
       const { data: childrenData } = await supabase
         .from('children')
         .select('*')
@@ -59,13 +59,13 @@ export default function DashboardPage() {
             .order('measurement_date', { ascending: false })
             .limit(1)
             .single();
-            
+
           if (latestRecord) {
             const lastDate = new Date(latestRecord.measurement_date);
             const today = new Date();
             const diffTime = Math.abs(today.getTime() - lastDate.getTime());
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
+
             if (diffDays >= 30) {
               newReminders.push(`Waktunya timbang! Sudah ${diffDays} hari sejak pengukuran terakhir ${child.full_name}.`);
             }
@@ -75,7 +75,7 @@ export default function DashboardPage() {
         }
         setReminders(newReminders);
       }
-      
+
       setLoading(false);
     };
 
@@ -91,31 +91,31 @@ export default function DashboardPage() {
         .select('*')
         .eq('child_id', selectedChildId)
         .order('age_in_months', { ascending: true });
-        
+
       if (growthData && growthData.length > 0) {
-          setHistoryRecords([...growthData].reverse());
+        setHistoryRecords([...growthData].reverse());
 
-          const formattedData = growthData.map(record => ({
-            id: record.id,
-            month: record.age_in_months,
-            weight: record.weight,
-            height: record.height,
-            normalWeight: record.age_in_months * 0.5 + 3.3, 
-            normalHeight: record.age_in_months * 2 + 50.5
-          }));
-          setChartData(formattedData);
+        const formattedData = growthData.map(record => ({
+          id: record.id,
+          month: record.age_in_months,
+          weight: record.weight,
+          height: record.height,
+          normalWeight: record.age_in_months * 0.5 + 3.3,
+          normalHeight: record.age_in_months * 2 + 50.5
+        }));
+        setChartData(formattedData);
 
-          const latest = growthData[growthData.length - 1];
-          setLatestStatus({
-            status: latest.health_status,
-            zScoreHFA: latest.z_score_hfa,
-            zScoreWFA: latest.z_score_wfa
-          });
-        } else {
-          setChartData([]);
-          setHistoryRecords([]);
-          setLatestStatus(null);
-        }
+        const latest = growthData[growthData.length - 1];
+        setLatestStatus({
+          status: latest.health_status,
+          zScoreHFA: latest.z_score_hfa,
+          zScoreWFA: latest.z_score_wfa
+        });
+      } else {
+        setChartData([]);
+        setHistoryRecords([]);
+        setLatestStatus(null);
+      }
     };
 
     fetchGrowthRecords();
@@ -137,10 +137,10 @@ export default function DashboardPage() {
         .eq('id', recordId);
 
       if (error) throw error;
-      
+
       setHistoryRecords(prev => prev.filter(r => r.id !== recordId));
       setChartData(prev => prev.filter(r => r.id !== recordId));
-      
+
       window.location.reload();
     } catch (err: any) {
       alert("Gagal menghapus data: " + (err.message || "Kesalahan tak dikenal"));
@@ -220,7 +220,7 @@ export default function DashboardPage() {
       `}</style>
 
       <div className="dash-container">
-        
+
         {/* Header khusus saat dicetak ke PDF */}
         <div className="print-header">
           <h1 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '0.5rem' }}>Laporan Pemantauan Pertumbuhan Anak</h1>
@@ -259,7 +259,7 @@ export default function DashboardPage() {
             <label className="child-select-label">
               <span>👶</span> Pilih Anak untuk Dipantau:
             </label>
-            <select 
+            <select
               className="child-select"
               value={selectedChildId || ''}
               onChange={(e) => setSelectedChildId(e.target.value)}
@@ -275,12 +275,12 @@ export default function DashboardPage() {
           {latestStatus && latestStatus.status && (
             <div className="neo-card animate-fade-in" style={{ marginBottom: 0 }}>
               <h2 className="neo-card-title">🩺 Status Gizi Saat Ini</h2>
-              
+
               <div className="status-box" style={{ marginBottom: '1rem', background: '#FFC107' }}>
                 <span className="status-label">Kondisi (Z-Score WHO)</span>
                 <span className="status-value">{latestStatus.status}</span>
               </div>
-              
+
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <div className="status-box" style={{ flex: 1 }}>
                   <span className="status-label">TB/U (Tinggi)</span>
@@ -320,12 +320,12 @@ export default function DashboardPage() {
         <div className="neo-card print-visible">
           <div className="chart-header">
             <h2 className="neo-card-title" style={{ marginBottom: 0 }}>📈 Grafik Pertumbuhan</h2>
-            
+
             <div style={{ display: 'none' }} className="print-header">
               <strong style={{ fontSize: '1.25rem' }}>Nama Anak: {children.find(c => c.id === selectedChildId)?.full_name}</strong>
             </div>
           </div>
-          
+
           {children.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFDE7', border: '2px dashed #d1d5db', borderRadius: '16px', fontWeight: 800, color: '#5d4037' }}>
               Belum ada profil anak. Silakan klik + Tambah Data. 🍯

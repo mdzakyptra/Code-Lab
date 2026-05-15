@@ -272,7 +272,7 @@ export default function HomeNavbar() {
           </Link>
 
           <div className="hn-links">
-            <a href="#features">Feature</a>
+            <a href="#features">Features</a>
             <a href="#how-to-use">How to Use</a>
             <a href="#about-us">About Us</a>
           </div>
@@ -280,7 +280,7 @@ export default function HomeNavbar() {
           {/* App dropdown */}
           <div className="hn-app-wrap">
             <button className="hn-app-btn" onClick={() => setAppOpen(o => !o)} aria-expanded={appOpen}>
-              🐝 Buka App
+              Buka App
               <span className={`hn-app-chevron${appOpen ? " open" : ""}`}>▾</span>
             </button>
             <div className={`hn-dropdown${appOpen ? " open" : ""}`}>
