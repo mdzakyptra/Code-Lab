@@ -98,6 +98,7 @@ export default function HomeNavbar() {
           letter-spacing: -0.04em;
           flex-shrink: 0;
           transition: opacity 0.2s;
+          transform: translateY(-2px);
         }
         .hn-logo:hover { opacity: 0.8; }
         .hn-logo .p1 { color: #FF4C00; }

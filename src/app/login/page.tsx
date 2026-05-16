@@ -24,13 +24,12 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      setError(error.message);
-    } else {
+    
+    // SIMULASI LOGIN (Karena Supabase belum dikonfigurasi)
+    setTimeout(() => {
+      setLoading(false);
       router.push('/dashboard');
-    }
-    setLoading(false);
+    }, 1000);
   };
 
   return (
@@ -42,15 +41,41 @@ export default function LoginPage() {
           align-items: center;
           justify-content: center;
           background-color: #FFFDE7;
-          background-image: url("data:image/svg+xml,%3Csvg width='40' height='69.28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 17.32l-20 11.55L0 17.32V0h40v17.32zm0 34.64l-20 11.55-20-11.55V34.64h40v17.32z' fill='%23fef08a' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
           padding: 2rem;
           font-family: 'Plus Jakarta Sans', sans-serif;
+          position: relative;
+          overflow: hidden;
         }
+
+        /* BACKGROUND BUBBLES */
+        .anim-bubble {
+          position: absolute;
+          background: rgba(253, 188, 21, 0.3);
+          border-radius: 50%;
+          animation: floatUp 5s linear infinite;
+          bottom: -50px;
+          z-index: 1;
+        }
+        @keyframes floatUp {
+          0% { transform: translateY(0) scale(0.8); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+        .bub-1 { left: 10%; width: 40px; height: 40px; animation-duration: 6s; animation-delay: 0s; }
+        .bub-2 { left: 25%; width: 60px; height: 60px; animation-duration: 5s; animation-delay: 1s; }
+        .bub-3 { left: 40%; width: 30px; height: 30px; animation-duration: 7s; animation-delay: 2s; }
+        .bub-4 { right: 30%; width: 50px; height: 50px; animation-duration: 6.5s; animation-delay: 0.5s; }
+        .bub-5 { right: 15%; width: 45px; height: 45px; animation-duration: 5.5s; animation-delay: 1.5s; }
+        .bub-6 { left: 5%; width: 20px; height: 20px; animation-duration: 4s; animation-delay: 0.2s; }
+        .bub-7 { right: 5%; width: 35px; height: 35px; animation-duration: 6.2s; animation-delay: 1.2s; }
+        .bub-8 { left: 55%; width: 25px; height: 25px; animation-duration: 4.5s; animation-delay: 2.5s; }
+        .bub-9 { left: 75%; width: 45px; height: 45px; animation-duration: 7.2s; animation-delay: 0.3s; }
         .auth-card {
           display: flex;
           width: 100%;
-          max-width: 900px;
-          min-height: 540px;
+          max-width: 1000px;
+          min-height: 580px;
           background: #fff;
           border: 2px solid #FDBC15;
           border-radius: 24px;
@@ -59,11 +84,12 @@ export default function LoginPage() {
           opacity: ${mounted ? 1 : 0};
           transform: ${mounted ? 'translateY(0)' : 'translateY(20px)'};
           transition: all 0.5s ease;
+          position: relative;
+          z-index: 10;
         }
         .auth-left {
           flex: 1;
           background-color: #FDBC15;
-          background-image: url("data:image/svg+xml,%3Csvg width='40' height='69.28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 17.32l-20 11.55L0 17.32V0h40v17.32zm0 34.64l-20 11.55-20-11.55V34.64h40v17.32z' fill='%23FFB300' fill-opacity='0.25' fill-rule='evenodd'/%3E%3C/svg%3E");
           padding: 3rem;
           display: flex;
           flex-direction: column;
@@ -75,18 +101,24 @@ export default function LoginPage() {
         .brand-logo {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          font-size: 1.5rem;
+          font-size: 1.75rem;
           font-weight: 900;
           margin-bottom: 2rem;
+          letter-spacing: -0.04em;
+          text-decoration: none;
+          transition: opacity 0.2s;
         }
-        .big-bee {
-          font-size: 5rem;
+        .brand-logo:hover {
+          opacity: 0.8;
+        }
+        .floating-img {
+          width: 120px;
+          height: auto;
           margin-bottom: 1.5rem;
-          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-          animation: floatBee 3s ease-in-out infinite;
+          filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+          animation: floatImg 4s ease-in-out infinite;
         }
-        @keyframes floatBee {
+        @keyframes floatImg {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
         }
@@ -113,7 +145,7 @@ export default function LoginPage() {
           color: #3e2723;
         }
         .check-icon {
-          background: #4CAF50;
+          background: #111;
           color: white;
           width: 20px;
           height: 20px;
@@ -133,15 +165,7 @@ export default function LoginPage() {
           flex-direction: column;
           justify-content: center;
         }
-        .floating-bee {
-          position: absolute;
-          font-size: 1.25rem;
-          opacity: 0.7;
-          pointer-events: none;
-        }
-        .bee-1 { top: 10%; right: 10%; animation: floatBee 4s ease-in-out infinite 1s; }
-        .bee-2 { bottom: 20%; right: 5%; animation: floatBee 5s ease-in-out infinite 2s; }
-        .bee-3 { bottom: 10%; left: 5%; animation: floatBee 3.5s ease-in-out infinite; }
+
 
         .auth-toggle {
           display: flex;
@@ -263,14 +287,24 @@ export default function LoginPage() {
       `}</style>
 
       <div className="auth-page">
+        <div className="anim-bubble bub-1"></div>
+        <div className="anim-bubble bub-2"></div>
+        <div className="anim-bubble bub-3"></div>
+        <div className="anim-bubble bub-4"></div>
+        <div className="anim-bubble bub-5"></div>
+        <div className="anim-bubble bub-6"></div>
+        <div className="anim-bubble bub-7"></div>
+        <div className="anim-bubble bub-8"></div>
+        <div className="anim-bubble bub-9"></div>
+
         <div className="auth-card">
 
           <div className="auth-left">
-            <div className="brand-logo">
-              <span>🍯</span> GrowB
-            </div>
-            <div className="big-bee">🐝</div>
-            <h2 className="left-title">Pantau tumbuh kembang<br />si kecil! 🌟</h2>
+            <a href="/" className="brand-logo">
+              <span style={{color: '#FF4C00'}}>grow</span><span style={{color: '#6C4EE5'}}>b</span>
+            </a>
+            <img src="/bees.png" alt="GrowB" className="floating-img" />
+            <h2 className="left-title">Pantau tumbuh kembang<br />si kecil!</h2>
 
             <div className="benefits">
               <div className="benefit-item">
@@ -289,9 +323,7 @@ export default function LoginPage() {
           </div>
 
           <div className="auth-right">
-            <div className="floating-bee bee-1">🐝</div>
-            <div className="floating-bee bee-2">🐝</div>
-            <div className="floating-bee bee-3">🐝</div>
+
 
             <div className="auth-toggle">
               <div className="toggle-btn active">Masuk</div>
@@ -342,7 +374,7 @@ export default function LoginPage() {
               </div>
 
               <button type="submit" disabled={loading} className="btn-submit">
-                {loading ? 'Memverifikasi...' : 'Masuk'} 🍯
+                {loading ? 'Memverifikasi...' : 'Masuk ke Dashboard'}
               </button>
             </form>
 
