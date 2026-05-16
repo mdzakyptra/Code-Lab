@@ -44,7 +44,7 @@ export default function LoginPage() {
           background-color: #FFFDE7;
           background-image: url("data:image/svg+xml,%3Csvg width='40' height='69.28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 17.32l-20 11.55L0 17.32V0h40v17.32zm0 34.64l-20 11.55-20-11.55V34.64h40v17.32z' fill='%23fef08a' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
           padding: 2rem;
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .auth-card {
           display: flex;
@@ -189,7 +189,7 @@ export default function LoginPage() {
           padding: 0.75rem 1rem;
           font-size: 0.95rem;
           color: #111;
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           font-weight: 600;
           outline: none;
           transition: box-shadow 0.2s;
@@ -215,7 +215,7 @@ export default function LoginPage() {
           padding: 0.85rem;
           border-radius: 999px;
           border: none;
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           font-size: 1.05rem;
           font-weight: 800;
           cursor: pointer;

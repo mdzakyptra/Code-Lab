@@ -149,20 +149,20 @@ export default function DashboardPage() {
   };
 
   if (loading) {
-    return <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito', sans-serif", fontSize: "1.2rem", fontWeight: 800 }}>Memuat lebah madu... 🐝</div>;
+    return <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "1.2rem", fontWeight: 800 }}>Memuat lebah madu... 🐝</div>;
   }
 
   return (
     <>
       <style>{`
-        .dash-container { max-width: 1000px; margin: 0 auto; font-family: 'Nunito', sans-serif; }
+        .dash-container { max-width: 1000px; margin: 0 auto; font-family: 'Plus Jakarta Sans', sans-serif; }
         
         .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
         .dash-title { font-size: 2.5rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.5rem; }
         .dash-subtitle { font-size: 1.1rem; color: #5d4037; font-weight: 600; }
         
         .dash-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn-neo { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: box-shadow 0.2s, background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-neo { padding: 0.6rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: box-shadow 0.2s, background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
         .btn-neo:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
         .btn-print { background: #fff; color: #111; }
         .btn-print:hover { background: #f9fafb; }
@@ -175,7 +175,7 @@ export default function DashboardPage() {
 
         .child-select-card { background: #FFF8E1; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
         .child-select-label { font-size: 1.1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
-        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; max-width: 400px; }
+        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; max-width: 400px; }
         .child-select:hover { border-color: #9ca3af; }
         .child-select:focus { outline: none; border-color: #FFC107; box-shadow: 0 0 0 3px rgba(255,193,7,0.15); }
 
@@ -206,7 +206,7 @@ export default function DashboardPage() {
         .neo-table tr:hover td { background: #FFFDE7; }
 
         .action-btns { display: flex; gap: 0.5rem; justify-content: center; }
-        .btn-mini { padding: 0.4rem 0.8rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.85rem; border: 1.5px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+        .btn-mini { padding: 0.4rem 0.8rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.85rem; border: 1.5px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
         .btn-mini:hover { opacity: 0.85; }
         .btn-mini-edit { background: #FFFDE7; color: #111; }
         .btn-mini-del { background: #ffcdd2; color: #111; }

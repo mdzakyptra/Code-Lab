@@ -91,24 +91,24 @@ export default function NutritionPage() {
   };
 
   if (pageLoading) {
-    return <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", fontFamily: "'Nunito', sans-serif", fontSize: "1.2rem", fontWeight: 800 }}>Memuat lebah madu... 🐝</div>;
+    return <div style={{ display: "flex", minHeight: "100vh", alignItems: "center", justifyContent: "center", fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: "1.2rem", fontWeight: 800 }}>Memuat lebah madu... 🐝</div>;
   }
 
   return (
     <>
       <style>{`
-        .neo-container { max-width: 1000px; margin: 0 auto; font-family: 'Nunito', sans-serif; }
+        .neo-container { max-width: 1000px; margin: 0 auto; font-family: 'Plus Jakarta Sans', sans-serif; }
         
         .neo-header { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
         .neo-title { font-size: 2rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
         .neo-subtitle { font-size: 1rem; color: #5d4037; font-weight: 600; }
 
-        .btn-back { padding: 0.6rem 1.25rem; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; background: #FFFDE7; color: #111; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-back { padding: 0.6rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; background: #FFFDE7; color: #111; display: inline-flex; align-items: center; gap: 6px; }
         .btn-back:hover { background: #FFF8E1; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
         .child-select-card { background: #FFF8E1; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
         .child-select-label { font-size: 1.1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
-        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; max-width: 400px; }
+        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; max-width: 400px; }
         .child-select:hover { border-color: #9ca3af; }
         .child-select:focus { outline: none; border-color: #FFC107; box-shadow: 0 0 0 3px rgba(255,193,7,0.15); }
 
@@ -123,7 +123,7 @@ export default function NutritionPage() {
         .status-val { font-size: 1.25rem; font-weight: 900; color: #111; display: block; }
         .status-pill { display: inline-block; background: #fff; border: 1.5px solid #d1d5db; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 1rem; margin-top: 0.25rem; }
 
-        .btn-ai-submit { width: 100%; padding: 1rem 2rem; font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.15rem; border: none; border-radius: 16px; cursor: pointer; background: #FFC107; color: #111; box-shadow: 0 4px 14px rgba(255,193,7,0.4); transition: box-shadow 0.2s, background 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-ai-submit { width: 100%; padding: 1rem 2rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 1.15rem; border: none; border-radius: 16px; cursor: pointer; background: #FFC107; color: #111; box-shadow: 0 4px 14px rgba(255,193,7,0.4); transition: box-shadow 0.2s, background 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .btn-ai-submit:hover:not(:disabled) { background: #FFD54F; box-shadow: 0 6px 20px rgba(255,193,7,0.5); }
         .btn-ai-submit:disabled { opacity: 0.7; cursor: not-allowed; box-shadow: none; }
 

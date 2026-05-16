@@ -40,14 +40,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
         .an {
           position: fixed;
           top: 0; left: 0;
           width: 100%;
           z-index: 9999;
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           background: transparent;
           border: none;
           box-shadow: none;
@@ -158,7 +158,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           box-shadow: 0 4px 12px rgba(255,76,0,0.35);
           transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
           border: none; cursor: pointer;
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
         }
         .an-btn:hover {
           background: #e04300;
@@ -179,7 +179,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           font-size: 0.95rem;
           white-space: nowrap;
           border: none; cursor: pointer;
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           transition: background 0.2s;
         }
         .an-logout:hover { background: #fecaca; }
@@ -224,7 +224,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           color: #fff; text-decoration: none;
           padding: 1rem 1.5rem;
           border-bottom: 1px solid rgba(255,255,255,0.08);
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           transition: background 0.15s;
         }
         .an-mobile a:hover { background: rgba(255,255,255,0.06); }
@@ -246,7 +246,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         }
 
         .an-main {
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           background: #FFFDE7;
           min-height: 100vh;
           padding-top: 80px;
@@ -288,7 +288,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <Link href="/add-data"  className={pathname === "/add-data"  ? "an-mobile-active" : ""} onClick={() => setMenuOpen(false)}>Input Data</Link>
             <Link href="/nutrition" className={pathname === "/nutrition" ? "an-mobile-active" : ""} onClick={() => setMenuOpen(false)}>Nutrisi</Link>
             <Link href="/" className="an-mobile-home" onClick={() => setMenuOpen(false)}>Home</Link>
-            <button className="an-mobile-home" style={{ background: '#ffcdd2', color: '#b71c1c', border: 'none', cursor: 'pointer', fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: '1rem', textAlign: 'center' }} onClick={() => { setMenuOpen(false); handleLogout(); }}>Keluar</button>
+            <button className="an-mobile-home" style={{ background: '#ffcdd2', color: '#b71c1c', border: 'none', cursor: 'pointer', fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 900, fontSize: '1rem', textAlign: 'center' }} onClick={() => { setMenuOpen(false); handleLogout(); }}>Keluar</button>
           </div>
         </>
       )}

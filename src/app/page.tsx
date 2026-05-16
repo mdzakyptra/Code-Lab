@@ -8,9 +8,9 @@ export default function HomePage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900');
         .hp*{box-sizing:border-box;margin:0;padding:0;}
-        .hp{font-family:'Nunito',sans-serif;background:#FFFDE7;overflow-x:clip;}
+        .hp{font-family:'Plus Jakarta Sans',sans-serif;background:#FFFDE7;overflow-x:clip;}
 
         
         html { scroll-behavior: smooth; }
@@ -26,9 +26,9 @@ export default function HomePage() {
         .hp-hero p{font-size:1.25rem;color:#fff;line-height:1.6;margin:0 auto 2.5rem;max-width:600px;font-weight:700;}
         .hp-hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
         
-        .btn-primary{background:#fff;color:#FDBC15;padding:1rem 2.5rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.1rem;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,0.1);transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;}
-        .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:0 12px 24px rgba(0,0,0,0.15);}
-        .btn-secondary{background:rgba(255,255,255,0.2);color:#fff;padding:1rem 2.5rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.1rem;text-decoration:none;backdrop-filter:blur(4px);transition:background .15s;display:inline-flex;align-items:center;}
+        .btn-primary{background:#fff;color:#111;padding:1rem 2.5rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:1.1rem;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,0.1);transition:transform .15s,box-shadow .15s,border-color .15s;display:inline-flex;align-items:center;border:2px solid transparent;}
+        .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:0 12px 24px rgba(0,0,0,0.15);border-color:#111;color:#111!important;}
+        .btn-secondary{background:rgba(255,255,255,0.2);color:#fff;padding:1rem 2.5rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:1.1rem;text-decoration:none;backdrop-filter:blur(4px);transition:background .15s;display:inline-flex;align-items:center;}
         .btn-secondary:hover{background:rgba(255,255,255,0.3);}
 
         .hp-hero-bottom{width:100%;flex:1;position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:440px;z-index:5;}
@@ -139,7 +139,7 @@ export default function HomePage() {
         
         .splash-text-svg { width: 400px; height: 120px; overflow: visible; }
         .splash-text {
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           font-weight: 900;
           font-size: 5.5rem;
           fill: transparent;
@@ -238,25 +238,27 @@ export default function HomePage() {
         .hp-how-wave{width:100%;overflow:visible;display:block;margin:-8px 0;height:60px;}
 
         /* ABOUT */
-        .hp-about{background:#111;padding:5rem 2rem;position:relative;overflow:hidden;}
-        .hp-about-inner{max-width:960px;margin:0 auto;}
+        .hp-about{background:#FFFDE7;padding:5rem 2rem;position:relative;overflow:hidden;}
+        .hp-about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+        .hp-about-left{display:flex;flex-direction:column;align-items:flex-start;}
         .hp-about-tag{display:inline-block;background:#FDBC15;color:#111;padding:4px 16px;border-radius:999px;font-size:.75rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;}
-        .hp-about h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;color:#FDBC15;letter-spacing:-.02em;line-height:1.2;margin-bottom:1rem;}
-        .hp-about-lead{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:600px;line-height:1.75;margin-bottom:3rem;}
-        .hp-about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin-bottom:3rem;}
-        .hp-about-card{background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;padding:1.5rem;transition:border-color .2s,background .2s;}
-        .hp-about-card:hover{background:rgba(255,193,7,.08);border-color:rgba(253,188,21,.4);}
+        .hp-about h2{font-size:clamp(1.75rem,4vw,2.75rem);font-weight:900;color:#111;letter-spacing:-.02em;line-height:1.2;margin-bottom:1rem;}
+        .hp-about-lead{color:#444;font-size:1.05rem;line-height:1.75;margin-bottom:2.5rem;}
+        .hp-about-grid{display:grid;grid-template-columns:repeat(2, 1fr);gap:1.25rem;}
+        @media (max-width: 900px) { .hp-about-inner { grid-template-columns: 1fr; gap: 3rem; } }
+        .hp-about-card{background:#fff;border:1.5px solid #e0e0e0;border-radius:16px;padding:1.5rem;transition:border-color .2s,background .2s;box-shadow:0 4px 12px rgba(0,0,0,0.03);}
+        .hp-about-card:hover{background:#FFF8E1;border-color:#FDBC15;}
         .hp-about-icon{font-size:2rem;margin-bottom:.75rem;}
-        .hp-about-card h3{font-size:1rem;font-weight:900;color:#fff;margin-bottom:.4rem;}
-        .hp-about-card p{font-size:.875rem;color:rgba(255,255,255,.6);line-height:1.6;}
+        .hp-about-card h3{font-size:1rem;font-weight:900;color:#111;margin-bottom:.4rem;}
+        .hp-about-card p{font-size:.875rem;color:#555;line-height:1.6;}
         .hp-about-bottom{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
-        .btn-cta{background:#FDBC15;color:#111;padding:1rem 2.5rem;border-radius:999px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1.0625rem;text-decoration:none;border:2.5px solid #FDBC15;box-shadow:5px 5px 0 #FF8F00;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px;}
-        .btn-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #FF8F00;}
-        .hp-about-note{font-size:.875rem;color:rgba(255,255,255,.45);line-height:1.6;}
+        .btn-cta{background:#FDBC15;color:#111;padding:1rem 2.5rem;border-radius:999px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:1.0625rem;text-decoration:none;border:2.5px solid #FDBC15;box-shadow:5px 5px 0 #FF8F00;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px;}
+        .btn-cta:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #FF8F00;color:#111!important;}
+        .hp-about-note{font-size:.875rem;color:#666;line-height:1.6;}
 
         /* FOOTER */
-        .hp-footer{background:#111;border-top:3px solid #FDBC15;color:rgba(255,255,255,.45);padding:2rem;text-align:center;font-size:.8125rem;}
-        .hp-footer strong{color:#FDBC15;}
+        .hp-footer{background:#FFFDE7;border-top:2px solid #e0e0e0;color:#666;padding:2rem;text-align:center;font-size:.8125rem;}
+        .hp-footer strong{color:#111;}
       `}</style>
       <HomeNavbar />
       <div className="hp hp-ready">
@@ -276,7 +278,6 @@ export default function HomePage() {
               <p className="anim-pop delay-2">Deteksi dini, rekomendasi gizi, dan pantau pertumbuhan anak setiap saat bersama GrowB!</p>
               <div className="hp-hero-btns anim-pop delay-3">
                 <Link href="/register" className="btn-primary">Mulai Sekarang</Link>
-                <Link href="#features" className="btn-secondary">Pelajari Lebih Lanjut</Link>
               </div>
             </div>
 
@@ -417,7 +418,7 @@ export default function HomePage() {
         <section className="hp-how" id="how-to-use">
           <div className="hp-how-inner">
             <div className="hp-how-head">
-              <h2>Mulai dalam 4 Langkah Mudah</h2>
+              <h2>How It Works?</h2>
               <p>Tidak perlu keahlian khusus — cukup data anak dan GrowB sisanya.</p>
             </div>
             <div className="hp-how-steps">
@@ -477,55 +478,54 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* TIES DIRECTLY INTO ABOUT US, NO DIVIDER NEEDED */}
+
+
         {/* ABOUT US */}
         <section className="hp-about" id="about-us">
           <div className="hp-about-inner">
-            <div className="hp-about-tag">🐝 Tentang GrowB</div>
-            <h2>Dibangun untuk Masa Depan<br />Anak Indonesia</h2>
-            <p className="hp-about-lead">
-              Stunting masih menjadi tantangan besar di Indonesia — 1 dari 5 anak mengalaminya.
-              GrowB hadir karena kami percaya setiap orang tua berhak mendapatkan alat yang mudah,
-              akurat, dan gratis untuk memantau tumbuh kembang si kecil sedini mungkin.
-            </p>
+            <div className="hp-about-left">
+              <div className="hp-about-tag">Tentang GrowB</div>
+              <h2>Dibangun untuk Masa Depan<br />Anak Indonesia</h2>
+              <p className="hp-about-lead">
+                Stunting masih menjadi tantangan besar di Indonesia — 1 dari 5 anak mengalaminya.
+                GrowB hadir karena kami percaya setiap orang tua berhak mendapatkan alat yang mudah,
+                akurat, dan gratis untuk memantau tumbuh kembang si kecil sedini mungkin.
+              </p>
+
+              <div className="hp-about-bottom">
+                <Link href="/register" className="btn-cta">Mulai Sekarang — Gratis!</Link>
+                <p className="hp-about-note">
+                  Sudah punya akun?{" "}
+                  <Link href="/login" style={{ color: "#FDBC15", fontWeight: 700, textDecoration: "underline" }}>Masuk di sini</Link>
+                </p>
+              </div>
+            </div>
 
             <div className="hp-about-grid">
               <div className="hp-about-card">
-                <div className="hp-about-icon">🎯</div>
+                <div className="hp-about-icon"><img src="/research.png" alt="Misi" style={{ width: '48px', height: '48px', objectFit: 'contain' }} /></div>
                 <h3>Misi Kami</h3>
                 <p>Mendeteksi risiko stunting lebih awal menggunakan standar WHO agar intervensi gizi bisa dilakukan tepat waktu.</p>
               </div>
               <div className="hp-about-card">
-                <div className="hp-about-icon">👨‍👩‍👧</div>
+                <div className="hp-about-icon"><img src="/team.png" alt="Untuk Siapa" style={{ width: '48px', height: '48px', objectFit: 'contain' }} /></div>
                 <h3>Untuk Siapa</h3>
                 <p>Orang tua, kader Posyandu, bidan desa, dan tenaga kesehatan yang ingin memantau pertumbuhan anak secara digital.</p>
               </div>
               <div className="hp-about-card">
-                <div className="hp-about-icon">🤖</div>
+                <div className="hp-about-icon"><img src="/rocket.png" alt="Teknologi" style={{ width: '48px', height: '48px', objectFit: 'contain' }} /></div>
                 <h3>Teknologi</h3>
                 <p>Kalkulasi Z-Score otomatis berbasis data WHO, dikombinasikan dengan rekomendasi nutrisi berbasis AI yang dipersonalisasi.</p>
               </div>
               <div className="hp-about-card">
-                <div className="hp-about-icon">🍯</div>
+                <div className="hp-about-icon"><img src="/piggy-bank.png" alt="Gratis" style={{ width: '48px', height: '48px', objectFit: 'contain' }} /></div>
                 <h3>Gratis Selamanya</h3>
                 <p>GrowB sepenuhnya gratis. Tidak ada biaya tersembunyi — karena kesehatan anak tidak boleh jadi privilege.</p>
               </div>
             </div>
-
-            <div className="hp-about-bottom">
-              <Link href="/register" className="btn-cta">Mulai Sekarang — Gratis 🎉</Link>
-              <p className="hp-about-note">
-                Sudah punya akun?{" "}
-                <Link href="/login" style={{ color: "#FDBC15", fontWeight: 700, textDecoration: "underline" }}>Masuk di sini</Link>
-              </p>
-            </div>
           </div>
         </section>
-
-        {/* FOOTER / ABOUT US */}
-        <footer className="hp-footer" id="about-us">
-          <p>© {new Date().getFullYear()} <strong>GrowB 🐝</strong> — Platform Deteksi Dini Stunting Anak Indonesia</p>
-          <p style={{ marginTop: ".4rem" }}>Dibuat dengan ❤️ dan 🍯 untuk masa depan anak yang lebih sehat</p>
-        </footer>
       </div>
     </>
   );

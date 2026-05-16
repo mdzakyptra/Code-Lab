@@ -37,7 +37,7 @@ export default function HomeNavbar() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
         /* ── wrapper: always fixed, always transparent ── */
         .hn {
@@ -45,7 +45,7 @@ export default function HomeNavbar() {
           top: 0; left: 0;
           width: 100%;
           z-index: 9999;
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           background: transparent;
           border: none;
           box-shadow: none;
@@ -145,7 +145,6 @@ export default function HomeNavbar() {
           text-decoration: none;
           white-space: nowrap;
           flex-shrink: 0;
-          box-shadow: 0 4px 12px rgba(255,76,0,0.35);
           transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
         }
         .hn-btn:hover {
@@ -165,7 +164,7 @@ export default function HomeNavbar() {
         .hn-app-btn {
           background: #111; color: #FDBC15;
           padding: 0.55rem 1.2rem; border-radius: 999px;
-          font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.9rem;
+          font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 0.9rem;
           border: none; cursor: pointer; display: flex; align-items: center; gap: 6px;
           white-space: nowrap; transition: background 0.2s, transform 0.15s;
         }
@@ -193,7 +192,7 @@ export default function HomeNavbar() {
         }
         .hn-dropdown a {
           display: flex; align-items: center; gap: 10px;
-          padding: 0.65rem 1rem; font-family: 'Nunito', sans-serif;
+          padding: 0.65rem 1rem; font-family: 'Plus Jakarta Sans', sans-serif;
           font-size: 0.95rem; font-weight: 800; color: #111;
           text-decoration: none; transition: background 0.15s;
         }
@@ -244,7 +243,7 @@ export default function HomeNavbar() {
           color: #fff; text-decoration: none;
           padding: 1rem 1.5rem;
           border-bottom: 1px solid rgba(255,255,255,0.08);
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
           transition: background 0.15s;
         }
         .hn-mobile a:hover { background: rgba(255,255,255,0.06); }
