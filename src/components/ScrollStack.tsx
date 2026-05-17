@@ -80,21 +80,25 @@ const ScrollStack = ({
   const setupLenis = useCallback(() => {
     if (useWindowScroll) {
       window.addEventListener('scroll', handleScroll, { passive: true });
-      try {
-        const lenis = new Lenis({
-          lerp: 0.1,
-          smoothWheel: true,
-          wheelMultiplier: 1,
-          touchMultiplier: 2,
-        });
-        lenis.on('scroll', handleScroll);
-        const raf = (time: number) => {
-          lenis.raf(time);
+
+      const isMobile = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+      if (!isMobile) {
+        try {
+          const lenis = new Lenis({
+            lerp: 0.02,
+            smoothWheel: true,
+            wheelMultiplier: 1,
+            touchMultiplier: 1,
+          });
+          lenis.on('scroll', handleScroll);
+          const raf = (time: number) => {
+            lenis.raf(time);
+            animationFrameRef.current = requestAnimationFrame(raf);
+          };
           animationFrameRef.current = requestAnimationFrame(raf);
-        };
-        animationFrameRef.current = requestAnimationFrame(raf);
-        lenisRef.current = lenis;
-      } catch {}
+          lenisRef.current = lenis;
+        } catch {}
+      }
     }
   }, [handleScroll, useWindowScroll]);
 
