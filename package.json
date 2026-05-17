@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.50.1",
+    "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.105.4",
     "groq-sdk": "^1.1.2",
     "lenis": "^1.3.23",

@@ -24,12 +24,18 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
-    // SIMULASI LOGIN (Karena Supabase belum dikonfigurasi)
-    setTimeout(() => {
+
+    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (authError) {
+      setError(authError.message === 'Invalid login credentials'
+        ? 'Email atau password salah. Silakan coba lagi.'
+        : authError.message);
       setLoading(false);
-      router.push('/dashboard');
-    }, 1000);
+      return;
+    }
+
+    router.push('/dashboard');
   };
 
   return (

@@ -217,7 +217,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           max-height: 0;
           transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
         }
-        .an-mobile.open { max-height: 280px; }
+        .an-mobile.open { max-height: 360px; }
         .an-mobile a {
           display: block;
           font-size: 1rem; font-weight: 800;
@@ -230,15 +230,32 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         .an-mobile a:hover { background: rgba(255,255,255,0.06); }
         .an-mobile a.an-mobile-active { color: #FDBC15; }
         .an-mobile .an-mobile-home {
-          margin: 1rem 1.5rem;
+          margin: 1rem 1.5rem 0;
           background: #FF4C00;
           color: #fff !important;
           border-radius: 999px;
           text-align: center;
           border-bottom: none;
         }
+        .an-mobile .an-mobile-logout {
+          margin: 0.5rem 1.5rem 1rem;
+          background: #ffcdd2;
+          color: #b71c1c !important;
+          border-radius: 999px;
+          text-align: center;
+          border-bottom: none;
+          padding: 1rem 1.5rem;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-weight: 900;
+          font-size: 1rem;
+          border: none;
+          cursor: pointer;
+          width: calc(100% - 3rem);
+          display: block;
+        }
+        .an-mobile .an-mobile-logout:hover { background: #fecaca; }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           .an-links  { display: none; }
           .an-right  { display: none; }
           .an-burger { display: flex; }
@@ -249,7 +266,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           font-family: 'Plus Jakarta Sans', sans-serif;
           background: #FFFDE7;
           min-height: 100vh;
-          padding-top: 80px;
+          padding: 80px 1rem 0;
+        }
+        @media (min-width: 640px) {
+          .an-main { padding: 88px 1.5rem 0; }
+        }
+        @media (min-width: 1024px) {
+          .an-main { padding: 96px 2rem 0; }
         }
       `}</style>
 
@@ -288,7 +311,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <Link href="/add-data"  className={pathname === "/add-data"  ? "an-mobile-active" : ""} onClick={() => setMenuOpen(false)}>Input Data</Link>
             <Link href="/nutrition" className={pathname === "/nutrition" ? "an-mobile-active" : ""} onClick={() => setMenuOpen(false)}>Nutrisi</Link>
             <Link href="/" className="an-mobile-home" onClick={() => setMenuOpen(false)}>Home</Link>
-            <button className="an-mobile-home" style={{ background: '#ffcdd2', color: '#b71c1c', border: 'none', cursor: 'pointer', fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 900, fontSize: '1rem', textAlign: 'center' }} onClick={() => { setMenuOpen(false); handleLogout(); }}>Keluar</button>
+            <button className="an-mobile-logout" onClick={() => { setMenuOpen(false); handleLogout(); }}>Keluar</button>
           </div>
         </>
       )}

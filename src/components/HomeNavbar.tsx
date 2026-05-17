@@ -237,7 +237,7 @@ export default function HomeNavbar() {
           max-height: 0;
           transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
         }
-        .hn-mobile.open { max-height: 300px; }
+        .hn-mobile.open { max-height: 480px; }
         .hn-mobile a {
           display: block;
           font-size: 1rem; font-weight: 800;
@@ -256,12 +256,22 @@ export default function HomeNavbar() {
           text-align: center;
           border-bottom: none;
         }
+        .hn-mobile-section {
+          font-size: 0.7rem; font-weight: 900; color: #888;
+          text-transform: uppercase; letter-spacing: .08em;
+          padding: 0.75rem 1.5rem 0.25rem;
+          border-bottom: none;
+        }
+        .hn-mobile-divider {
+          height: 1px; background: rgba(255,255,255,0.1); margin: 0.25rem 0;
+        }
 
-        @media (max-width: 640px) {
-          .hn-links { display: none; }
-          .hn-btn   { display: none; }
-          .hn-burger { display: flex; }
-          .hn-mobile { display: flex; }
+        @media (max-width: 768px) {
+          .hn-links    { display: none; }
+          .hn-btn      { display: none; }
+          .hn-app-wrap { display: none; }
+          .hn-burger   { display: flex; }
+          .hn-mobile   { display: flex; }
         }
       `}</style>
 
@@ -308,6 +318,11 @@ export default function HomeNavbar() {
         <a href="#features"   onClick={() => setMenuOpen(false)}>Feature</a>
         <a href="#how-to-use" onClick={() => setMenuOpen(false)}>How to Use</a>
         <a href="#about-us"   onClick={() => setMenuOpen(false)}>About Us</a>
+        <div className="hn-mobile-divider" />
+        <span className="hn-mobile-section">Buka App</span>
+        <Link href="/dashboard"  onClick={() => setMenuOpen(false)}>📊 Dashboard</Link>
+        <Link href="/add-data"   onClick={() => setMenuOpen(false)}>📝 Input Data</Link>
+        <Link href="/nutrition"  onClick={() => setMenuOpen(false)}>🥗 Rekomendasi Nutrisi</Link>
         <Link href="/login" className="hn-mobile-btn" onClick={() => setMenuOpen(false)}>Login</Link>
       </div>
     </>

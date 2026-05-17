@@ -181,37 +181,45 @@ function AddDataForm() {
   return (
     <>
       <style>{`
-        .neo-container { max-width: 800px; margin: 0 auto; font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        .neo-header { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .neo-title { font-size: 2rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
-        .neo-subtitle { font-size: 1rem; color: #5d4037; font-weight: 600; }
+        .neo-container { max-width: 800px; margin: 0 auto; font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 4rem; }
 
-        .btn-back { padding: 0.6rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; background: #FFFDE7; color: #111; display: inline-flex; align-items: center; gap: 6px; }
+        .neo-header { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
+        @media(min-width: 640px) { .neo-header { border-radius: 20px; padding: 2rem; margin-bottom: 2rem; align-items: center; } }
+        .neo-title { font-size: 1.4rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        @media(min-width: 640px) { .neo-title { font-size: 2rem; } }
+        .neo-subtitle { font-size: 0.875rem; color: #5d4037; font-weight: 600; }
+        @media(min-width: 640px) { .neo-subtitle { font-size: 1rem; } }
+
+        .btn-back { padding: 0.5rem 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.875rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; background: #FFFDE7; color: #111; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
         .btn-back:hover { background: #FFF8E1; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-        .alert-error { background: #fff1f2; border: 1.5px solid #fca5a5; border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(239,68,68,0.1); color: #b71c1c; }
-        .alert-error-title { font-weight: 900; font-size: 1.1rem; margin-bottom: 0.25rem; }
+        .alert-error { background: #fff1f2; border: 1.5px solid #fca5a5; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; display: flex; gap: 0.75rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(239,68,68,0.1); color: #b71c1c; }
+        .alert-error-title { font-weight: 900; font-size: 1rem; margin-bottom: 0.25rem; }
 
-        .neo-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; }
-        .neo-card-title { font-size: 1.25rem; font-weight: 900; color: #111; margin-bottom: 0.25rem; }
-        .neo-card-desc { font-size: 0.95rem; color: #5d4037; font-weight: 600; margin-bottom: 1.5rem; }
+        .neo-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 1.25rem; }
+        @media(min-width: 640px) { .neo-card { border-radius: 20px; padding: 2rem; margin-bottom: 2rem; } }
+        .neo-card-title { font-size: 1.05rem; font-weight: 900; color: #111; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem; }
+        @media(min-width: 640px) { .neo-card-title { font-size: 1.25rem; } }
+        .neo-card-desc { font-size: 0.85rem; color: #5d4037; font-weight: 600; margin-bottom: 1.25rem; }
+        @media(min-width: 640px) { .neo-card-desc { font-size: 0.95rem; margin-bottom: 1.5rem; } }
 
-        .neo-tabs { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .neo-tab { flex: 1; min-width: 200px; padding: 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1rem; border: 1.5px solid #e5e7eb; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #FFFDE7; color: #5d4037; }
+        .neo-tabs { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .neo-tab { flex: 1; min-width: 130px; padding: 0.75rem 0.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.875rem; border: 1.5px solid #e5e7eb; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.4rem; background: #FFFDE7; color: #5d4037; }
+        @media(min-width: 640px) { .neo-tab { font-size: 1rem; padding: 1rem; min-width: 180px; } }
         .neo-tab:hover:not(:disabled) { background: #FFF8E1; border-color: #d1d5db; }
         .neo-tab.active { background: #FFC107; color: #111; border-color: #FFC107; box-shadow: 0 2px 8px rgba(255,193,7,0.3); }
         .neo-tab:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .badge-count { background: #111; color: #FFC107; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 900; }
+        .badge-count { background: #111; color: #FFC107; padding: 2px 7px; border-radius: 999px; font-size: 0.7rem; font-weight: 900; }
 
-        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
-        @media(min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } .col-span-2 { grid-column: span 2; } }
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media(min-width: 640px) { .form-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; } .col-span-2 { grid-column: span 2; } }
 
         .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        .neo-label { font-size: 0.95rem; font-weight: 800; color: #111; }
+        .neo-label { font-size: 0.875rem; font-weight: 800; color: #111; }
+        @media(min-width: 640px) { .neo-label { font-size: 0.95rem; } }
 
-        .neo-input { width: 100%; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1rem; font-size: 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: #111; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+        .neo-input { width: 100%; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.75rem 1rem; font-size: 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: #111; background: #fff; transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
         .neo-input:focus { border-color: #FFC107; box-shadow: 0 0 0 3px rgba(255,193,7,0.15); }
         .neo-input::placeholder { color: #9e9e9e; font-weight: 600; }
 
@@ -220,14 +228,18 @@ function AddDataForm() {
         .input-wrapper { position: relative; }
         .input-addon { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem; font-weight: 900; color: #5d4037; }
 
-        .info-box { background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 12px; padding: 1.25rem; display: flex; gap: 1rem; align-items: flex-start; margin-top: 1.5rem; }
-        .info-box p { font-size: 0.9rem; font-weight: 700; color: #3e2723; margin: 0; }
+        .info-box { background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 12px; padding: 1rem; display: flex; gap: 0.75rem; align-items: flex-start; margin-top: 1.25rem; }
+        @media(min-width: 640px) { .info-box { padding: 1.25rem; gap: 1rem; margin-top: 1.5rem; } }
+        .info-box p { font-size: 0.85rem; font-weight: 700; color: #3e2723; margin: 0; }
+        @media(min-width: 640px) { .info-box p { font-size: 0.9rem; } }
 
-        .form-actions { display: flex; gap: 1rem; margin-top: 2rem; justify-content: flex-end; flex-wrap: wrap; }
-        .btn-cancel { padding: 0.875rem 2rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 1.05rem; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; background: #FFFDE7; color: #111; text-decoration: none; transition: background 0.2s; }
+        .form-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; justify-content: flex-end; flex-wrap: wrap; }
+        .btn-cancel { padding: 0.75rem 1.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 0.95rem; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; background: #FFFDE7; color: #111; text-decoration: none; transition: background 0.2s; }
+        @media(min-width: 640px) { .btn-cancel { padding: 0.875rem 2rem; font-size: 1.05rem; } }
         .btn-cancel:hover { background: #FFF8E1; }
 
-        .btn-submit { padding: 0.875rem 2.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 1.05rem; border: none; border-radius: 999px; cursor: pointer; background: #111; color: #FFC107; box-shadow: 0 4px 14px rgba(0,0,0,0.2); transition: box-shadow 0.2s, background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-submit { padding: 0.75rem 1.75rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 0.95rem; border: none; border-radius: 999px; cursor: pointer; background: #111; color: #FFC107; box-shadow: 0 4px 14px rgba(0,0,0,0.2); transition: box-shadow 0.2s, background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        @media(min-width: 640px) { .btn-submit { padding: 0.875rem 2.5rem; font-size: 1.05rem; } }
         .btn-submit:hover:not(:disabled) { background: #2a2a2a; box-shadow: 0 6px 20px rgba(0,0,0,0.28); }
         .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
       `}</style>
@@ -236,7 +248,7 @@ function AddDataForm() {
         {/* Header */}
         <div className="neo-header">
           <div>
-            <h1 className="neo-title">✍️ Input Data</h1>
+            <h1 className="neo-title"><img src="/accountant.png" alt="" width={28} height={28} /> Input Data</h1>
             <p className="neo-subtitle">Perbarui data ukur atau tambahkan profil anak</p>
           </div>
           <Link href="/dashboard" className="btn-back">
@@ -267,7 +279,7 @@ function AddDataForm() {
                 disabled={existingChildren.length === 0}
                 className={`neo-tab ${!isNewChild ? 'active' : ''}`}
               >
-                👦 Lanjutkan Pengisian
+                <img src="/good-choice.png" alt="" width={20} height={20} style={{display:'inline',verticalAlign:'middle'}} /> Lanjutkan Pengisian
                 {existingChildren.length > 0 && (
                   <span className="badge-count">{existingChildren.length}</span>
                 )}
@@ -277,7 +289,7 @@ function AddDataForm() {
                 onClick={() => setIsNewChild(true)}
                 className={`neo-tab ${isNewChild ? 'active' : ''}`}
               >
-                ➕ Tambah Anak Baru
+                <img src="/kid.png" alt="" width={20} height={20} style={{display:'inline',verticalAlign:'middle'}} /> Tambah Anak Baru
               </button>
             </div>
           </div>
@@ -286,7 +298,7 @@ function AddDataForm() {
           <div className="neo-card animate-fade-in">
             {isNewChild ? (
               <>
-                <h2 className="neo-card-title">Profil Anak Baru</h2>
+                <h2 className="neo-card-title"><img src="/graphics.png" alt="" width={22} height={22} /> Profil Anak Baru</h2>
                 <p className="neo-card-desc">Isi data lengkap anak yang akan dipantau pertumbuhannya</p>
                 <div className="form-grid">
                   <div className="form-group col-span-2">
@@ -327,7 +339,7 @@ function AddDataForm() {
               </>
             ) : (
               <>
-                <h2 className="neo-card-title">Pilih Anak</h2>
+                <h2 className="neo-card-title"><img src="/kid.png" alt="" width={22} height={22} /> Pilih Anak</h2>
                 <p className="neo-card-desc">Pilih anak yang akan dicatat pengukurannya</p>
                 <div className="form-group">
                   <label className="neo-label">Nama Anak yang Akan Diukur</label>
@@ -387,7 +399,7 @@ function AddDataForm() {
 
             {/* Info Box */}
             <div className="info-box">
-              <span style={{ fontSize: '1.5rem' }}>💡</span>
+              <img src="/idea.png" alt="" width={28} height={28} style={{flexShrink:0}} />
               <div>
                 <strong style={{ display: 'block', marginBottom: '0.25rem', color: '#111' }}>Tips Pengukuran</strong>
                 <p>Ukur berat dan tinggi badan anak di pagi hari sebelum makan untuk hasil yang akurat. Gunakan timbangan dan alat ukur standar!</p>
@@ -405,7 +417,7 @@ function AddDataForm() {
               disabled={loading}
               className="btn-submit"
             >
-              {loading ? 'Menyimpan... 🐝' : 'Simpan Data & Analisis 🚀'}
+              {loading ? 'Menyimpan... 🐝' : 'Simpan Data & Analisis'}
             </button>
           </div>
 

@@ -25,12 +25,24 @@ export default function RegisterPage() {
     setLoading(true);
     setError('');
 
-    // SIMULASI DAFTAR (Karena Supabase belum dikonfigurasi)
-    setTimeout(() => {
+    const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
+
+    if (signUpError) {
+      setError(signUpError.message);
       setLoading(false);
-      alert('Pendaftaran berhasil! (Mode Simulasi)');
-      router.push('/login');
-    }, 1200);
+      return;
+    }
+
+    if (data.user) {
+      await supabase.from('profiles').upsert({
+        id: data.user.id,
+        full_name: fullName,
+        role: role,
+      });
+    }
+
+    alert('Pendaftaran berhasil! Silakan masuk dengan akun Anda.');
+    router.push('/login');
   };
 
   return (

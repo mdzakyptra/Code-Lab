@@ -155,14 +155,15 @@ export default function DashboardPage() {
   return (
     <>
       <style>{`
-        .dash-container { max-width: 1000px; margin: 0 auto; font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
-        .dash-title { font-size: 2.5rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.5rem; }
-        .dash-subtitle { font-size: 1.1rem; color: #5d4037; font-weight: 600; }
-        
-        .dash-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn-neo { padding: 0.6rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: box-shadow 0.2s, background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .dash-container { max-width: 1000px; margin: 0 auto; font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 4rem; }
+
+        .dash-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+        .dash-title { font-size: 1.75rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.4rem; }
+        .dash-subtitle { font-size: 0.95rem; color: #5d4037; font-weight: 600; }
+        @media(min-width: 640px) { .dash-title { font-size: 2.5rem; } .dash-subtitle { font-size: 1.1rem; } }
+
+        .dash-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .btn-neo { padding: 0.55rem 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.85rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: box-shadow 0.2s, background 0.2s; display: inline-flex; align-items: center; gap: 6px; }
         .btn-neo:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
         .btn-print { background: #fff; color: #111; }
         .btn-print:hover { background: #f9fafb; }
@@ -173,40 +174,43 @@ export default function DashboardPage() {
         .btn-logout { background: #ffcdd2; color: #b71c1c; border-color: #fca5a5; }
         .btn-logout:hover { background: #fecaca; }
 
-        .child-select-card { background: #FFF8E1; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
-        .child-select-label { font-size: 1.1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
-        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; max-width: 400px; }
+        .child-select-card { background: #FFF8E1; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .child-select-label { font-size: 1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
+        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.75rem 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
         .child-select:hover { border-color: #9ca3af; }
         .child-select:focus { outline: none; border-color: #FFC107; box-shadow: 0 0 0 3px rgba(255,193,7,0.15); }
 
-        .neo-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; position: relative; overflow: hidden; }
-        .neo-card-title { font-size: 1.5rem; font-weight: 900; color: #111; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .neo-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+        @media(min-width: 640px) { .neo-card { border-radius: 20px; padding: 2rem; margin-bottom: 2rem; } }
+        .neo-card-title { font-size: 1.15rem; font-weight: 900; color: #111; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        @media(min-width: 640px) { .neo-card-title { font-size: 1.5rem; margin-bottom: 1.5rem; } }
 
-        .alert-box { background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 16px; padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; }
+        .alert-box { background: #FFF8E1; border: 1.5px solid #FFC107; border-radius: 14px; padding: 1rem; display: flex; gap: 0.75rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 1.5rem; }
         .alert-danger { background: #fff1f2; border-color: #fca5a5; }
-        .alert-title { font-weight: 900; font-size: 1.1rem; color: #111; margin-bottom: 0.25rem; }
-        .alert-text { font-size: 0.95rem; color: #3e2723; font-weight: 600; }
+        .alert-title { font-weight: 900; font-size: 1rem; color: #111; margin-bottom: 0.25rem; }
+        .alert-text { font-size: 0.875rem; color: #3e2723; font-weight: 600; }
 
-        .status-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-        @media(min-width: 768px) { .status-grid { grid-template-columns: 1.5fr 1fr; } }
+        .status-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        @media(min-width: 768px) { .status-grid { grid-template-columns: 1.5fr 1fr; gap: 1.5rem; margin-bottom: 2rem; } }
 
-        .status-box { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: center; }
-        .status-label { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5d4037; margin-bottom: 0.5rem; }
-        .status-value { font-size: 1.5rem; font-weight: 900; color: #111; }
+        .status-box { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; justify-content: center; }
+        .status-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5d4037; margin-bottom: 0.4rem; }
+        .status-value { font-size: 1.15rem; font-weight: 900; color: #111; }
+        @media(min-width: 640px) { .status-value { font-size: 1.5rem; } }
 
-        .chart-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
 
-        .neo-table-wrapper { border: 1.5px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .neo-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .neo-table th { background: #FFF8E1; padding: 1rem; font-weight: 900; color: #111; border-bottom: 1.5px solid #e5e7eb; border-right: 1px solid #e5e7eb; }
+        .neo-table-wrapper { border: 1.5px solid #e5e7eb; border-radius: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .neo-table { width: 100%; min-width: 520px; border-collapse: collapse; text-align: left; }
+        .neo-table th { background: #FFF8E1; padding: 0.75rem 1rem; font-weight: 900; color: #111; border-bottom: 1.5px solid #e5e7eb; border-right: 1px solid #e5e7eb; white-space: nowrap; font-size: 0.875rem; }
         .neo-table th:last-child { border-right: none; }
-        .neo-table td { background: #fff; padding: 1rem; font-weight: 700; color: #3e2723; border-bottom: 1px solid #f3f4f6; border-right: 1px solid #f3f4f6; }
+        .neo-table td { background: #fff; padding: 0.75rem 1rem; font-weight: 700; color: #3e2723; border-bottom: 1px solid #f3f4f6; border-right: 1px solid #f3f4f6; font-size: 0.875rem; }
         .neo-table td:last-child { border-right: none; }
         .neo-table tr:last-child td { border-bottom: none; }
         .neo-table tr:hover td { background: #FFFDE7; }
 
         .action-btns { display: flex; gap: 0.5rem; justify-content: center; }
-        .btn-mini { padding: 0.4rem 0.8rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.85rem; border: 1.5px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: background 0.15s; }
+        .btn-mini { padding: 0.4rem 0.75rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.8rem; border: 1.5px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
         .btn-mini:hover { opacity: 0.85; }
         .btn-mini-edit { background: #FFFDE7; color: #111; }
         .btn-mini-del { background: #ffcdd2; color: #111; }
@@ -234,7 +238,7 @@ export default function DashboardPage() {
             <p className="dash-subtitle">Halo Bunda {profile?.full_name || user?.email}!</p>
           </div>
           <div className="dash-actions">
-            <button onClick={() => window.print()} className="btn-neo btn-print">🖨️ Cetak PDF</button>
+            <button onClick={() => window.print()} className="btn-neo btn-print"><img src="/magnet.png" alt="" width={18} height={18} style={{display:'inline',verticalAlign:'middle'}} /> Cetak PDF</button>
           </div>
         </div>
 
@@ -257,7 +261,7 @@ export default function DashboardPage() {
         {children.length > 0 && (
           <div className="child-select-card print-hidden animate-fade-in">
             <label className="child-select-label">
-              <span>👶</span> Pilih Anak untuk Dipantau:
+              <img src="/kid.png" alt="" width={22} height={22} style={{display:'inline',verticalAlign:'middle'}} /> Pilih Anak untuk Dipantau:
             </label>
             <select
               className="child-select"
@@ -274,7 +278,7 @@ export default function DashboardPage() {
         <div className="status-grid">
           {latestStatus && latestStatus.status && (
             <div className="neo-card animate-fade-in" style={{ marginBottom: 0 }}>
-              <h2 className="neo-card-title">🩺 Status Gizi Saat Ini</h2>
+              <h2 className="neo-card-title"><img src="/teamwork.png" alt="" width={24} height={24} /> Status Gizi Saat Ini</h2>
 
               <div className="status-box" style={{ marginBottom: '1rem', background: '#FFC107' }}>
                 <span className="status-label">Kondisi (Z-Score WHO)</span>
@@ -305,7 +309,7 @@ export default function DashboardPage() {
           )}
 
           <div className="neo-card" style={{ marginBottom: 0, background: '#FFC107', borderColor: '#FFC107' }}>
-            <h2 className="neo-card-title">👤 Info Akun</h2>
+            <h2 className="neo-card-title"><img src="/user.png" alt="" width={24} height={24} /> Info Akun</h2>
             <div className="status-box" style={{ marginBottom: '1rem', background: '#fff' }}>
               <span className="status-label">Email Terdaftar</span>
               <span className="status-value" style={{ fontSize: '1.1rem' }}>{user?.email}</span>

@@ -97,59 +97,72 @@ export default function NutritionPage() {
   return (
     <>
       <style>{`
-        .neo-container { max-width: 1000px; margin: 0 auto; font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        .neo-header { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
-        .neo-title { font-size: 2rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
-        .neo-subtitle { font-size: 1rem; color: #5d4037; font-weight: 600; }
+        .neo-container { max-width: 1000px; margin: 0 auto; font-family: 'Plus Jakarta Sans', sans-serif; padding-bottom: 4rem; }
 
-        .btn-back { padding: 0.6rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.95rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; background: #FFFDE7; color: #111; display: inline-flex; align-items: center; gap: 6px; }
+        .neo-header { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
+        @media(min-width: 640px) { .neo-header { border-radius: 20px; padding: 2rem; margin-bottom: 2rem; gap: 1.5rem; align-items: center; } }
+        .neo-title { font-size: 1.4rem; font-weight: 900; color: #111; line-height: 1.1; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        @media(min-width: 640px) { .neo-title { font-size: 2rem; } }
+        .neo-subtitle { font-size: 0.875rem; color: #5d4037; font-weight: 600; }
+        @media(min-width: 640px) { .neo-subtitle { font-size: 1rem; } }
+
+        .btn-back { padding: 0.5rem 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.875rem; text-decoration: none; border: 1.5px solid #d1d5db; border-radius: 999px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s; background: #FFFDE7; color: #111; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
         .btn-back:hover { background: #FFF8E1; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
-        .child-select-card { background: #FFF8E1; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
-        .child-select-label { font-size: 1.1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
-        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.875rem 1.25rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.15rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; max-width: 400px; }
+        .child-select-card { background: #FFF8E1; border: 1.5px solid #e5e7eb; border-radius: 14px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        @media(min-width: 640px) { .child-select-card { border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem; } }
+        .child-select-label { font-size: 1rem; font-weight: 900; color: #111; display: flex; align-items: center; gap: 0.5rem; }
+        .child-select { appearance: none; background-color: #fff; border: 1.5px solid #d1d5db; border-radius: 12px; padding: 0.75rem 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 900; color: #111; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; }
         .child-select:hover { border-color: #9ca3af; }
         .child-select:focus { outline: none; border-color: #FFC107; box-shadow: 0 0 0 3px rgba(255,193,7,0.15); }
 
-        .neo-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; }
-        .neo-card-title { font-size: 1.25rem; font-weight: 900; color: #111; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .neo-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 1.5rem; }
+        @media(min-width: 640px) { .neo-card { border-radius: 20px; padding: 2rem; margin-bottom: 2rem; } }
+        .neo-card-title { font-size: 1rem; font-weight: 900; color: #111; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        @media(min-width: 640px) { .neo-card-title { font-size: 1.25rem; margin-bottom: 1rem; } }
 
-        .alert-error { background: #fff1f2; border: 1.5px solid #fca5a5; border-radius: 12px; padding: 1.25rem; margin-top: 1rem; margin-bottom: 1rem; display: flex; gap: 1rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(239,68,68,0.1); color: #b71c1c; }
+        .alert-error { background: #fff1f2; border: 1.5px solid #fca5a5; border-radius: 12px; padding: 1rem; margin-top: 1rem; margin-bottom: 1rem; display: flex; gap: 0.75rem; align-items: flex-start; box-shadow: 0 2px 8px rgba(239,68,68,0.1); color: #b71c1c; }
 
-        .status-box-wrap { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-        .status-box { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.5rem; flex: 1; min-width: 200px; }
-        .status-label { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5d4037; display: block; margin-bottom: 0.25rem; }
-        .status-val { font-size: 1.25rem; font-weight: 900; color: #111; display: block; }
-        .status-pill { display: inline-block; background: #fff; border: 1.5px solid #d1d5db; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 1rem; margin-top: 0.25rem; }
+        .status-box-wrap { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+        .status-box { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 0.875rem 1rem; flex: 1; min-width: 140px; }
+        .status-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #5d4037; display: block; margin-bottom: 0.25rem; }
+        .status-val { font-size: 1.1rem; font-weight: 900; color: #111; display: block; }
+        @media(min-width: 640px) { .status-val { font-size: 1.25rem; } }
+        .status-pill { display: inline-block; background: #fff; border: 1.5px solid #d1d5db; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.9rem; margin-top: 0.25rem; }
 
-        .btn-ai-submit { width: 100%; padding: 1rem 2rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 1.15rem; border: none; border-radius: 16px; cursor: pointer; background: #FFC107; color: #111; box-shadow: 0 4px 14px rgba(255,193,7,0.4); transition: box-shadow 0.2s, background 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-ai-submit { width: 100%; padding: 0.875rem 1.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 1rem; border: none; border-radius: 14px; cursor: pointer; background: #FFC107; color: #111; box-shadow: 0 4px 14px rgba(255,193,7,0.4); transition: box-shadow 0.2s, background 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        @media(min-width: 640px) { .btn-ai-submit { font-size: 1.15rem; border-radius: 16px; padding: 1rem 2rem; } }
         .btn-ai-submit:hover:not(:disabled) { background: #FFD54F; box-shadow: 0 6px 20px rgba(255,193,7,0.5); }
         .btn-ai-submit:disabled { opacity: 0.7; cursor: not-allowed; box-shadow: none; }
 
-        .ai-result-card { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 20px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 2rem; }
-        .ai-result-text { font-size: 1.05rem; font-weight: 600; color: #3e2723; line-height: 1.6; white-space: pre-wrap; }
+        .ai-result-card { background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 1.5rem; }
+        @media(min-width: 640px) { .ai-result-card { border-radius: 20px; padding: 2rem; margin-bottom: 2rem; } }
+        .ai-result-text { font-size: 0.95rem; font-weight: 600; color: #3e2723; line-height: 1.6; white-space: pre-wrap; }
+        @media(min-width: 640px) { .ai-result-text { font-size: 1.05rem; } }
 
-        .targets-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
-        @media(min-width: 768px) { .targets-grid { grid-template-columns: repeat(3, 1fr); } }
-        .target-box { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-        .target-box p:first-child { font-size: 0.9rem; font-weight: 800; color: #5d4037; text-transform: uppercase; margin-bottom: 0.5rem; }
-        .target-box p:last-child { font-size: 1.5rem; font-weight: 900; color: #111; }
+        .targets-grid { display: grid; grid-template-columns: 1fr; gap: 0.75rem; margin-bottom: 1.5rem; }
+        @media(min-width: 480px) { .targets-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media(min-width: 640px) { .targets-grid { gap: 1rem; margin-bottom: 2rem; } }
+        .target-box { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .target-box p:first-child { font-size: 0.8rem; font-weight: 800; color: #5d4037; text-transform: uppercase; margin-bottom: 0.4rem; }
+        .target-box p:last-child { font-size: 1.25rem; font-weight: 900; color: #111; }
+        @media(min-width: 640px) { .target-box p:last-child { font-size: 1.5rem; } }
 
-        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media(min-width: 768px) { .menu-grid { grid-template-columns: repeat(3, 1fr); } }
-        .menu-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 1.5rem; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.07); transition: box-shadow 0.2s, transform 0.2s; }
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media(min-width: 640px) { .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; } }
+        @media(min-width: 900px) { .menu-grid { grid-template-columns: repeat(3, 1fr); } }
+        .menu-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 14px; padding: 1.25rem; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.07); transition: box-shadow 0.2s, transform 0.2s; }
         .menu-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-        .menu-time { position: absolute; top: 0; right: 0; background: #FFC107; border-bottom: 1.5px solid #e5e7eb; border-left: 1.5px solid #e5e7eb; border-top-right-radius: 14px; border-bottom-left-radius: 12px; padding: 0.4rem 0.8rem; font-weight: 900; font-size: 0.85rem; color: #111; }
-        .menu-title { font-size: 1.25rem; font-weight: 900; color: #111; margin-top: 0.5rem; margin-bottom: 1rem; padding-right: 3.5rem; }
-        .menu-nutrients { display: inline-block; background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 0.4rem 0.75rem; font-size: 0.85rem; font-weight: 800; color: #5d4037; }
+        .menu-time { position: absolute; top: 0; right: 0; background: #FFC107; border-bottom: 1.5px solid #e5e7eb; border-left: 1.5px solid #e5e7eb; border-top-right-radius: 12px; border-bottom-left-radius: 10px; padding: 0.35rem 0.7rem; font-weight: 900; font-size: 0.8rem; color: #111; }
+        .menu-title { font-size: 1.1rem; font-weight: 900; color: #111; margin-top: 0.5rem; margin-bottom: 0.75rem; padding-right: 3.5rem; }
+        .menu-nutrients { display: inline-block; background: #FFFDE7; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 0.35rem 0.65rem; font-size: 0.8rem; font-weight: 800; color: #5d4037; }
       `}</style>
 
       <div className="neo-container">
         {/* Header */}
         <div className="neo-header">
           <div>
-            <h1 className="neo-title">✨ AI Rekomendasi Nutrisi</h1>
+            <h1 className="neo-title"><img src="/puzzle.png" alt="" width={28} height={28} /> AI Rekomendasi Nutrisi</h1>
             <p className="neo-subtitle">Resep dan panduan makanan khusus sesuai status gizi anak</p>
           </div>
           <Link href="/dashboard" className="btn-back">
@@ -161,7 +174,7 @@ export default function NutritionPage() {
         {children.length > 0 && (
           <div className="child-select-card animate-fade-in">
             <label className="child-select-label">
-              <span>👶</span> Pilih Anak:
+              <img src="/kid.png" alt="" width={22} height={22} style={{display:'inline',verticalAlign:'middle'}} /> Pilih Anak:
             </label>
             <select
               className="child-select"
@@ -183,7 +196,7 @@ export default function NutritionPage() {
             </div>
           ) : (
             <div className="animate-fade-in">
-              <h2 className="neo-card-title" style={{ marginBottom: '1.5rem' }}>📊 Profil Anak Saat Ini</h2>
+              <h2 className="neo-card-title" style={{ marginBottom: '1.5rem' }}><img src="/graphics.png" alt="" width={24} height={24} /> Profil Anak Saat Ini</h2>
 
               <div className="status-box-wrap">
                 <div className="status-box">
@@ -205,7 +218,7 @@ export default function NutritionPage() {
                 disabled={loading}
                 className="btn-ai-submit"
               >
-                {loading ? "AI Sedang Menganalisis... 🐝" : "✨ Buat Resep dengan AI"}
+                {loading ? "AI Sedang Menganalisis... 🐝" : <><img src="/puzzle.png" alt="" width={20} height={20} style={{display:'inline',verticalAlign:'middle'}} /> Buat Resep dengan AI</>}
               </button>
 
               {error && (
@@ -225,7 +238,7 @@ export default function NutritionPage() {
         {aiData && (
           <div className="animate-fade-in">
             <div className="ai-result-card">
-              <h2 className="neo-card-title" style={{ fontSize: '1.5rem' }}>💡 Saran Dokter AI</h2>
+              <h2 className="neo-card-title" style={{ fontSize: '1.5rem' }}><img src="/idea.png" alt="" width={24} height={24} /> Saran Dokter AI</h2>
               <p className="ai-result-text">{aiData.recommendation}</p>
             </div>
 
