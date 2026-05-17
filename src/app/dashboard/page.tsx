@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import GrowthChart from '@/components/GrowthChart';
-import { formatAge } from '@/utils/whoStandards';
+import { formatAge, getWHOMedian } from '@/utils/whoStandards';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -95,14 +95,20 @@ export default function DashboardPage() {
       if (growthData && growthData.length > 0) {
         setHistoryRecords([...growthData].reverse());
 
-        const formattedData = growthData.map(record => ({
-          id: record.id,
-          month: record.age_in_months,
-          weight: record.weight,
-          height: record.height,
-          normalWeight: record.age_in_months * 0.5 + 3.3,
-          normalHeight: record.age_in_months * 2 + 50.5
-        }));
+        const selectedChild = children.find(c => c.id === selectedChildId);
+        const gender: 'L' | 'P' = selectedChild?.gender === 'P' ? 'P' : 'L';
+
+        const formattedData = growthData.map(record => {
+          const median = getWHOMedian(gender, record.age_in_months);
+          return {
+            id: record.id,
+            month: record.age_in_months,
+            weight: record.weight,
+            height: record.height,
+            normalWeight: median.weight,
+            normalHeight: median.height,
+          };
+        });
         setChartData(formattedData);
 
         const latest = growthData[growthData.length - 1];
