@@ -280,7 +280,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <>
           <nav className={`an${scrolled ? " an-scrolled" : ""}`} role="navigation" aria-label="App navigation">
             <div className="an-container">
-              <Link href="/dashboard" className="an-logo">
+              <Link href="/" className="an-logo">
                 <span className="p1">grow</span><span className="p2">B</span>
               </Link>
 
